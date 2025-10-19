@@ -1,0 +1,744 @@
+2025-10-19 20:31:29 | INFO     | models.database:_initialize_pool - âœ“ VeritabanÄ± connection pool baÅŸlatÄ±ldÄ±
+2025-10-19 20:31:29 | INFO     | __main__:main - ============================================================
+2025-10-19 20:31:29 | INFO     | __main__:main - SÄ±nav Takvimi YÃ¶netim Sistemi v1.0.0
+2025-10-19 20:31:29 | INFO     | __main__:main - Kocaeli Ãœniversitesi
+2025-10-19 20:31:29 | INFO     | __main__:main - ============================================================
+2025-10-19 20:32:43 | WARNING  | controllers.login_controller:login - Login denemesi baÅŸarÄ±sÄ±z: admin@test.com
+2025-10-19 20:32:51 | WARNING  | controllers.login_controller:login - Login denemesi baÅŸarÄ±sÄ±z: admin@test.com
+2025-10-19 20:33:10 | WARNING  | controllers.login_controller:login - Login denemesi baÅŸarÄ±sÄ±z (ÅŸifre): admin@kocaeli.edu.tr
+2025-10-19 20:33:12 | WARNING  | controllers.login_controller:login - Login denemesi baÅŸarÄ±sÄ±z (ÅŸifre): admin@kocaeli.edu.tr
+2025-10-19 20:33:13 | WARNING  | controllers.login_controller:login - Login denemesi baÅŸarÄ±sÄ±z (ÅŸifre): admin@kocaeli.edu.tr
+2025-10-19 20:33:14 | WARNING  | controllers.login_controller:login - Login denemesi baÅŸarÄ±sÄ±z (ÅŸifre): admin@kocaeli.edu.tr
+2025-10-19 20:33:15 | WARNING  | controllers.login_controller:login - Login denemesi baÅŸarÄ±sÄ±z (ÅŸifre): admin@kocaeli.edu.tr
+2025-10-19 20:33:16 | WARNING  | controllers.login_controller:login - Login denemesi baÅŸarÄ±sÄ±z (ÅŸifre): admin@kocaeli.edu.tr
+2025-10-19 20:33:16 | WARNING  | controllers.login_controller:login - Login denemesi baÅŸarÄ±sÄ±z (ÅŸifre): admin@kocaeli.edu.tr
+2025-10-19 20:34:27 | WARNING  | controllers.login_controller:login - Login denemesi baÅŸarÄ±sÄ±z (ÅŸifre): admin@kocaeli.edu.tr
+2025-10-19 20:34:28 | WARNING  | controllers.login_controller:login - Login denemesi baÅŸarÄ±sÄ±z (ÅŸifre): admin@kocaeli.edu.tr
+2025-10-19 20:34:29 | WARNING  | controllers.login_controller:login - Login denemesi baÅŸarÄ±sÄ±z (ÅŸifre): admin@kocaeli.edu.tr
+2025-10-19 20:37:29 | WARNING  | controllers.login_controller:login - Login denemesi baÅŸarÄ±sÄ±z (ÅŸifre): admin@kocaeli.edu.tr
+2025-10-19 20:37:30 | WARNING  | controllers.login_controller:login - Login denemesi baÅŸarÄ±sÄ±z (ÅŸifre): admin@kocaeli.edu.tr
+2025-10-19 20:37:31 | WARNING  | controllers.login_controller:login - Login denemesi baÅŸarÄ±sÄ±z (ÅŸifre): admin@kocaeli.edu.tr
+2025-10-19 20:37:32 | WARNING  | controllers.login_controller:login - Login denemesi baÅŸarÄ±sÄ±z (ÅŸifre): admin@kocaeli.edu.tr
+2025-10-19 20:48:49 | WARNING  | controllers.login_controller:login - Login denemesi baÅŸarÄ±sÄ±z (ÅŸifre): admin@kocaeli.edu.tr
+2025-10-19 20:48:51 | WARNING  | controllers.login_controller:login - Login denemesi baÅŸarÄ±sÄ±z (ÅŸifre): admin@kocaeli.edu.tr
+2025-10-19 21:04:53 | INFO     | models.database:close_all - âœ“ TÃ¼m veritabanÄ± baÄŸlantÄ±larÄ± kapatÄ±ldÄ±
+2025-10-19 21:04:53 | INFO     | __main__:main - Uygulama kapatÄ±ldÄ±
+2025-10-19 21:40:35 | INFO     | models.database:_initialize_pool - âœ“ VeritabanÄ± connection pool baÅŸlatÄ±ldÄ±
+2025-10-19 21:40:35 | INFO     | __main__:main - ============================================================
+2025-10-19 21:40:35 | INFO     | __main__:main - SÄ±nav Takvimi YÃ¶netim Sistemi v1.0.0
+2025-10-19 21:40:35 | INFO     | __main__:main - Kocaeli Ãœniversitesi
+2025-10-19 21:40:35 | INFO     | __main__:main - ============================================================
+2025-10-19 21:40:52 | INFO     | models.database:close_all - âœ“ TÃ¼m veritabanÄ± baÄŸlantÄ±larÄ± kapatÄ±ldÄ±
+2025-10-19 21:40:52 | INFO     | __main__:main - Uygulama kapatÄ±ldÄ±
+2025-10-19 21:41:08 | INFO     | models.database:_initialize_pool - [OK] VeritabanÄ± connection pool baÅŸlatÄ±ldÄ±
+2025-10-19 21:41:08 | INFO     | __main__:main - ============================================================
+2025-10-19 21:41:08 | INFO     | __main__:main - SÄ±nav Takvimi YÃ¶netim Sistemi v1.0.0
+2025-10-19 21:41:08 | INFO     | __main__:main - Kocaeli Ãœniversitesi
+2025-10-19 21:41:08 | INFO     | __main__:main - ============================================================
+2025-10-19 21:41:10 | INFO     | models.database:close_all - [OK] TÃ¼m veritabanÄ± baÄŸlantÄ±larÄ± kapatÄ±ldÄ±
+2025-10-19 21:41:10 | INFO     | __main__:main - Uygulama kapatÄ±ldÄ±
+2025-10-19 21:41:31 | INFO     | models.database:_initialize_pool - [OK] VeritabanÄ± connection pool baÅŸlatÄ±ldÄ±
+2025-10-19 21:41:31 | INFO     | __main__:main - ============================================================
+2025-10-19 21:41:31 | INFO     | __main__:main - SÄ±nav Takvimi YÃ¶netim Sistemi v1.0.0
+2025-10-19 21:41:31 | INFO     | __main__:main - Kocaeli Ãœniversitesi
+2025-10-19 21:41:31 | INFO     | __main__:main - ============================================================
+2025-10-19 21:59:13 | INFO     | models.database:_initialize_pool - [OK] VeritabanÄ± connection pool baÅŸlatÄ±ldÄ±
+2025-10-19 21:59:13 | INFO     | __main__:main - ============================================================
+2025-10-19 21:59:13 | INFO     | __main__:main - SÄ±nav Takvimi YÃ¶netim Sistemi v1.0.0
+2025-10-19 21:59:13 | INFO     | __main__:main - Kocaeli Ãœniversitesi
+2025-10-19 21:59:13 | INFO     | __main__:main - ============================================================
+2025-10-19 21:59:27 | INFO     | models.database:close_all - [OK] TÃ¼m veritabanÄ± baÄŸlantÄ±larÄ± kapatÄ±ldÄ±
+2025-10-19 21:59:27 | INFO     | __main__:main - Uygulama kapatÄ±ldÄ±
+2025-10-19 22:12:41 | INFO     | models.database:_initialize_pool - [OK] VeritabanÄ± connection pool baÅŸlatÄ±ldÄ±
+2025-10-19 22:12:41 | INFO     | __main__:main - ============================================================
+2025-10-19 22:12:41 | INFO     | __main__:main - SÄ±nav Takvimi YÃ¶netim Sistemi v1.0.0
+2025-10-19 22:12:41 | INFO     | __main__:main - Kocaeli Ãœniversitesi
+2025-10-19 22:12:41 | INFO     | __main__:main - ============================================================
+2025-10-19 22:16:11 | INFO     | models.database:close_all - [OK] TÃ¼m veritabanÄ± baÄŸlantÄ±larÄ± kapatÄ±ldÄ±
+2025-10-19 22:16:11 | INFO     | __main__:main - Uygulama kapatÄ±ldÄ±
+2025-10-19 22:19:36 | INFO     | models.database:_initialize_pool - [OK] VeritabanÄ± connection pool baÅŸlatÄ±ldÄ±
+2025-10-19 22:19:36 | INFO     | __main__:main - ============================================================
+2025-10-19 22:19:36 | INFO     | __main__:main - SÄ±nav Takvimi YÃ¶netim Sistemi v1.0.0
+2025-10-19 22:19:36 | INFO     | __main__:main - Kocaeli Ãœniversitesi
+2025-10-19 22:19:36 | INFO     | __main__:main - ============================================================
+2025-10-19 22:19:36 | CRITICAL | __main__:main - Kritik hata: name 'LoginView' is not defined
+2025-10-19 22:45:37 | INFO     | models.database:_initialize_pool - [OK] VeritabanÄ± connection pool baÅŸlatÄ±ldÄ±
+2025-10-19 22:45:37 | INFO     | __main__:main - ============================================================
+2025-10-19 22:45:37 | INFO     | __main__:main - SÄ±nav Takvimi YÃ¶netim Sistemi v1.0.0
+2025-10-19 22:45:37 | INFO     | __main__:main - Kocaeli Ãœniversitesi
+2025-10-19 22:45:37 | INFO     | __main__:main - ============================================================
+2025-10-19 22:45:37 | CRITICAL | __main__:main - Kritik hata: name 'LoginView' is not defined
+2025-10-19 22:49:35 | INFO     | models.database:_initialize_pool - [OK] VeritabanÄ± connection pool baÅŸlatÄ±ldÄ±
+2025-10-19 22:49:35 | INFO     | __main__:main - Uygulama baÅŸlatÄ±lÄ±yor...
+2025-10-19 22:49:35 | INFO     | __main__:main - VeritabanÄ± baÄŸlantÄ±sÄ± kontrol ediliyor...
+2025-10-19 22:49:35 | INFO     | __main__:main - âœ“ VeritabanÄ± baÄŸlantÄ±sÄ± baÅŸarÄ±lÄ± (3 kullanÄ±cÄ±)
+2025-10-19 22:50:15 | INFO     | models.database:_initialize_pool - [OK] VeritabanÄ± connection pool baÅŸlatÄ±ldÄ±
+2025-10-19 22:50:16 | INFO     | __main__:main - Uygulama baÅŸlatÄ±lÄ±yor...
+2025-10-19 22:50:16 | INFO     | __main__:main - VeritabanÄ± baÄŸlantÄ±sÄ± kontrol ediliyor...
+2025-10-19 22:50:16 | INFO     | __main__:main - âœ“ VeritabanÄ± baÄŸlantÄ±sÄ± baÅŸarÄ±lÄ± (3 kullanÄ±cÄ±)
+2025-10-19 23:36:28 | INFO     | __main__:main - KullanÄ±cÄ± login'i iptal etti
+2025-10-19 23:42:20 | INFO     | __main__:main - KullanÄ±cÄ± login'i iptal etti
+2025-10-20 00:07:00 [INFO] __main__: ============================================================
+2025-10-20 00:07:00 [INFO] __main__: ============================================================
+2025-10-20 00:10:36 [INFO] __main__: ============================================================
+2025-10-20 00:10:36 [INFO] __main__: ============================================================
+2025-10-20 00:22:17 [INFO] __main__: ============================================================
+2025-10-20 00:22:17 [INFO] __main__: ============================================================
+2025-10-20 00:22:27 [INFO] __main__: ============================================================
+2025-10-20 00:22:27 [INFO] __main__: ============================================================
+2025-10-20 00:23:40 [INFO] __main__: ============================================================
+2025-10-20 00:23:40 [INFO] __main__: [START] Sýnav Takvimi Yönetim Sistemi v1.0.0
+2025-10-20 00:23:40 [INFO] __main__: ============================================================
+2025-10-20 00:23:40 [INFO] __main__: [DB] Initializing database connection...
+2025-10-20 00:23:41 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-20 00:23:41 [INFO] __main__: [OK] Database connection successful
+2025-10-20 00:23:41 [INFO] __main__: [UI] Opening login window...
+2025-10-20 00:24:42 [INFO] __main__: [OK] Login dialog accepted
+2025-10-20 00:24:42 [INFO] __main__: [CLEANUP] Closing database connections...
+2025-10-20 00:24:42 [INFO] models.database: [OK] All database connections closed
+2025-10-20 00:24:42 [INFO] __main__: [END] Application closed
+2025-10-20 00:25:21 [INFO] __main__: ============================================================
+2025-10-20 00:25:21 [INFO] __main__: [START] Sýnav Takvimi Yönetim Sistemi v1.0.0
+2025-10-20 00:25:21 [INFO] __main__: ============================================================
+2025-10-20 00:25:21 [INFO] __main__: [DB] Initializing database connection...
+2025-10-20 00:25:21 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-20 00:25:21 [INFO] __main__: [OK] Database connection successful
+2025-10-20 00:25:21 [INFO] __main__: [UI] Opening login window...
+2025-10-20 00:25:29 [INFO] __main__: ============================================================
+2025-10-20 00:25:29 [INFO] __main__: [START] Sýnav Takvimi Yönetim Sistemi v1.0.0
+2025-10-20 00:25:29 [INFO] __main__: ============================================================
+2025-10-20 00:25:29 [INFO] __main__: [DB] Initializing database connection...
+2025-10-20 00:25:29 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-20 00:25:29 [INFO] __main__: [OK] Database connection successful
+2025-10-20 00:25:29 [INFO] __main__: [UI] Opening login window...
+2025-10-20 00:26:23 [INFO] __main__: [OK] Login dialog accepted
+2025-10-20 00:26:23 [INFO] __main__: [CLEANUP] Closing database connections...
+2025-10-20 00:26:23 [INFO] models.database: [OK] All database connections closed
+2025-10-20 00:26:23 [INFO] __main__: [END] Application closed
+2025-10-20 00:31:43 [INFO] __main__: ============================================================
+2025-10-20 00:31:43 [INFO] __main__: [START] Sýnav Takvimi Yönetim Sistemi v1.0.0
+2025-10-20 00:31:43 [INFO] __main__: ============================================================
+2025-10-20 00:31:43 [INFO] __main__: [DB] Initializing database connection...
+2025-10-20 00:31:44 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-20 00:31:44 [INFO] __main__: [OK] Database connection successful
+2025-10-20 00:31:44 [INFO] __main__: [UI] Opening login window...
+2025-10-20 00:32:48 [INFO] __main__: [OK] Login dialog accepted
+2025-10-20 00:32:48 [INFO] __main__: [CLEANUP] Closing database connections...
+2025-10-20 00:32:48 [INFO] models.database: [OK] All database connections closed
+2025-10-20 00:32:48 [INFO] __main__: [END] Application closed
+2025-10-20 00:38:03 [INFO] __main__: [OK] Login dialog accepted
+2025-10-20 00:38:03 [INFO] __main__: [CLEANUP] Closing database connections...
+2025-10-20 00:38:03 [INFO] models.database: [OK] All database connections closed
+2025-10-20 00:38:03 [INFO] __main__: [END] Application closed
+2025-10-20 01:02:37 [INFO] __main__: ============================================================
+2025-10-20 01:02:37 [INFO] __main__: [START] Sýnav Takvimi Yönetim Sistemi v1.0.0
+2025-10-20 01:02:37 [INFO] __main__: ============================================================
+2025-10-20 01:02:37 [INFO] __main__: [DB] Initializing database connection...
+2025-10-20 01:02:38 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-20 01:02:38 [INFO] __main__: [OK] Database connection successful
+2025-10-20 01:02:38 [INFO] __main__: [UI] Opening login window...
+2025-10-20 01:02:38 [INFO] __main__: ============================================================
+2025-10-20 01:02:38 [INFO] __main__: [START] Sýnav Takvimi Yönetim Sistemi v1.0.0
+2025-10-20 01:02:38 [INFO] __main__: ============================================================
+2025-10-20 01:02:38 [INFO] __main__: [DB] Initializing database connection...
+2025-10-20 01:02:38 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-20 01:02:38 [INFO] __main__: [OK] Database connection successful
+2025-10-20 01:02:38 [INFO] __main__: [UI] Opening login window...
+2025-10-20 01:02:47 [INFO] __main__: [OK] Login dialog accepted
+2025-10-20 01:02:47 [INFO] __main__: [CLEANUP] Closing database connections...
+2025-10-20 01:02:47 [INFO] models.database: [OK] All database connections closed
+2025-10-20 01:02:47 [INFO] __main__: [END] Application closed
+2025-10-20 01:02:55 [INFO] __main__: [OK] Login dialog accepted
+2025-10-20 01:02:55 [INFO] __main__: [CLEANUP] Closing database connections...
+2025-10-20 01:02:55 [INFO] models.database: [OK] All database connections closed
+2025-10-20 01:02:55 [INFO] __main__: [END] Application closed
+2025-10-20 01:02:57 [INFO] __main__: ============================================================
+2025-10-20 01:02:57 [INFO] __main__: [START] Sýnav Takvimi Yönetim Sistemi v1.0.0
+2025-10-20 01:02:57 [INFO] __main__: ============================================================
+2025-10-20 01:02:57 [INFO] __main__: [DB] Initializing database connection...
+2025-10-20 01:02:58 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-20 01:02:58 [INFO] __main__: [OK] Database connection successful
+2025-10-20 01:02:58 [INFO] __main__: [UI] Opening login window...
+2025-10-20 01:03:09 [INFO] __main__: [OK] Login dialog accepted
+2025-10-20 01:03:09 [INFO] __main__: [CLEANUP] Closing database connections...
+2025-10-20 01:03:09 [INFO] models.database: [OK] All database connections closed
+2025-10-20 01:03:09 [INFO] __main__: [END] Application closed
+2025-10-20 01:03:52 [INFO] __main__: ============================================================
+2025-10-20 01:03:52 [INFO] __main__: [START] Sýnav Takvimi Yönetim Sistemi v1.0.0
+2025-10-20 01:03:52 [INFO] __main__: ============================================================
+2025-10-20 01:03:52 [INFO] __main__: [DB] Initializing database connection...
+2025-10-20 01:03:52 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-20 01:03:52 [INFO] __main__: [OK] Database connection successful
+2025-10-20 01:03:52 [INFO] __main__: [UI] Opening login window...
+2025-10-20 01:04:20 [INFO] __main__: [OK] Login dialog accepted
+2025-10-20 01:04:20 [INFO] __main__: [CLEANUP] Closing database connections...
+2025-10-20 01:04:20 [INFO] models.database: [OK] All database connections closed
+2025-10-20 01:04:20 [INFO] __main__: [END] Application closed
+2025-10-20 01:06:05 [INFO] __main__: ============================================================
+2025-10-20 01:06:05 [INFO] __main__: [START] Sýnav Takvimi Yönetim Sistemi v1.0.0
+2025-10-20 01:06:05 [INFO] __main__: ============================================================
+2025-10-20 01:06:05 [INFO] __main__: [DB] Initializing database connection...
+2025-10-20 01:06:05 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-20 01:06:05 [INFO] __main__: [OK] Database connection successful
+2025-10-20 01:06:05 [INFO] __main__: [UI] Opening login window...
+2025-10-20 01:06:37 [INFO] __main__: [OK] Login dialog accepted
+2025-10-20 01:06:37 [INFO] __main__: [CLEANUP] Closing database connections...
+2025-10-20 01:06:37 [INFO] models.database: [OK] All database connections closed
+2025-10-20 01:06:37 [INFO] __main__: [END] Application closed
+2025-10-20 01:07:02 [INFO] __main__: ============================================================
+2025-10-20 01:07:02 [INFO] __main__: [START] Sýnav Takvimi Yönetim Sistemi v1.0.0
+2025-10-20 01:07:02 [INFO] __main__: ============================================================
+2025-10-20 01:07:02 [INFO] __main__: [DB] Initializing database connection...
+2025-10-20 01:07:02 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-20 01:07:02 [INFO] __main__: [OK] Database connection successful
+2025-10-20 01:07:02 [INFO] __main__: [UI] Opening login window...
+2025-10-20 01:08:05 [INFO] __main__: ============================================================
+2025-10-20 01:08:05 [INFO] __main__: [START] Sýnav Takvimi Yönetim Sistemi v1.0.0
+2025-10-20 01:08:05 [INFO] __main__: ============================================================
+2025-10-20 01:08:05 [INFO] __main__: [DB] Initializing database connection...
+2025-10-20 01:08:05 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-20 01:08:05 [INFO] __main__: [OK] Database connection successful
+2025-10-20 01:08:05 [INFO] __main__: [UI] Opening login window...
+2025-10-20 01:09:37 [INFO] __main__: [OK] Login dialog accepted
+2025-10-20 01:09:37 [INFO] __main__: [CLEANUP] Closing database connections...
+2025-10-20 01:09:37 [INFO] models.database: [OK] All database connections closed
+2025-10-20 01:09:37 [INFO] __main__: [END] Application closed
+2025-10-20 01:10:03 [INFO] __main__: ============================================================
+2025-10-20 01:10:03 [INFO] __main__: [START] Sýnav Takvimi Yönetim Sistemi v1.0.0
+2025-10-20 01:10:03 [INFO] __main__: ============================================================
+2025-10-20 01:10:03 [INFO] __main__: [DB] Initializing database connection...
+2025-10-20 01:10:03 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-20 01:10:03 [INFO] __main__: [OK] Database connection successful
+2025-10-20 01:10:03 [INFO] __main__: [UI] Opening login window...
+2025-10-20 01:10:26 [INFO] __main__: [OK] Login dialog accepted
+2025-10-20 01:10:26 [INFO] __main__: [CLEANUP] Closing database connections...
+2025-10-20 01:10:26 [INFO] models.database: [OK] All database connections closed
+2025-10-20 01:10:26 [INFO] __main__: [END] Application closed
+2025-10-20 01:11:56 [INFO] __main__: [OK] Login dialog accepted
+2025-10-20 01:11:56 [INFO] __main__: [CLEANUP] Closing database connections...
+2025-10-20 01:11:56 [INFO] models.database: [OK] All database connections closed
+2025-10-20 01:11:56 [INFO] __main__: [END] Application closed
+2025-10-20 01:12:47 [INFO] __main__: ============================================================
+2025-10-20 01:12:47 [INFO] __main__: [START] Sýnav Takvimi Yönetim Sistemi v1.0.0
+2025-10-20 01:12:47 [INFO] __main__: ============================================================
+2025-10-20 01:12:48 [INFO] __main__: [DB] Initializing database connection...
+2025-10-20 01:12:48 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-20 01:12:48 [INFO] __main__: [OK] Database connection successful
+2025-10-20 01:12:48 [INFO] __main__: [UI] Opening login window...
+2025-10-20 01:16:10 [INFO] __main__: ============================================================
+2025-10-20 01:16:10 [INFO] __main__: [START] Sýnav Takvimi Yönetim Sistemi v1.0.0
+2025-10-20 01:16:10 [INFO] __main__: ============================================================
+2025-10-20 01:16:10 [INFO] __main__: [DB] Initializing database connection...
+2025-10-20 01:16:10 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-20 01:16:10 [INFO] __main__: [OK] Database connection successful
+2025-10-20 01:16:10 [INFO] __main__: [UI] Opening login window...
+2025-10-20 01:16:25 [INFO] __main__: [OK] Login dialog accepted
+2025-10-20 01:16:25 [INFO] __main__: [CLEANUP] Closing database connections...
+2025-10-20 01:16:25 [INFO] models.database: [OK] All database connections closed
+2025-10-20 01:16:25 [INFO] __main__: [END] Application closed
+2025-10-20 01:16:28 [INFO] __main__: [OK] Login dialog accepted
+2025-10-20 01:16:28 [INFO] __main__: [CLEANUP] Closing database connections...
+2025-10-20 01:16:28 [INFO] models.database: [OK] All database connections closed
+2025-10-20 01:16:28 [INFO] __main__: [END] Application closed
+2025-10-20 01:16:41 [INFO] __main__: ============================================================
+2025-10-20 01:16:41 [INFO] __main__: [START] Sýnav Takvimi Yönetim Sistemi v1.0.0
+2025-10-20 01:16:41 [INFO] __main__: ============================================================
+2025-10-20 01:16:41 [INFO] __main__: [DB] Initializing database connection...
+2025-10-20 01:16:41 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-20 01:16:41 [INFO] __main__: [OK] Database connection successful
+2025-10-20 01:16:41 [INFO] __main__: [UI] Opening login window...
+2025-10-20 01:17:50 [INFO] __main__: [OK] Login dialog accepted
+2025-10-20 01:17:50 [INFO] __main__: [CLEANUP] Closing database connections...
+2025-10-20 01:17:50 [INFO] models.database: [OK] All database connections closed
+2025-10-20 01:17:50 [INFO] __main__: [END] Application closed
+2025-10-20 01:17:56 [INFO] __main__: ============================================================
+2025-10-20 01:17:56 [INFO] __main__: [START] Sýnav Takvimi Yönetim Sistemi v1.0.0
+2025-10-20 01:17:56 [INFO] __main__: ============================================================
+2025-10-20 01:17:56 [INFO] __main__: [DB] Initializing database connection...
+2025-10-20 01:17:56 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-20 01:17:56 [INFO] __main__: [OK] Database connection successful
+2025-10-20 01:17:56 [INFO] __main__: [UI] Opening login window...
+2025-10-20 01:18:17 [INFO] __main__: [OK] Login dialog accepted
+2025-10-20 01:18:17 [INFO] __main__: [CLEANUP] Closing database connections...
+2025-10-20 01:18:17 [INFO] models.database: [OK] All database connections closed
+2025-10-20 01:18:17 [INFO] __main__: [END] Application closed
+2025-10-20 01:18:24 [INFO] __main__: ============================================================
+2025-10-20 01:18:24 [INFO] __main__: [START] Sýnav Takvimi Yönetim Sistemi v1.0.0
+2025-10-20 01:18:24 [INFO] __main__: ============================================================
+2025-10-20 01:18:24 [INFO] __main__: [DB] Initializing database connection...
+2025-10-20 01:18:24 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-20 01:18:24 [INFO] __main__: [OK] Database connection successful
+2025-10-20 01:18:24 [INFO] __main__: [UI] Opening login window...
+2025-10-20 01:20:11 [INFO] __main__: ============================================================
+2025-10-20 01:20:11 [INFO] __main__: [START] Sýnav Takvimi Yönetim Sistemi v1.0.0
+2025-10-20 01:20:11 [INFO] __main__: ============================================================
+2025-10-20 01:20:11 [INFO] __main__: [DB] Initializing database connection...
+2025-10-20 01:20:11 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-20 01:20:11 [INFO] __main__: [OK] Database connection successful
+2025-10-20 01:20:11 [INFO] __main__: [UI] Opening login window...
+2025-10-20 01:20:54 [INFO] __main__: [OK] Login dialog accepted
+2025-10-20 01:20:54 [INFO] __main__: [CLEANUP] Closing database connections...
+2025-10-20 01:20:54 [INFO] models.database: [OK] All database connections closed
+2025-10-20 01:20:54 [INFO] __main__: [END] Application closed
+2025-10-20 01:22:26 [INFO] __main__: [OK] Login dialog accepted
+2025-10-20 01:22:26 [INFO] __main__: [CLEANUP] Closing database connections...
+2025-10-20 01:22:26 [INFO] models.database: [OK] All database connections closed
+2025-10-20 01:22:26 [INFO] __main__: [END] Application closed
+2025-10-20 01:22:34 [INFO] __main__: ============================================================
+2025-10-20 01:22:34 [INFO] __main__: [START] Sýnav Takvimi Yönetim Sistemi v1.0.0
+2025-10-20 01:22:34 [INFO] __main__: ============================================================
+2025-10-20 01:22:34 [INFO] __main__: [DB] Initializing database connection...
+2025-10-20 01:22:34 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-20 01:22:34 [INFO] __main__: [OK] Database connection successful
+2025-10-20 01:22:34 [INFO] __main__: [UI] Opening login window...
+2025-10-20 01:23:42 [INFO] __main__: [OK] Login dialog accepted
+2025-10-20 01:23:42 [INFO] __main__: [CLEANUP] Closing database connections...
+2025-10-20 01:23:42 [INFO] models.database: [OK] All database connections closed
+2025-10-20 01:23:42 [INFO] __main__: [END] Application closed
+2025-10-20 01:25:06 [INFO] __main__: ============================================================
+2025-10-20 01:25:06 [INFO] __main__: [START] Sýnav Takvimi Yönetim Sistemi v1.0.0
+2025-10-20 01:25:06 [INFO] __main__: ============================================================
+2025-10-20 01:25:06 [INFO] __main__: [DB] Initializing database connection...
+2025-10-20 01:25:06 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-20 01:25:06 [INFO] __main__: [OK] Database connection successful
+2025-10-20 01:25:06 [INFO] __main__: [UI] Opening login window...
+2025-10-20 01:27:03 [INFO] __main__: ============================================================
+2025-10-20 01:27:03 [INFO] __main__: [START] Sýnav Takvimi Yönetim Sistemi v1.0.0
+2025-10-20 01:27:03 [INFO] __main__: ============================================================
+2025-10-20 01:27:03 [INFO] __main__: [DB] Initializing database connection...
+2025-10-20 01:27:03 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-20 01:27:03 [INFO] __main__: [OK] Database connection successful
+2025-10-20 01:27:03 [INFO] __main__: [UI] Opening login window...
+2025-10-20 01:29:05 [INFO] __main__: ============================================================
+2025-10-20 01:29:05 [INFO] __main__: [START] Sýnav Takvimi Yönetim Sistemi v1.0.0
+2025-10-20 01:29:05 [INFO] __main__: ============================================================
+2025-10-20 01:29:05 [INFO] __main__: [DB] Initializing database connection...
+2025-10-20 01:29:05 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-20 01:29:05 [INFO] __main__: [OK] Database connection successful
+2025-10-20 01:29:05 [INFO] __main__: [UI] Opening login window...
+2025-10-20 01:29:55 [INFO] __main__: [OK] Login dialog accepted
+2025-10-20 01:29:55 [INFO] __main__: [CLEANUP] Closing database connections...
+2025-10-20 01:29:55 [INFO] models.database: [OK] All database connections closed
+2025-10-20 01:29:55 [INFO] __main__: [END] Application closed
+2025-10-20 01:32:03 [INFO] __main__: ============================================================
+2025-10-20 01:32:03 [INFO] __main__: [START] Sýnav Takvimi Yönetim Sistemi v1.0.0
+2025-10-20 01:32:03 [INFO] __main__: ============================================================
+2025-10-20 01:32:03 [INFO] __main__: [DB] Initializing database connection...
+2025-10-20 01:32:03 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-20 01:32:03 [INFO] __main__: [OK] Database connection successful
+2025-10-20 01:32:03 [INFO] __main__: [UI] Opening login window...
+2025-10-20 01:32:28 [INFO] __main__: [OK] Login dialog accepted
+2025-10-20 01:32:28 [INFO] __main__: [CLEANUP] Closing database connections...
+2025-10-20 01:32:28 [INFO] models.database: [OK] All database connections closed
+2025-10-20 01:32:28 [INFO] __main__: [END] Application closed
+2025-10-20 01:33:29 [INFO] __main__: ============================================================
+2025-10-20 01:33:29 [INFO] __main__: [START] Sýnav Takvimi Yönetim Sistemi v1.0.0
+2025-10-20 01:33:29 [INFO] __main__: ============================================================
+2025-10-20 01:33:29 [INFO] __main__: [DB] Initializing database connection...
+2025-10-20 01:33:30 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-20 01:33:30 [INFO] __main__: [OK] Database connection successful
+2025-10-20 01:33:30 [INFO] __main__: [UI] Opening login window...
+2025-10-20 01:34:55 [INFO] __main__: ============================================================
+2025-10-20 01:34:55 [INFO] __main__: [START] Sýnav Takvimi Yönetim Sistemi v1.0.0
+2025-10-20 01:34:55 [INFO] __main__: ============================================================
+2025-10-20 01:34:55 [INFO] __main__: [DB] Initializing database connection...
+2025-10-20 01:34:55 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-20 01:34:55 [INFO] __main__: [OK] Database connection successful
+2025-10-20 01:34:55 [INFO] __main__: [UI] Opening login window...
+2025-10-20 01:35:51 [INFO] __main__: ============================================================
+2025-10-20 01:35:51 [INFO] __main__: [START] Sýnav Takvimi Yönetim Sistemi v1.0.0
+2025-10-20 01:35:51 [INFO] __main__: ============================================================
+2025-10-20 01:35:51 [INFO] __main__: [DB] Initializing database connection...
+2025-10-20 01:35:51 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-20 01:35:51 [INFO] __main__: [OK] Database connection successful
+2025-10-20 01:35:51 [INFO] __main__: [UI] Opening login window...
+2025-10-20 01:36:00 [INFO] __main__: [OK] Login dialog accepted
+2025-10-20 01:36:00 [INFO] __main__: [CLEANUP] Closing database connections...
+2025-10-20 01:36:00 [INFO] models.database: [OK] All database connections closed
+2025-10-20 01:36:00 [INFO] __main__: [END] Application closed
+2025-10-20 01:36:49 [INFO] __main__: ============================================================
+2025-10-20 01:36:49 [INFO] __main__: [START] Sýnav Takvimi Yönetim Sistemi v1.0.0
+2025-10-20 01:36:49 [INFO] __main__: ============================================================
+2025-10-20 01:36:49 [INFO] __main__: [DB] Initializing database connection...
+2025-10-20 01:36:49 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-20 01:36:49 [INFO] __main__: [OK] Database connection successful
+2025-10-20 01:36:49 [INFO] __main__: [UI] Opening login window...
+2025-10-20 01:37:02 [INFO] __main__: [OK] Login dialog accepted
+2025-10-20 01:37:02 [INFO] __main__: [CLEANUP] Closing database connections...
+2025-10-20 01:37:02 [INFO] models.database: [OK] All database connections closed
+2025-10-20 01:37:02 [INFO] __main__: [END] Application closed
+2025-10-20 01:37:05 [INFO] __main__: [OK] Login dialog accepted
+2025-10-20 01:37:05 [INFO] __main__: [CLEANUP] Closing database connections...
+2025-10-20 01:37:05 [INFO] models.database: [OK] All database connections closed
+2025-10-20 01:37:05 [INFO] __main__: [END] Application closed
+2025-10-20 01:37:06 [INFO] __main__: [OK] Login dialog accepted
+2025-10-20 01:37:06 [INFO] __main__: [CLEANUP] Closing database connections...
+2025-10-20 01:37:06 [INFO] models.database: [OK] All database connections closed
+2025-10-20 01:37:06 [INFO] __main__: [END] Application closed
+2025-10-20 01:37:07 [INFO] __main__: [OK] Login dialog accepted
+2025-10-20 01:37:07 [INFO] __main__: [CLEANUP] Closing database connections...
+2025-10-20 01:37:07 [INFO] models.database: [OK] All database connections closed
+2025-10-20 01:37:07 [INFO] __main__: [END] Application closed
+2025-10-20 01:37:09 [INFO] __main__: [OK] Login dialog accepted
+2025-10-20 01:37:09 [INFO] __main__: [CLEANUP] Closing database connections...
+2025-10-20 01:37:09 [INFO] models.database: [OK] All database connections closed
+2025-10-20 01:37:09 [INFO] __main__: [END] Application closed
+2025-10-20 01:37:26 [INFO] __main__: ============================================================
+2025-10-20 01:37:26 [INFO] __main__: [START] Sýnav Takvimi Yönetim Sistemi v1.0.0
+2025-10-20 01:37:26 [INFO] __main__: ============================================================
+2025-10-20 01:37:26 [INFO] __main__: [DB] Initializing database connection...
+2025-10-20 01:37:26 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-20 01:37:26 [INFO] __main__: [OK] Database connection successful
+2025-10-20 01:37:26 [INFO] __main__: [UI] Opening login window...
+2025-10-20 01:37:41 [INFO] __main__: [OK] Login dialog accepted
+2025-10-20 01:37:41 [INFO] __main__: [CLEANUP] Closing database connections...
+2025-10-20 01:37:41 [INFO] models.database: [OK] All database connections closed
+2025-10-20 01:37:41 [INFO] __main__: [END] Application closed
+2025-10-20 01:39:09 [INFO] __main__: ============================================================
+2025-10-20 01:39:09 [INFO] __main__: [START] Sýnav Takvimi Yönetim Sistemi v1.0.0
+2025-10-20 01:39:09 [INFO] __main__: ============================================================
+2025-10-20 01:39:09 [INFO] __main__: [DB] Initializing database connection...
+2025-10-20 01:39:09 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-20 01:39:09 [INFO] __main__: [OK] Database connection successful
+2025-10-20 01:39:09 [INFO] __main__: [UI] Opening login window...
+2025-10-20 01:40:04 [INFO] __main__: ============================================================
+2025-10-20 01:40:04 [INFO] __main__: [START] Sýnav Takvimi Yönetim Sistemi v1.0.0
+2025-10-20 01:40:04 [INFO] __main__: ============================================================
+2025-10-20 01:40:04 [INFO] __main__: [DB] Initializing database connection...
+2025-10-20 01:40:04 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-20 01:40:04 [INFO] __main__: [OK] Database connection successful
+2025-10-20 01:40:04 [INFO] __main__: [UI] Opening login window...
+2025-10-20 01:40:12 [INFO] __main__: [OK] Login dialog accepted
+2025-10-20 01:40:12 [INFO] __main__: [CLEANUP] Closing database connections...
+2025-10-20 01:40:12 [INFO] models.database: [OK] All database connections closed
+2025-10-20 01:40:12 [INFO] __main__: [END] Application closed
+2025-10-20 01:40:35 [INFO] __main__: ============================================================
+2025-10-20 01:40:35 [INFO] __main__: [START] Sýnav Takvimi Yönetim Sistemi v1.0.0
+2025-10-20 01:40:35 [INFO] __main__: ============================================================
+2025-10-20 01:40:35 [INFO] __main__: [DB] Initializing database connection...
+2025-10-20 01:40:35 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-20 01:40:35 [INFO] __main__: [OK] Database connection successful
+2025-10-20 01:40:35 [INFO] __main__: [UI] Opening login window...
+2025-10-20 01:41:34 [INFO] __main__: [OK] Login dialog accepted
+2025-10-20 01:41:34 [INFO] __main__: [CLEANUP] Closing database connections...
+2025-10-20 01:41:34 [INFO] models.database: [OK] All database connections closed
+2025-10-20 01:41:34 [INFO] __main__: [END] Application closed
+2025-10-20 01:41:38 [INFO] __main__: ============================================================
+2025-10-20 01:41:38 [INFO] __main__: [START] Sýnav Takvimi Yönetim Sistemi v1.0.0
+2025-10-20 01:41:38 [INFO] __main__: ============================================================
+2025-10-20 01:41:38 [INFO] __main__: [DB] Initializing database connection...
+2025-10-20 01:41:38 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-20 01:41:38 [INFO] __main__: [OK] Database connection successful
+2025-10-20 01:41:38 [INFO] __main__: [UI] Opening login window...
+2025-10-20 01:43:50 [INFO] __main__: ============================================================
+2025-10-20 01:43:50 [INFO] __main__: [START] Sýnav Takvimi Yönetim Sistemi v1.0.0
+2025-10-20 01:43:50 [INFO] __main__: ============================================================
+2025-10-20 01:43:50 [INFO] __main__: [DB] Initializing database connection...
+2025-10-20 01:43:51 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-20 01:43:51 [INFO] __main__: [OK] Database connection successful
+2025-10-20 01:43:51 [INFO] __main__: [UI] Opening login window...
+2025-10-20 01:45:00 [INFO] __main__: ============================================================
+2025-10-20 01:45:00 [INFO] __main__: [START] Sýnav Takvimi Yönetim Sistemi v1.0.0
+2025-10-20 01:45:00 [INFO] __main__: ============================================================
+2025-10-20 01:45:00 [INFO] __main__: [DB] Initializing database connection...
+2025-10-20 01:45:00 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-20 01:45:00 [INFO] __main__: [OK] Database connection successful
+2025-10-20 01:45:00 [INFO] __main__: [UI] Opening login window...
+2025-10-20 01:45:11 [INFO] __main__: [OK] Login dialog accepted
+2025-10-20 01:45:11 [INFO] __main__: [CLEANUP] Closing database connections...
+2025-10-20 01:45:11 [INFO] models.database: [OK] All database connections closed
+2025-10-20 01:45:11 [INFO] __main__: [END] Application closed
+2025-10-20 01:45:48 [INFO] __main__: ============================================================
+2025-10-20 01:45:48 [INFO] __main__: [START] Sýnav Takvimi Yönetim Sistemi v1.0.0
+2025-10-20 01:45:48 [INFO] __main__: ============================================================
+2025-10-20 01:45:48 [INFO] __main__: [DB] Initializing database connection...
+2025-10-20 01:45:48 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-20 01:45:48 [INFO] __main__: [OK] Database connection successful
+2025-10-20 01:45:48 [INFO] __main__: [UI] Opening login window...
+2025-10-20 01:45:53 [INFO] __main__: [OK] Login dialog accepted
+2025-10-20 01:45:53 [INFO] __main__: [CLEANUP] Closing database connections...
+2025-10-20 01:45:53 [INFO] models.database: [OK] All database connections closed
+2025-10-20 01:45:53 [INFO] __main__: [END] Application closed
+2025-10-20 01:46:28 [INFO] __main__: [OK] Login dialog accepted
+2025-10-20 01:46:28 [INFO] __main__: [CLEANUP] Closing database connections...
+2025-10-20 01:46:28 [INFO] models.database: [OK] All database connections closed
+2025-10-20 01:46:28 [INFO] __main__: [END] Application closed
+2025-10-20 01:46:30 [INFO] __main__: [OK] Login dialog accepted
+2025-10-20 01:46:30 [INFO] __main__: [CLEANUP] Closing database connections...
+2025-10-20 01:46:30 [INFO] models.database: [OK] All database connections closed
+2025-10-20 01:46:30 [INFO] __main__: [END] Application closed
+2025-10-20 01:46:37 [INFO] __main__: ============================================================
+2025-10-20 01:46:37 [INFO] __main__: [START] Sýnav Takvimi Yönetim Sistemi v1.0.0
+2025-10-20 01:46:37 [INFO] __main__: ============================================================
+2025-10-20 01:46:37 [INFO] __main__: [DB] Initializing database connection...
+2025-10-20 01:46:37 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-20 01:46:37 [INFO] __main__: [OK] Database connection successful
+2025-10-20 01:46:37 [INFO] __main__: [UI] Opening login window...
+2025-10-20 01:47:28 [INFO] __main__: [OK] Login dialog accepted
+2025-10-20 01:47:28 [INFO] __main__: [CLEANUP] Closing database connections...
+2025-10-20 01:47:28 [INFO] models.database: [OK] All database connections closed
+2025-10-20 01:47:28 [INFO] __main__: [END] Application closed
+2025-10-20 01:47:41 [INFO] __main__: ============================================================
+2025-10-20 01:47:41 [INFO] __main__: [START] Sýnav Takvimi Yönetim Sistemi v1.0.0
+2025-10-20 01:47:41 [INFO] __main__: ============================================================
+2025-10-20 01:47:41 [INFO] __main__: [DB] Initializing database connection...
+2025-10-20 01:47:41 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-20 01:47:41 [INFO] __main__: [OK] Database connection successful
+2025-10-20 01:47:41 [INFO] __main__: [UI] Opening login window...
+2025-10-20 01:48:03 [INFO] __main__: [OK] Login dialog accepted
+2025-10-20 01:48:03 [INFO] __main__: [CLEANUP] Closing database connections...
+2025-10-20 01:48:03 [INFO] models.database: [OK] All database connections closed
+2025-10-20 01:48:03 [INFO] __main__: [END] Application closed
+2025-10-20 01:48:06 [INFO] __main__: ============================================================
+2025-10-20 01:48:06 [INFO] __main__: [START] Sýnav Takvimi Yönetim Sistemi v1.0.0
+2025-10-20 01:48:06 [INFO] __main__: ============================================================
+2025-10-20 01:48:06 [INFO] __main__: [DB] Initializing database connection...
+2025-10-20 01:48:06 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-20 01:48:06 [INFO] __main__: [OK] Database connection successful
+2025-10-20 01:48:06 [INFO] __main__: [UI] Opening login window...
+2025-10-20 01:48:11 [INFO] __main__: [OK] Login dialog accepted
+2025-10-20 01:48:11 [INFO] __main__: [CLEANUP] Closing database connections...
+2025-10-20 01:48:11 [INFO] models.database: [OK] All database connections closed
+2025-10-20 01:48:11 [INFO] __main__: [END] Application closed
+2025-10-20 01:49:57 [INFO] __main__: ============================================================
+2025-10-20 01:49:57 [INFO] __main__: [START] Sýnav Takvimi Yönetim Sistemi v1.0.0
+2025-10-20 01:49:57 [INFO] __main__: ============================================================
+2025-10-20 01:49:57 [INFO] __main__: [DB] Initializing database connection...
+2025-10-20 01:49:57 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-20 01:49:57 [INFO] __main__: [OK] Database connection successful
+2025-10-20 01:49:57 [INFO] __main__: [UI] Opening login window...
+2025-10-20 01:50:04 [INFO] __main__: [OK] Login dialog accepted
+2025-10-20 01:50:04 [INFO] __main__: [CLEANUP] Closing database connections...
+2025-10-20 01:50:04 [INFO] models.database: [OK] All database connections closed
+2025-10-20 01:50:04 [INFO] __main__: [END] Application closed
+2025-10-20 01:50:20 [INFO] __main__: ============================================================
+2025-10-20 01:50:20 [INFO] __main__: [START] Sýnav Takvimi Yönetim Sistemi v1.0.0
+2025-10-20 01:50:20 [INFO] __main__: ============================================================
+2025-10-20 01:50:20 [INFO] __main__: [DB] Initializing database connection...
+2025-10-20 01:50:20 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-20 01:50:20 [INFO] __main__: [OK] Database connection successful
+2025-10-20 01:50:20 [INFO] __main__: [UI] Opening login window...
+2025-10-20 01:51:35 [INFO] __main__: ============================================================
+2025-10-20 01:51:35 [INFO] __main__: [START] Sýnav Takvimi Yönetim Sistemi v1.0.0
+2025-10-20 01:51:35 [INFO] __main__: ============================================================
+2025-10-20 01:51:35 [INFO] __main__: [DB] Initializing database connection...
+2025-10-20 01:51:35 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-20 01:51:35 [INFO] __main__: [OK] Database connection successful
+2025-10-20 01:51:35 [INFO] __main__: [UI] Opening login window...
+2025-10-20 01:51:40 [INFO] __main__: [OK] Login dialog accepted
+2025-10-20 01:51:40 [INFO] __main__: [CLEANUP] Closing database connections...
+2025-10-20 01:51:40 [INFO] models.database: [OK] All database connections closed
+2025-10-20 01:51:40 [INFO] __main__: [END] Application closed
+2025-10-20 01:52:21 [INFO] __main__: ============================================================
+2025-10-20 01:52:21 [INFO] __main__: [START] Sýnav Takvimi Yönetim Sistemi v1.0.0
+2025-10-20 01:52:21 [INFO] __main__: ============================================================
+2025-10-20 01:52:21 [INFO] __main__: [DB] Initializing database connection...
+2025-10-20 01:52:21 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-20 01:52:21 [INFO] __main__: [OK] Database connection successful
+2025-10-20 01:52:21 [INFO] __main__: [UI] Opening login window...
+2025-10-20 01:52:38 [INFO] __main__: [OK] Login dialog accepted
+2025-10-20 01:52:38 [INFO] __main__: [CLEANUP] Closing database connections...
+2025-10-20 01:52:38 [INFO] models.database: [OK] All database connections closed
+2025-10-20 01:52:38 [INFO] __main__: [END] Application closed
+2025-10-20 01:53:17 [INFO] __main__: ============================================================
+2025-10-20 01:53:17 [INFO] __main__: [START] Sýnav Takvimi Yönetim Sistemi v1.0.0
+2025-10-20 01:53:17 [INFO] __main__: ============================================================
+2025-10-20 01:53:17 [INFO] __main__: [DB] Initializing database connection...
+2025-10-20 01:53:17 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-20 01:53:17 [INFO] __main__: [OK] Database connection successful
+2025-10-20 01:53:17 [INFO] __main__: [UI] Opening login window...
+2025-10-20 01:53:38 [INFO] __main__: [OK] Login dialog accepted
+2025-10-20 01:53:38 [INFO] __main__: [CLEANUP] Closing database connections...
+2025-10-20 01:53:38 [INFO] models.database: [OK] All database connections closed
+2025-10-20 01:53:38 [INFO] __main__: [END] Application closed
+2025-10-20 01:54:51 [INFO] __main__: ============================================================
+2025-10-20 01:54:51 [INFO] __main__: [START] Sýnav Takvimi Yönetim Sistemi v1.0.0
+2025-10-20 01:54:51 [INFO] __main__: ============================================================
+2025-10-20 01:54:51 [INFO] __main__: [DB] Initializing database connection...
+2025-10-20 01:54:51 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-20 01:54:51 [INFO] __main__: [OK] Database connection successful
+2025-10-20 01:54:51 [INFO] __main__: [UI] Opening login window...
+2025-10-20 01:54:59 [INFO] __main__: [OK] Login dialog accepted
+2025-10-20 01:54:59 [INFO] __main__: [CLEANUP] Closing database connections...
+2025-10-20 01:54:59 [INFO] models.database: [OK] All database connections closed
+2025-10-20 01:54:59 [INFO] __main__: [END] Application closed
+2025-10-20 01:55:53 [INFO] __main__: ============================================================
+2025-10-20 01:55:53 [INFO] __main__: [START] Sýnav Takvimi Yönetim Sistemi v1.0.0
+2025-10-20 01:55:53 [INFO] __main__: ============================================================
+2025-10-20 01:55:53 [INFO] __main__: [DB] Initializing database connection...
+2025-10-20 01:55:53 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-20 01:55:53 [INFO] __main__: [OK] Database connection successful
+2025-10-20 01:55:53 [INFO] __main__: [UI] Opening login window...
+2025-10-20 01:56:40 [INFO] __main__: [OK] Login dialog accepted
+2025-10-20 01:56:40 [INFO] __main__: [CLEANUP] Closing database connections...
+2025-10-20 01:56:40 [INFO] models.database: [OK] All database connections closed
+2025-10-20 01:56:40 [INFO] __main__: [END] Application closed
+2025-10-20 01:56:47 [INFO] __main__: [OK] Login dialog accepted
+2025-10-20 01:56:47 [INFO] __main__: [CLEANUP] Closing database connections...
+2025-10-20 01:56:47 [INFO] models.database: [OK] All database connections closed
+2025-10-20 01:56:47 [INFO] __main__: [END] Application closed
+2025-10-20 01:57:03 [INFO] __main__: ============================================================
+2025-10-20 01:57:03 [INFO] __main__: [START] Sýnav Takvimi Yönetim Sistemi v1.0.0
+2025-10-20 01:57:03 [INFO] __main__: ============================================================
+2025-10-20 01:57:03 [INFO] __main__: [DB] Initializing database connection...
+2025-10-20 01:57:03 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-20 01:57:03 [INFO] __main__: [OK] Database connection successful
+2025-10-20 01:57:03 [INFO] __main__: [UI] Opening login window...
+2025-10-20 01:57:09 [INFO] __main__: [OK] Login dialog accepted
+2025-10-20 01:57:09 [INFO] __main__: [CLEANUP] Closing database connections...
+2025-10-20 01:57:09 [INFO] models.database: [OK] All database connections closed
+2025-10-20 01:57:09 [INFO] __main__: [END] Application closed
+2025-10-20 01:57:49 [INFO] __main__: ============================================================
+2025-10-20 01:57:49 [INFO] __main__: [START] Sýnav Takvimi Yönetim Sistemi v1.0.0
+2025-10-20 01:57:49 [INFO] __main__: ============================================================
+2025-10-20 01:57:49 [INFO] __main__: [DB] Initializing database connection...
+2025-10-20 01:57:49 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-20 01:57:49 [INFO] __main__: [OK] Database connection successful
+2025-10-20 01:57:49 [INFO] __main__: [UI] Opening login window...
+2025-10-20 01:57:53 [INFO] __main__: [OK] Login dialog accepted
+2025-10-20 01:57:53 [INFO] __main__: [CLEANUP] Closing database connections...
+2025-10-20 01:57:53 [INFO] models.database: [OK] All database connections closed
+2025-10-20 01:57:53 [INFO] __main__: [END] Application closed
+2025-10-20 01:58:32 [INFO] __main__: ============================================================
+2025-10-20 01:58:32 [INFO] __main__: [START] Sýnav Takvimi Yönetim Sistemi v1.0.0
+2025-10-20 01:58:32 [INFO] __main__: ============================================================
+2025-10-20 01:58:32 [INFO] __main__: [DB] Initializing database connection...
+2025-10-20 01:58:32 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-20 01:58:32 [INFO] __main__: [OK] Database connection successful
+2025-10-20 01:58:32 [INFO] __main__: [UI] Opening login window...
+2025-10-20 01:58:45 [INFO] __main__: [OK] Login dialog accepted
+2025-10-20 01:58:45 [INFO] __main__: [CLEANUP] Closing database connections...
+2025-10-20 01:58:45 [INFO] models.database: [OK] All database connections closed
+2025-10-20 01:58:45 [INFO] __main__: [END] Application closed
+2025-10-20 01:59:51 [INFO] __main__: ============================================================
+2025-10-20 01:59:51 [INFO] __main__: [START] Sýnav Takvimi Yönetim Sistemi v1.0.0
+2025-10-20 01:59:51 [INFO] __main__: ============================================================
+2025-10-20 01:59:51 [INFO] __main__: [DB] Initializing database connection...
+2025-10-20 01:59:52 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-20 01:59:52 [INFO] __main__: [OK] Database connection successful
+2025-10-20 01:59:52 [INFO] __main__: [UI] Opening login window...
+2025-10-20 02:00:16 [INFO] __main__: [OK] Login dialog accepted
+2025-10-20 02:00:16 [INFO] __main__: [CLEANUP] Closing database connections...
+2025-10-20 02:00:16 [INFO] models.database: [OK] All database connections closed
+2025-10-20 02:00:16 [INFO] __main__: [END] Application closed
+2025-10-20 02:01:07 [INFO] __main__: ============================================================
+2025-10-20 02:01:07 [INFO] __main__: [START] Sýnav Takvimi Yönetim Sistemi v1.0.0
+2025-10-20 02:01:07 [INFO] __main__: ============================================================
+2025-10-20 02:01:07 [INFO] __main__: [DB] Initializing database connection...
+2025-10-20 02:01:08 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-20 02:01:08 [INFO] __main__: [OK] Database connection successful
+2025-10-20 02:01:08 [INFO] __main__: [UI] Opening login window...
+2025-10-20 02:01:13 [INFO] __main__: [OK] Login dialog accepted
+2025-10-20 02:01:13 [INFO] __main__: [CLEANUP] Closing database connections...
+2025-10-20 02:01:13 [INFO] models.database: [OK] All database connections closed
+2025-10-20 02:01:13 [INFO] __main__: [END] Application closed
+2025-10-20 02:02:23 [INFO] __main__: ============================================================
+2025-10-20 02:02:23 [INFO] __main__: [START] Sýnav Takvimi Yönetim Sistemi v1.0.0
+2025-10-20 02:02:23 [INFO] __main__: ============================================================
+2025-10-20 02:02:23 [INFO] __main__: [DB] Initializing database connection...
+2025-10-20 02:02:23 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-20 02:02:23 [INFO] __main__: [OK] Database connection successful
+2025-10-20 02:02:23 [INFO] __main__: [UI] Opening login window...
+2025-10-20 02:02:27 [INFO] __main__: [OK] Login dialog accepted
+2025-10-20 02:02:27 [INFO] __main__: [CLEANUP] Closing database connections...
+2025-10-20 02:02:27 [INFO] models.database: [OK] All database connections closed
+2025-10-20 02:02:27 [INFO] __main__: [END] Application closed
+2025-10-20 02:03:42 [INFO] __main__: ============================================================
+2025-10-20 02:03:42 [INFO] __main__: [START] Sýnav Takvimi Yönetim Sistemi v1.0.0
+2025-10-20 02:03:42 [INFO] __main__: ============================================================
+2025-10-20 02:03:43 [INFO] __main__: [DB] Initializing database connection...
+2025-10-20 02:03:43 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-20 02:03:43 [INFO] __main__: [OK] Database connection successful
+2025-10-20 02:03:43 [INFO] __main__: [UI] Opening login window...
+2025-10-20 02:05:00 [INFO] __main__: ============================================================
+2025-10-20 02:05:00 [INFO] __main__: [START] Sýnav Takvimi Yönetim Sistemi v1.0.0
+2025-10-20 02:05:00 [INFO] __main__: ============================================================
+2025-10-20 02:05:00 [INFO] __main__: [DB] Initializing database connection...
+2025-10-20 02:05:00 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-20 02:05:00 [INFO] __main__: [OK] Database connection successful
+2025-10-20 02:05:00 [INFO] __main__: [UI] Opening login window...
+2025-10-20 02:05:04 [INFO] __main__: [OK] Login dialog accepted
+2025-10-20 02:05:04 [INFO] __main__: [CLEANUP] Closing database connections...
+2025-10-20 02:05:04 [INFO] models.database: [OK] All database connections closed
+2025-10-20 02:05:04 [INFO] __main__: [END] Application closed
+2025-10-20 02:06:04 [INFO] __main__: ============================================================
+2025-10-20 02:06:04 [INFO] __main__: [START] Sýnav Takvimi Yönetim Sistemi v1.0.0
+2025-10-20 02:06:04 [INFO] __main__: ============================================================
+2025-10-20 02:06:04 [INFO] __main__: [DB] Initializing database connection...
+2025-10-20 02:06:04 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-20 02:06:04 [INFO] __main__: [OK] Database connection successful
+2025-10-20 02:06:04 [INFO] __main__: [UI] Opening login window...
+2025-10-20 02:06:15 [INFO] __main__: [OK] Login dialog accepted
+2025-10-20 02:06:15 [INFO] __main__: [CLEANUP] Closing database connections...
+2025-10-20 02:06:15 [INFO] models.database: [OK] All database connections closed
+2025-10-20 02:06:15 [INFO] __main__: [END] Application closed
+2025-10-20 02:06:50 [INFO] __main__: [OK] Login dialog accepted
+2025-10-20 02:06:50 [INFO] __main__: [CLEANUP] Closing database connections...
+2025-10-20 02:06:50 [INFO] models.database: [OK] All database connections closed
+2025-10-20 02:06:50 [INFO] __main__: [END] Application closed
+2025-10-20 02:08:17 [INFO] __main__: ============================================================
+2025-10-20 02:08:17 [INFO] __main__: [START] Sýnav Takvimi Yönetim Sistemi v1.0.0
+2025-10-20 02:08:17 [INFO] __main__: ============================================================
+2025-10-20 02:08:17 [INFO] __main__: [DB] Initializing database connection...
+2025-10-20 02:08:17 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-20 02:08:17 [INFO] __main__: [OK] Database connection successful
+2025-10-20 02:08:17 [INFO] __main__: [UI] Opening login window...
+2025-10-20 02:08:22 [INFO] __main__: [OK] Login dialog accepted
+2025-10-20 02:08:22 [INFO] __main__: [CLEANUP] Closing database connections...
+2025-10-20 02:08:22 [INFO] models.database: [OK] All database connections closed
+2025-10-20 02:08:22 [INFO] __main__: [END] Application closed
+2025-10-20 02:08:38 [INFO] __main__: ============================================================
+2025-10-20 02:08:38 [INFO] __main__: [START] Sýnav Takvimi Yönetim Sistemi v1.0.0
+2025-10-20 02:08:38 [INFO] __main__: ============================================================
+2025-10-20 02:08:38 [INFO] __main__: [DB] Initializing database connection...
+2025-10-20 02:08:38 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-20 02:08:38 [INFO] __main__: [OK] Database connection successful
+2025-10-20 02:08:38 [INFO] __main__: [UI] Opening login window...
+2025-10-20 02:08:46 [INFO] __main__: [OK] Login dialog accepted
+2025-10-20 02:08:46 [INFO] __main__: [CLEANUP] Closing database connections...
+2025-10-20 02:08:46 [INFO] models.database: [OK] All database connections closed
+2025-10-20 02:08:46 [INFO] __main__: [END] Application closed
+2025-10-20 02:12:51 [INFO] __main__: ============================================================
+2025-10-20 02:12:51 [INFO] __main__: [START] Sýnav Takvimi Yönetim Sistemi v1.0.0
+2025-10-20 02:12:51 [INFO] __main__: ============================================================
+2025-10-20 02:12:51 [INFO] __main__: [DB] Initializing database connection...
+2025-10-20 02:12:51 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-20 02:12:51 [INFO] __main__: [OK] Database connection successful
+2025-10-20 02:12:51 [INFO] __main__: [UI] Opening login window...
+2025-10-20 02:13:00 [INFO] __main__: [OK] Login dialog accepted
+2025-10-20 02:13:00 [INFO] __main__: [CLEANUP] Closing database connections...
+2025-10-20 02:13:00 [INFO] models.database: [OK] All database connections closed
+2025-10-20 02:13:00 [INFO] __main__: [END] Application closed
+2025-10-20 02:13:49 [INFO] __main__: ============================================================
+2025-10-20 02:13:49 [INFO] __main__: [START] Sýnav Takvimi Yönetim Sistemi v1.0.0
+2025-10-20 02:13:49 [INFO] __main__: ============================================================
+2025-10-20 02:13:49 [INFO] __main__: [DB] Initializing database connection...
+2025-10-20 02:13:49 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-20 02:13:49 [INFO] __main__: [OK] Database connection successful
+2025-10-20 02:13:49 [INFO] __main__: [UI] Opening login window...
+2025-10-20 02:15:33 [INFO] __main__: [OK] Login dialog accepted
+2025-10-20 02:15:33 [INFO] __main__: [CLEANUP] Closing database connections...
+2025-10-20 02:15:33 [INFO] models.database: [OK] All database connections closed
+2025-10-20 02:15:33 [INFO] __main__: [END] Application closed
+2025-10-20 02:15:38 [INFO] __main__: ============================================================
+2025-10-20 02:15:38 [INFO] __main__: [START] Sýnav Takvimi Yönetim Sistemi v1.0.0
+2025-10-20 02:15:38 [INFO] __main__: ============================================================
+2025-10-20 02:15:38 [INFO] __main__: [DB] Initializing database connection...
+2025-10-20 02:15:38 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-20 02:15:38 [INFO] __main__: [OK] Database connection successful
+2025-10-20 02:15:38 [INFO] __main__: [UI] Opening login window...
+2025-10-20 02:15:45 [INFO] __main__: [OK] Login dialog accepted
+2025-10-20 02:15:45 [INFO] __main__: [CLEANUP] Closing database connections...
+2025-10-20 02:15:45 [INFO] models.database: [OK] All database connections closed
+2025-10-20 02:15:45 [INFO] __main__: [END] Application closed
+2025-10-20 02:17:46 [INFO] __main__: ============================================================
+2025-10-20 02:17:46 [INFO] __main__: [START] Sýnav Takvimi Yönetim Sistemi v1.0.0
+2025-10-20 02:17:46 [INFO] __main__: ============================================================
+2025-10-20 02:17:46 [INFO] __main__: [DB] Initializing database connection...
+2025-10-20 02:17:46 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-20 02:17:46 [INFO] __main__: [OK] Database connection successful
+2025-10-20 02:17:46 [INFO] __main__: [UI] Opening login window...
+2025-10-20 02:17:52 [INFO] __main__: [OK] Login dialog accepted
+2025-10-20 02:17:52 [INFO] __main__: [CLEANUP] Closing database connections...
+2025-10-20 02:17:52 [INFO] models.database: [OK] All database connections closed
+2025-10-20 02:17:52 [INFO] __main__: [END] Application closed
