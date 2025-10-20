@@ -298,6 +298,8 @@ class ActivityItem(QFrame):
 class MainWindow(QMainWindow):
     """Production Dashboard - Gerçek veri"""
     
+    logout_requested = Signal()
+    
     def __init__(self, user_data, parent=None):
         super().__init__(parent)
         self.user_data = user_data
@@ -622,7 +624,7 @@ class MainWindow(QMainWindow):
         )
         
         if reply == QMessageBox.Yes:
-            self.close()
+            self.logout_requested.emit()
             
     def animate_entrance(self):
         """Giriş animasyonu"""
