@@ -1,232 +1,327 @@
 """
 Kocaeli Üniversitesi Sınav Takvimi Sistemi
-Global Configuration Settings
+Yapılandırma Dosyası
 """
 
 import os
 from pathlib import Path
+from dotenv import load_dotenv
+
+# .env dosyasını yükle
+load_dotenv()
 
 # ============================================================
-# DATABASE CONFIGURATION
+# Proje Yolları
 # ============================================================
-DATABASE = {
-    'host': 'localhost',
-    'port': 5432,
-    'database': 'sinav_takvimi_db',
-    'user': 'postgres',
-    'password': '123213oo',  # CHANGE THIS!
-    'pool_size': 10,
-    'max_overflow': 20,
-    'pool_timeout': 30,
-    'pool_recycle': 3600
-}
+BASE_DIR = Path(__file__).resolve().parent
+RESOURCES_DIR = BASE_DIR / "resources"
+ICONS_DIR = RESOURCES_DIR / "icons"
+IMAGES_DIR = RESOURCES_DIR / "images"
+FONTS_DIR = RESOURCES_DIR / "fonts"
+TEMP_DIR = BASE_DIR / "temp"
+EXPORTS_DIR = BASE_DIR / "exports"
+LOGS_DIR = BASE_DIR / "logs"
+
+# Klasörleri oluştur
+for directory in [RESOURCES_DIR, ICONS_DIR, IMAGES_DIR, FONTS_DIR,
+                  TEMP_DIR, EXPORTS_DIR, LOGS_DIR]:
+    directory.mkdir(parents=True, exist_ok=True)
+
 
 # ============================================================
-# SMTP EMAIL CONFIGURATION (Gmail Example)
+# Veritabanı Ayarları
 # ============================================================
-SMTP_CONFIG = {
-    'enabled': True,  # Email gönderimi aktif mi?
-    'host': 'smtp.gmail.com',
-    'port': 587,
-    'use_tls': True,
-    'username': 'ozdmromer24@gmail.com',
-    'password': '123213oo',      # Gmail App Password!
-    'from_email': 'omer.ozdemir@kocaeli.edu.tr',
-    'from_name': 'Kocaeli Üniversitesi Sınav Sistemi'
-}
+class DatabaseConfig:
+    """PostgreSQL veritabanı ayarları"""
+
+    HOST = os.getenv("DB_HOST", "localhost")
+    PORT = int(os.getenv("DB_PORT", "5432"))
+    DATABASE = os.getenv("DB_NAME", "sinav_takvimi_db")
+    USER = os.getenv("DB_USER", "postgres")
+    PASSWORD = os.getenv("DB_PASSWORD", "postgres")
+
+    # Connection pool ayarları
+    POOL_SIZE = int(os.getenv("DB_POOL_SIZE", "10"))
+    MAX_OVERFLOW = int(os.getenv("DB_MAX_OVERFLOW", "20"))
+    POOL_TIMEOUT = int(os.getenv("DB_POOL_TIMEOUT", "30"))
+    POOL_RECYCLE = int(os.getenv("DB_POOL_RECYCLE", "3600"))
+
+    # SQLAlchemy connection string
+    @classmethod
+    def get_connection_string(cls):
+        return f"postgresql://{cls.USER}:{cls.PASSWORD}@{cls.HOST}:{cls.PORT}/{cls.DATABASE}"
+
+    # Psycopg2 connection params
+    @classmethod
+    def get_connection_params(cls):
+        return {
+            'host': cls.HOST,
+            'port': cls.PORT,
+            'database': cls.DATABASE,
+            'user': cls.USER,
+            'password': cls.PASSWORD
+        }
+
 
 # ============================================================
-# SECURITY SETTINGS
+# Uygulama Ayarları
 # ============================================================
-SECURITY = {
-    'password_min_length': 8,
-    'max_login_attempts': 5,
-    'account_lock_duration': 15,  # minutes
-    'session_timeout': 480,  # minutes (8 hours)
-    'password_reset_expiry': 15,  # minutes
-    'jwt_secret_key': 'your-super-secret-jwt-key-change-this',  # CHANGE THIS!
-    'jwt_algorithm': 'HS256',
-    'bcrypt_rounds': 12
-}
-
-# ============================================================
-# APPLICATION SETTINGS
-# ============================================================
-APP = {
-    'name': 'Sınav Takvimi Yönetim Sistemi',
-    'version': '1.0.0',
-    'organization': 'Kocaeli Üniversitesi',
-    'domain': 'kocaeli.edu.tr',
-    'debug_mode': True,  # Production'da False yap!
-    'log_level': 'INFO'
-}
-
-# ============================================================
-# UI SETTINGS
-# ============================================================
-UI = {
-    'theme': 'modern',
-    'window_title': 'KOÜ Sınav Takvimi Sistemi',
-    'min_width': 1200,
-    'min_height': 700,
-    'animation_duration': 300,  # ms
-    'particle_count': 30,
-    'enable_animations': True
-}
-
-# ============================================================
-# FILE PATHS
-# ============================================================
-BASE_DIR = Path(__file__).parent
-RESOURCES_DIR = BASE_DIR / 'resources'
-LOGS_DIR = BASE_DIR / 'logs'
-TEMP_DIR = BASE_DIR / 'temp'
-EXPORTS_DIR = BASE_DIR / 'exports'
-
-# Create directories if not exist
-for directory in [LOGS_DIR, TEMP_DIR, EXPORTS_DIR]:
-    directory.mkdir(exist_ok=True)
-
-# AppConfig class for compatibility
 class AppConfig:
-    APP_NAME = APP['name']
-    APP_VERSION = APP['version']
-    APP_ORGANIZATION = APP['organization']
-    APP_DOMAIN = APP['domain']
-    DEBUG_MODE = APP['debug_mode']
-    LOG_LEVEL = APP['log_level']
+    """Genel uygulama ayarları"""
+
+    APP_NAME = "Sınav Takvimi Yönetim Sistemi"
+    APP_VERSION = "1.0.0"
+    ORGANIZATION = "Kocaeli Üniversitesi"
+    DOMAIN = "kocaeli.edu.tr"
+
+    # Debug mode
+    DEBUG = os.getenv("DEBUG", "False").lower() == "true"
+
+    # Session ayarları
+    SESSION_TIMEOUT = 3600  # 1 saat
+    REMEMBER_ME_DAYS = 30
+
+    # Güvenlik
+    SECRET_KEY = os.getenv("SECRET_KEY", "kocaeli-uni-sinav-takvimi-2025")
+    PASSWORD_MIN_LENGTH = 8
+    PASSWORD_REQUIRE_SPECIAL = True
+    PASSWORD_REQUIRE_NUMBER = True
+
+    # Rate limiting
+    LOGIN_MAX_ATTEMPTS = 5
+    LOGIN_LOCKOUT_DURATION = 300  # 5 dakika
+
 
 # ============================================================
-# EXCEL IMPORT SETTINGS
+# Excel Import Ayarları
 # ============================================================
-EXCEL = {
-    'max_file_size': 10 * 1024 * 1024,  # 10 MB
-    'allowed_extensions': ['.xlsx', '.xls'],
-    'sheet_names': {
-        'ders': 'Dersler',
-        'ogrenci': 'Öğrenciler'
+class ExcelConfig:
+    """Excel import/export ayarları"""
+
+    # Desteklenen formatlar
+    SUPPORTED_FORMATS = ['.xlsx', '.xls', '.xlsm']
+
+    # Maksimum dosya boyutu (MB)
+    MAX_FILE_SIZE = 50
+
+    # Excel parser ayarları
+    CHUNK_SIZE = 1000
+    SKIP_EMPTY_ROWS = True
+
+    # Ders listesi kolonları
+    DERS_COLUMNS = {
+        'ders_kodu': ['Ders Kodu', 'Ders Kod', 'Kod'],
+        'ders_adi': ['Ders Adı', 'Ders Ad', 'Ders'],
+        'ogretim_elemani': ['Öğretim Üyesi', 'Hoca', 'Öğretim Elemanı'],
+        'sinif': ['Sınıf', 'Sinif'],
+        'ders_yapisi': ['Ders Yapısı', 'Yapı', 'Zorunlu/Seçmeli']
     }
-}
 
-# ============================================================
-# PDF EXPORT SETTINGS
-# ============================================================
-PDF = {
-    'page_size': 'A4',
-    'orientation': 'landscape',
-    'font_family': 'Arial',
-    'margin': 20
-}
-
-# ============================================================
-# LOGGING CONFIGURATION
-# ============================================================
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'detailed': {
-            'format': '%(asctime)s [%(levelname)s] %(name)s: %(message)s',
-            'datefmt': '%Y-%m-%d %H:%M:%S'
-        },
-        'simple': {
-            'format': '%(levelname)s: %(message)s'
-        }
-    },
-    'handlers': {
-        'file': {
-            'class': 'logging.handlers.RotatingFileHandler',
-            'filename': str(LOGS_DIR / 'app.log'),
-            'maxBytes': 10485760,  # 10MB
-            'backupCount': 5,
-            'formatter': 'detailed',
-            'level': 'INFO'
-        },
-        'console': {
-            'class': 'logging.StreamHandler',
-            'formatter': 'simple',
-            'level': 'DEBUG' if APP['debug_mode'] else 'INFO'
-        }
-    },
-    'loggers': {
-        '': {  # Root logger
-            'handlers': ['file', 'console'],
-            'level': 'DEBUG' if APP['debug_mode'] else 'INFO'
-        }
+    # Öğrenci listesi kolonları
+    OGRENCI_COLUMNS = {
+        'ogrenci_no': ['Öğrenci No', 'No', 'Numara'],
+        'ad_soyad': ['Ad Soyad', 'İsim', 'Öğrenci Adı'],
+        'sinif': ['Sınıf', 'Sinif'],
+        'ders_kodu': ['Ders Kodu', 'Kod']
     }
-}
 
-# LogConfig class for loguru logger
+
+# ============================================================
+# Sınav Programı Ayarları
+# ============================================================
+class ExamConfig:
+    """Sınav programı oluşturma ayarları"""
+
+    # Varsayılan değerler
+    DEFAULT_EXAM_DURATION = 75  # dakika
+    DEFAULT_BREAK_TIME = 15     # dakika
+
+    # Sınav saatleri (saat, dakika)
+    EXAM_TIME_SLOTS = [
+        (9, 0),   # 09:00
+        (11, 0),  # 11:00
+        (13, 30), # 13:30
+        (15, 30), # 15:30
+    ]
+
+    # Hafta içi günler
+    WEEKDAYS = ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma']
+
+    # Optimizasyon parametreleri
+    MAX_EXAMS_PER_DAY = 4
+    MAX_STUDENT_EXAMS_PER_DAY = 3
+    MIN_REST_BETWEEN_EXAMS = 120  # dakika
+
+    # Derslik kullanım oranı (kapasitenin yüzde kaçı kullanılmalı)
+    CLASSROOM_USAGE_TARGET = 0.75  # %75
+
+
+# ============================================================
+# PDF Export Ayarları
+# ============================================================
+class PDFConfig:
+    """PDF export ayarları"""
+
+    # Sayfa ayarları
+    PAGE_SIZE = 'A4'
+    ORIENTATION = 'landscape'
+
+    # Margin (mm)
+    MARGIN_TOP = 20
+    MARGIN_BOTTOM = 20
+    MARGIN_LEFT = 15
+    MARGIN_RIGHT = 15
+
+    # Font ayarları
+    FONT_FAMILY = 'Helvetica'
+    FONT_SIZE_TITLE = 16
+    FONT_SIZE_SUBTITLE = 12
+    FONT_SIZE_BODY = 10
+
+    # Renkler (RGB)
+    COLOR_PRIMARY = (0, 166, 81)
+    COLOR_SECONDARY = (100, 116, 139)
+    COLOR_TEXT = (15, 23, 42)
+    COLOR_BORDER = (226, 232, 240)
+
+
+# ============================================================
+# Loglama Ayarları
+# ============================================================
 class LogConfig:
-    FORMAT = "<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level: <8}</level> | <cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level>"
-    LEVEL = "DEBUG" if APP['debug_mode'] else "INFO"
-    LOG_FILE = str(LOGS_DIR / "app.log")
-    ERROR_LOG_FILE = str(LOGS_DIR / "error.log")
+    """Loglama ayarları"""
+
+    # Log seviyeleri
+    LEVEL = "DEBUG" if AppConfig.DEBUG else "INFO"
+
+    # Log formatı
+    FORMAT = "<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level: <8}</level> | <cyan>{name}</cyan>:<cyan>{function}</cyan> - <level>{message}</level>"
+
+    # Log dosyaları
+    LOG_FILE = LOGS_DIR / "app.log"
+    ERROR_LOG_FILE = LOGS_DIR / "error.log"
+
+    # Rotation ayarları
     ROTATION = "10 MB"
-    RETENTION = "7 days"
+    RETENTION = "30 days"
+
+    # Compression
     COMPRESSION = "zip"
 
-# ============================================================
-# VALIDATION MESSAGES (Turkish)
-# ============================================================
-MESSAGES = {
-    'login': {
-        'empty_email': '📧 Lütfen e-posta adresinizi girin',
-        'empty_password': '🔒 Lütfen şifrenizi girin',
-        'invalid_email': '⚠️ Geçerli bir e-posta adresi girin',
-        'invalid_credentials': '❌ E-posta veya şifre hatalı',
-        'account_locked': '🔒 Hesabınız kilitlendi. {} dakika sonra tekrar deneyin',
-        'success': '✅ Hoş geldiniz, {}!',
-        'session_expired': '⏱️ Oturumunuzun süresi doldu',
-        'connection_error': '🔌 Veritabanı bağlantı hatası: {}'
-    },
-    'password_reset': {
-        'email_sent': '📧 Şifre sıfırlama bağlantısı e-postanıza gönderildi',
-        'invalid_token': '❌ Geçersiz veya süresi dolmuş token',
-        'success': '✅ Şifreniz başarıyla güncellendi'
-    },
-    'validation': {
-        'required_field': 'Bu alan zorunludur',
-        'min_length': 'En az {} karakter olmalıdır',
-        'max_length': 'En fazla {} karakter olmalıdır',
-        'invalid_format': 'Geçersiz format'
-    }
-}
 
 # ============================================================
-# COLOR PALETTE (Modern Green Theme)
+# Cache Ayarları
 # ============================================================
-COLORS = {
-    'primary': '#00A651',        # KOÜ Yeşil
-    'primary_hover': '#00C75F',
-    'primary_pressed': '#007A3D',
-    'primary_light': '#E8F5E9',
+class CacheConfig:
+    """Cache ayarları"""
 
-    'secondary': '#2196F3',
-    'secondary_hover': '#42A5F5',
+    ENABLED = True
+    TTL = 3600  # 1 saat
 
-    'success': '#4CAF50',
-    'success_bg': '#E8F5E9',
+    # Redis (opsiyonel)
+    REDIS_HOST = os.getenv("REDIS_HOST", "localhost")
+    REDIS_PORT = int(os.getenv("REDIS_PORT", "6379"))
+    REDIS_DB = int(os.getenv("REDIS_DB", "0"))
+    REDIS_PASSWORD = os.getenv("REDIS_PASSWORD", None)
 
-    'error': '#F44336',
-    'error_bg': '#FFEBEE',
 
-    'warning': '#FF9800',
-    'warning_bg': '#FFF3E0',
+# ============================================================
+# UI Tema Ayarları
+# ============================================================
+class ThemeConfig:
+    """UI tema ayarları"""
 
-    'info': '#2196F3',
-    'info_bg': '#E3F2FD',
+    # Renkler - KOÜ Yeşili
+    PRIMARY_COLOR = "#00A651"
+    PRIMARY_DARK = "#008F47"
+    PRIMARY_LIGHT = "#00C75F"
+    ACCENT_COLOR = "#10B981"
 
-    'background': '#F5F7FA',
-    'surface': '#FFFFFF',
-    'card': '#FFFFFF',
+    SECONDARY_COLOR = "#64748b"
+    BACKGROUND_COLOR = "#f8fafc"
+    SURFACE_COLOR = "#ffffff"
 
-    'text_primary': '#1E293B',
-    'text_secondary': '#64748B',
-    'text_disabled': '#94A3B8',
+    ERROR_COLOR = "#dc2626"
+    SUCCESS_COLOR = "#16a34a"
+    WARNING_COLOR = "#f59e0b"
+    INFO_COLOR = "#2563eb"
 
-    'border': '#E2E8F0',
-    'border_focus': '#00A651',
+    # Font boyutları
+    FONT_SIZE_SMALL = 9
+    FONT_SIZE_NORMAL = 11
+    FONT_SIZE_LARGE = 13
+    FONT_SIZE_XLARGE = 16
 
-    'shadow': 'rgba(0, 0, 0, 0.1)'
-}
+    # Animasyon süreleri (ms)
+    ANIMATION_FAST = 200
+    ANIMATION_NORMAL = 300
+    ANIMATION_SLOW = 500
+
+
+# ============================================================
+# Bölümler (Sabit)
+# ============================================================
+class DepartmentConfig:
+    """Bölüm bilgileri"""
+
+    DEPARTMENTS = [
+        {
+            'id': 1,
+            'name': 'Bilgisayar Mühendisliği',
+            'code': 'BMU',
+            'color': '#00A651'
+        },
+        {
+            'id': 2,
+            'name': 'Yazılım Mühendisliği',
+            'code': 'YMU',
+            'color': '#2563eb'
+        },
+        {
+            'id': 3,
+            'name': 'Elektrik Mühendisliği',
+            'code': 'EMU',
+            'color': '#f59e0b'
+        },
+        {
+            'id': 4,
+            'name': 'Elektronik Mühendisliği',
+            'code': 'ELM',
+            'color': '#8b5cf6'
+        },
+        {
+            'id': 5,
+            'name': 'İnşaat Mühendisliği',
+            'code': 'INS',
+            'color': '#dc2626'
+        }
+    ]
+
+    @classmethod
+    def get_department_by_id(cls, dept_id):
+        return next((d for d in cls.DEPARTMENTS if d['id'] == dept_id), None)
+
+    @classmethod
+    def get_department_by_code(cls, code):
+        return next((d for d in cls.DEPARTMENTS if d['code'] == code), None)
+
+
+# ============================================================
+# Export all configs
+# ============================================================
+__all__ = [
+    'DatabaseConfig',
+    'AppConfig',
+    'ExcelConfig',
+    'ExamConfig',
+    'PDFConfig',
+    'LogConfig',
+    'CacheConfig',
+    'ThemeConfig',
+    'DepartmentConfig',
+    'BASE_DIR',
+    'RESOURCES_DIR',
+    'EXPORTS_DIR',
+    'TEMP_DIR',
+    'LOGS_DIR'
+]

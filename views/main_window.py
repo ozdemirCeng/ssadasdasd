@@ -62,7 +62,7 @@ class KOUGlassButton(QPushButton):
         self.update()
 
     scale = Property(float, get_scale, set_scale)
-
+        
     def enterEvent(self, event):
         """Hover - sadece büyüme"""
         self.is_hovered = True
@@ -76,7 +76,7 @@ class KOUGlassButton(QPushButton):
 
         self.update()
         super().enterEvent(event)
-
+        
     def leaveEvent(self, event):
         """Leave"""
         self.is_hovered = False
@@ -90,7 +90,7 @@ class KOUGlassButton(QPushButton):
 
         self.update()
         super().leaveEvent(event)
-
+        
     def mousePressEvent(self, event):
         """Press"""
         anim = QPropertyAnimation(self, b"scale")
@@ -110,7 +110,7 @@ class KOUGlassButton(QPushButton):
 
         self.clicked_with_id.emit(self.module_id)
         super().mouseReleaseEvent(event)
-
+    
     def paintEvent(self, event):
         """Custom paint - KOÜ yeşil"""
         painter = QPainter(self)
@@ -138,7 +138,7 @@ class KOUGlassButton(QPushButton):
             painter.drawEllipse(center, radius, radius)
 
             # Text - beyaz
-            painter.setPen(QPen(QColor(255, 255, 255)))
+        painter.setPen(QPen(QColor(255, 255, 255)))
         else:
             # Normal: Saydam beyaz glass
             gradient = QRadialGradient(center, radius)
@@ -296,11 +296,11 @@ class CleanStatCard(QWidget):
 
     def __init__(self, label, current, total, parent=None):
         super().__init__(parent)
-
+        
         layout = QVBoxLayout(self)
         layout.setContentsMargins(16, 14, 16, 14)
         layout.setSpacing(8)
-
+        
         # Header
         header = QHBoxLayout()
 
@@ -368,16 +368,16 @@ class CleanActivityCard(QFrame):
         dot = QLabel("●")
         dot.setFont(QFont("Segoe UI", 12))
         dot.setStyleSheet("color: #00A651;")
-
+        
         # Content
         content = QVBoxLayout()
         content.setSpacing(2)
-
+        
         title_label = QLabel(title)
         title_label.setFont(QFont("Segoe UI", 11, QFont.DemiBold))
         title_label.setStyleSheet("color: #333;")
         title_label.setWordWrap(True)
-
+        
         time_label = QLabel(time)
         time_label.setFont(QFont("Segoe UI", 9))
         time_label.setStyleSheet("color: #999;")
@@ -408,7 +408,7 @@ class MainWindow(QWidget):
     """KOÜ Professional Dashboard"""
 
     logout_requested = Signal()
-
+    
     def __init__(self, user_data, parent=None):
         super().__init__(parent)
         self.user_data = user_data
@@ -420,7 +420,7 @@ class MainWindow(QWidget):
             'classrooms': 8,
             'students': 850
         }
-
+        
         self.setWindowTitle("Kocaeli Üniversitesi - Sınav Takvimi Sistemi")
         self.showMaximized()
 
@@ -434,11 +434,11 @@ class MainWindow(QWidget):
         main_layout = QVBoxLayout(self)
         main_layout.setContentsMargins(0, 0, 0, 0)
         main_layout.setSpacing(0)
-
+        
         # Top bar
         top_bar = self.create_top_bar()
         main_layout.addWidget(top_bar)
-
+        
         # Content
         content = QWidget()
         content_layout = QHBoxLayout(content)
@@ -471,7 +471,7 @@ class MainWindow(QWidget):
                 border: none;
             }
         """)
-
+        
         layout = QHBoxLayout(bar)
         layout.setContentsMargins(25, 0, 25, 0)
 
@@ -482,7 +482,7 @@ class MainWindow(QWidget):
         # Title
         title_layout = QVBoxLayout()
         title_layout.setSpacing(0)
-
+        
         title = QLabel("Sınav Takvimi Sistemi")
         title.setFont(QFont("Segoe UI", 13, QFont.Bold))
         title.setStyleSheet("color: #333;")
@@ -497,12 +497,12 @@ class MainWindow(QWidget):
         layout.addWidget(logo)
         layout.addLayout(title_layout)
         layout.addStretch()
-
+        
         # User
         user = QLabel(self.user_data['ad_soyad'])
         user.setFont(QFont("Segoe UI", 10))
         user.setStyleSheet("color: #666;")
-
+        
         # Logout
         logout = QPushButton("Çıkış")
         logout.setFont(QFont("Segoe UI", 10, QFont.DemiBold))
@@ -526,9 +526,9 @@ class MainWindow(QWidget):
 
         layout.addWidget(user)
         layout.addWidget(logout)
-
+        
         return bar
-
+        
     def create_left_panel(self):
         """Compact left panel"""
         panel = QFrame()
@@ -593,14 +593,14 @@ class MainWindow(QWidget):
                 ("Sınavlar", "sinav"),
                 ("Raporlar", "rapor")
             ]
-
+        
         self.radial_buttons = []
         for text, module_id in modules:
             btn = KOUGlassButton(text, module_id, self.radial_container)
             btn.clicked_with_id.connect(self.open_module)
             btn.show()
             self.radial_buttons.append(btn)
-
+        
         QTimer.singleShot(50, lambda: self.position_radial(None))
 
         original = self.radial_container.resizeEvent
@@ -634,7 +634,7 @@ class MainWindow(QWidget):
         # Buttons
         num = len(self.radial_buttons)
         button_size = max(110, min(130, container_size // 9))
-
+        
         for i, btn in enumerate(self.radial_buttons):
             angle = (360 / num) * i - 90
             rad = math.radians(angle)
@@ -735,13 +735,13 @@ class MainWindow(QWidget):
         if hasattr(self, 'center_hub'):
             self.center_hub.show()
 
-            hub_effect = QGraphicsOpacityEffect(self.center_hub)
-            self.center_hub.setGraphicsEffect(hub_effect)
-
-            hub_anim = QPropertyAnimation(hub_effect, b"opacity")
-            hub_anim.setDuration(600)
-            hub_anim.setStartValue(0)
-            hub_anim.setEndValue(1)
+        hub_effect = QGraphicsOpacityEffect(self.center_hub)
+        self.center_hub.setGraphicsEffect(hub_effect)
+        
+        hub_anim = QPropertyAnimation(hub_effect, b"opacity")
+        hub_anim.setDuration(600)
+        hub_anim.setStartValue(0)
+        hub_anim.setEndValue(1)
             hub_anim.start()
 
             def remove_hub():
@@ -756,7 +756,7 @@ class MainWindow(QWidget):
         for i, btn in enumerate(self.radial_buttons):
             effect = QGraphicsOpacityEffect(btn)
             btn.setGraphicsEffect(effect)
-
+            
             anim = QPropertyAnimation(effect, b"opacity")
             anim.setDuration(500)
             anim.setStartValue(0)
@@ -772,7 +772,7 @@ class MainWindow(QWidget):
             self.btn_anims.append(anim)
 
             QTimer.singleShot(100 * (i + 1), anim.start)
-
+        
     def apply_styles(self):
         """KOÜ gradient"""
         self.setStyleSheet("""
