@@ -138,7 +138,7 @@ class KOUGlassButton(QPushButton):
             painter.drawEllipse(center, radius, radius)
 
             # Text - beyaz
-        painter.setPen(QPen(QColor(255, 255, 255)))
+            painter.setPen(QPen(QColor(255, 255, 255)))
         else:
             # Normal: Saydam beyaz glass
             gradient = QRadialGradient(center, radius)
