@@ -20,6 +20,7 @@ from controllers.login_controller import LoginController
 
 # Import views
 from views.login_view import LoginView
+from views.main_window import DashboardView
 
 
 def setup_logging():
@@ -109,25 +110,34 @@ def main():
     def on_login_success(user_data):
         logger.info(f"[OK] Login successful: {user_data['email']} ({user_data['role']})")
         logger.info(f"[USER] User: {user_data['ad_soyad']}")
-        if user_data['bolum_adi']:
-            logger.info(f"[DEPT] Department: {user_data['bolum_adi']} ({user_data['bolum_kodu']})")
+        if user_data.get('bolum_adi'):
+            logger.info(f"[DEPT] Department: {user_data['bolum_adi']} ({user_data.get('bolum_kodu', 'N/A')})")
 
-        # TODO: Open main window
-        # main_window = MainWindow(user_data)
-        # main_window.show()
-
-        # Temporary success message
-        msg = QMessageBox()
-        msg.setIcon(QMessageBox.Information)
-        msg.setWindowTitle("Giriş Başarılı")
-        msg.setText(f"Hoş geldiniz, {user_data['ad_soyad']}!")
-        msg.setInformativeText(
-            f"Rol: {user_data['role']}\n"
-            f"E-posta: {user_data['email']}\n"
-            f"Bölüm: {user_data['bolum_adi'] or 'Admin'}"
-        )
-        msg.setStandardButtons(QMessageBox.Ok)
-        msg.exec()
+        # Close login window
+        login_window.close()
+        
+        # Create and show main dashboard
+        logger.info("[UI] Opening main dashboard...")
+        main_window = DashboardView(user_data)
+        
+        # Handle logout from main window
+        def on_logout():
+            logger.info("[LOGOUT] User logged out")
+            main_window.close()
+            login_window.show()
+            login_window.clear()  # Clear login fields
+        
+        main_window.logout_requested.connect(on_logout)
+        
+        # Handle module changes
+        def on_module_changed(module_name):
+            logger.info(f"[MODULE] Switched to: {module_name}")
+            # TODO: Load module content
+        
+        main_window.module_changed.connect(on_module_changed)
+        
+        # Show main window
+        main_window.show()
 
     login_window.login_success.connect(on_login_success)
 

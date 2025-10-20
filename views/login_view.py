@@ -1008,3 +1008,9 @@ class LoginView(QWidget):
         if event.key() == Qt.Key_Return or event.key() == Qt.Key_Enter:
             self.handle_login()
         super().keyPressEvent(event)
+    
+    def clear(self):
+        """Clear login fields"""
+        self.email_input.clear()
+        self.password_input.clear()
+        self.set_loading_state(False)
