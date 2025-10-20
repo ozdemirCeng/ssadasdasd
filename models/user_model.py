@@ -58,6 +58,16 @@ class UserModel:
         return bcrypt.hashpw(password.encode('utf-8'), salt).decode('utf-8')
 
     @staticmethod
+    def update_password(user_id: int, new_password_hash: str):
+        """Update user password"""
+        query = """
+            UPDATE users 
+            SET password_hash = %s
+            WHERE user_id = %s
+        """
+        db.execute_update(query, (new_password_hash, user_id))
+
+    @staticmethod
     def update_last_login(user_id: int):
         """Update last login timestamp"""
         query = """
