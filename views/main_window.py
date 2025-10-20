@@ -614,17 +614,7 @@ class MainWindow(QMainWindow):
         
     def handle_logout(self):
         """Çıkış"""
-        from PySide6.QtWidgets import QMessageBox
-        
-        reply = QMessageBox.question(
-            self,
-            "Çıkış",
-            "Çıkış yapmak istediğinize emin misiniz?",
-            QMessageBox.Yes | QMessageBox.No
-        )
-        
-        if reply == QMessageBox.Yes:
-            self.logout_requested.emit()
+        self.logout_requested.emit()
             
     def animate_entrance(self):
         """Giriş animasyonu"""

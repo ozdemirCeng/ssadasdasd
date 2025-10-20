@@ -102,7 +102,7 @@ class MainApplication(QMainWindow):
         reply = QMessageBox.question(
             self,
             "Çıkış Onayı",
-            "Çıkış yapmak istediğinize emin misiniz?",
+            "Sistemden çıkış yapmak istediğinize emin misiniz?",
             QMessageBox.Yes | QMessageBox.No,
             QMessageBox.No
         )
