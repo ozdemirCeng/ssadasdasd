@@ -70,11 +70,13 @@ class MainApplication(QMainWindow):
         
     def on_login_success(self, user_data):
         """Login başarılı - Dashboard'a geç"""
+        logger = logging.getLogger(__name__)
         logger.info(f"Login successful: {user_data['email']} ({user_data['role']})")
         
         self.current_user = user_data
         
         # Create dashboard page
+        logger = logging.getLogger(__name__)
         logger.info("Creating dashboard...")
         self.dashboard_page = MainWindow(user_data)
         
@@ -91,6 +93,7 @@ class MainApplication(QMainWindow):
         
     def on_logout(self):
         """Logout - Login sayfasına dön"""
+        logger = logging.getLogger(__name__)
         logger.info("User logged out")
         
         reply = QMessageBox.question(
@@ -119,6 +122,7 @@ class MainApplication(QMainWindow):
             # Reset title
             self.setWindowTitle(f"{APP['name']} v{APP['version']}")
             
+            logger = logging.getLogger(__name__)
             logger.info("Returned to login page")
 
 
