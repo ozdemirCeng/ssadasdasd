@@ -9,7 +9,7 @@ import math
 from pathlib import Path
 from datetime import datetime, timedelta
 from PySide6.QtWidgets import (
-    QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QLabel, 
+    QWidget, QVBoxLayout, QHBoxLayout, QLabel, 
     QPushButton, QFrame, QScrollArea, QGraphicsOpacityEffect,
     QStackedWidget, QSizePolicy, QGraphicsDropShadowEffect
 )
@@ -295,7 +295,7 @@ class ActivityItem(QFrame):
 # MAIN WINDOW
 # ============================================================
 
-class MainWindow(QMainWindow):
+class MainWindow(QWidget):
     """Production Dashboard - Gerçek veri"""
     
     logout_requested = Signal()
@@ -304,9 +304,6 @@ class MainWindow(QMainWindow):
         super().__init__(parent)
         self.user_data = user_data
         self.is_admin = user_data.get('role') == 'Admin'
-        
-        self.setWindowTitle(f"KOÜ Sınav Takvimi - {user_data.get('ad_soyad')}")
-        self.setMinimumSize(1400, 800)
         
         # Gerçek verileri yükle
         self.load_real_data()
@@ -404,10 +401,7 @@ class MainWindow(QMainWindow):
         
     def setup_ui(self):
         """Ana UI"""
-        central = QWidget()
-        self.setCentralWidget(central)
-        
-        main_layout = QVBoxLayout(central)
+        main_layout = QVBoxLayout(self)
         main_layout.setContentsMargins(0, 0, 0, 0)
         main_layout.setSpacing(0)
         
@@ -753,5 +747,30 @@ class MainWindow(QMainWindow):
             
             #activityDetail {{
                 color: #64748b;
+            }}
+            
+            /* Radial Button Styles */
+            RadialButton {{
+                background: white;
+                color: #0f172a;
+                border: 2px solid #e2e8f0;
+                border-radius: 50px;
+                padding: 15px 25px;
+                font-weight: 600;
+                font-size: 14px;
+                min-width: 120px;
+                min-height: 50px;
+            }}
+            
+            RadialButton:hover {{
+                background: #10B981;
+                color: white;
+                border: 2px solid #10B981;
+                transform: scale(1.05);
+            }}
+            
+            RadialButton:pressed {{
+                background: #059669;
+                border: 2px solid #059669;
             }}
         """)
