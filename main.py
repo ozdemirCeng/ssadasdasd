@@ -83,6 +83,9 @@ class MainApplication(QMainWindow):
         # Dashboard'u widget olarak ekle
         self.stacked_widget.addWidget(self.dashboard_page)
         
+        # Connect signals
+        self.dashboard_page.logout_requested.connect(self.on_logout)
+        
         # Switch to dashboard
         self.stacked_widget.setCurrentWidget(self.dashboard_page)
         

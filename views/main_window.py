@@ -655,7 +655,7 @@ class MainWindow(QMainWindow):
     def apply_styles(self):
         """Beyaz-Yeşil tema"""
         self.setStyleSheet(f"""
-            QMainWindow, QWidget {{
+            QWidget {{
                 background: qlineargradient(
                     x1:0, y1:0, x2:1, y2:1,
                     stop:0 #f8fafc,
