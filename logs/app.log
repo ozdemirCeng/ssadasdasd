@@ -820,3 +820,19 @@
 2025-10-21 00:29:27 [INFO] __main__: [CLEANUP] Closing database connections...
 2025-10-21 00:29:27 [INFO] models.database: [OK] All database connections closed
 2025-10-21 00:29:27 [INFO] __main__: [END] Application closed
+2025-10-21 00:30:39 [INFO] __main__: ============================================================
+2025-10-21 00:30:39 [INFO] __main__: [START] Sýnav Takvimi Yönetim Sistemi v1.0.0
+2025-10-21 00:30:39 [INFO] __main__: ============================================================
+2025-10-21 00:30:39 [INFO] __main__: [DB] Initializing database connection...
+2025-10-21 00:30:39 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-21 00:30:39 [INFO] __main__: [OK] Database connection successful
+2025-10-21 00:30:39 [INFO] __main__: [UI] Creating main application window...
+2025-10-21 00:31:01 [INFO] controllers.login_controller: Successful login: admin@kocaeli.edu.tr (Role: Admin, User ID: 1)
+2025-10-21 00:31:02 [INFO] controllers.login_controller: Successful login: admin@kocaeli.edu.tr (Role: Admin, User ID: 1)
+2025-10-21 00:31:02 [INFO] __main__: [OK] Login successful: admin@kocaeli.edu.tr (Admin)
+2025-10-21 00:31:02 [INFO] __main__: [OK] Login successful: admin@kocaeli.edu.tr (Admin)
+2025-10-21 00:31:11 [INFO] __main__: [LOGOUT] User logged out
+2025-10-21 00:31:13 [INFO] __main__: [OK] Application closed normally
+2025-10-21 00:31:13 [INFO] __main__: [CLEANUP] Closing database connections...
+2025-10-21 00:31:13 [INFO] models.database: [OK] All database connections closed
+2025-10-21 00:31:13 [INFO] __main__: [END] Application closed
