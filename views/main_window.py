@@ -1,56 +1,169 @@
-def paintEvent(self, event):
-    """Custom paint - KOÜ yeşil"""
-    painter = QPainter(self)
-    painter.setRenderHint(QPainter.Antialiasing)
+"""
+views/main_window.py
+Kocaeli Üniversitesi - PROFESSIONAL DASHBOARD
+KOÜ Renkleri: Yeşil (#00A651) + Beyaz
+Glassmorphism, Minimal, Clean, Responsive
+Production Ready - Full Implementation
+"""
 
-    center = QPoint(self.width() // 2, self.height() // 2)
-    radius = int(60 * self._scale)
+import sys
+import math
+from pathlib import Path
+from PySide6.QtWidgets import (
+    QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton,
+    QFrame, QScrollArea, QGraphicsOpacityEffect, QGraphicsDropShadowEffect,
+    QSizePolicy, QMessageBox, QProgressBar, QSpacerItem
+)
+from PySide6.QtCore import (
+    Qt, QPropertyAnimation, QEasingCurve, QTimer, QPoint, QSize,
+    Signal, Property, QParallelAnimationGroup
+)
+from PySide6.QtGui import (
+    QFont, QCursor, QColor, QPainter, QPen, QBrush,
+    QLinearGradient, QRadialGradient, QPainterPath, QTransform
+)
 
-    # Hover: Yeşil gradient
-    if self.is_hovered:
-        # Outer glow
-        glow = QRadialGradient(center, radius + 12)
-        glow.setColorAt(0, QColor(0, 166, 81, 100))
-        glow.setColorAt(1, QColor(0, 166, 81, 0))
-        painter.setBrush(QBrush(glow))
-        painter.setPen(Qt.NoPen)
-        painter.drawEllipse(center, radius + 12, radius + 12)
+sys.path.append(str(Path(__file__).parent.parent))
 
-        # Glass circle - yeşil
-        gradient = QRadialGradient(center, radius)
-        gradient.setColorAt(0, QColor(0, 166, 81, 240))
-        gradient.setColorAt(1, QColor(0, 143, 71, 200))
-        painter.setBrush(QBrush(gradient))
-        painter.setPen(QPen(QColor(255, 255, 255, 200), 3))
-        painter.drawEllipse(center, radius, radius)
 
-        # Text - beyaz
-        painter.setPen(QPen(QColor(255, 255, 255)))
-    else:
-        # Normal: Saydam beyaz glass
-        gradient = QRadialGradient(center, radius)
-        gradient.setColorAt(0, QColor(255, 255, 255, 200))
-        gradient.setColorAt(1, QColor(255, 255, 255, 140))
-        painter.setBrush(QBrush(gradient))
-        painter.setPen(QPen(QColor(255, 255, 255, 220), 2))
-        painter.drawEllipse(center, radius, radius)
+# ============================================================
+# KOÜ GLASS BUTTON
+# ============================================================
 
-        # Text - yeşil
-        painter.setPen(QPen(QColor(0, 166, 81)))
+class KOUGlassButton(QPushButton):
+    """KOÜ tarzı glassmorphism buton"""
 
-    # Inner shine
-    if self.is_hovered:
-        shine = QRadialGradient(QPoint(center.x() - 15, center.y() - 15), 25)
-        shine.setColorAt(0, QColor(255, 255, 255, 120))
-        shine.setColorAt(1, QColor(255, 255, 255, 0))
-        painter.setBrush(QBrush(shine))
-        painter.setPen(Qt.NoPen)
-        painter.drawEllipse(QPoint(center.x() - 15, center.y() - 15), 25, 25)
+    clicked_with_id = Signal(str)
 
-    # Text
-    painter.setFont(QFont("Segoe UI", int(12 * self._scale), QFont.Bold))
-    text_rect = self.rect().adjusted(8, int(40 * self._scale), -8, -8)
-    painter.drawText(text_rect, Qt.AlignCenter | Qt.TextWordWrap, self.text_label)
+    def __init__(self, text, module_id, parent=None):
+        super().__init__(parent)
+        self.text_label = text
+        self.module_id = module_id
+        self.is_hovered = False
+        self._scale = 1.0
+
+        self.setFixedSize(130, 130)
+        self.setCursor(Qt.PointingHandCursor)
+        self.setStyleSheet("background: transparent; border: none;")
+
+        # Shadow
+        shadow = QGraphicsDropShadowEffect()
+        shadow.setBlurRadius(25)
+        shadow.setXOffset(0)
+        shadow.setYOffset(8)
+        shadow.setColor(QColor(0, 0, 0, 30))
+        self.setGraphicsEffect(shadow)
+
+    def get_scale(self):
+        return self._scale
+
+    def set_scale(self, value):
+        self._scale = value
+        self.update()
+
+    scale = Property(float, get_scale, set_scale)
+
+    def enterEvent(self, event):
+        """Hover - sadece büyüme"""
+        self.is_hovered = True
+
+        anim = QPropertyAnimation(self, b"scale")
+        anim.setDuration(250)
+        anim.setStartValue(self._scale)
+        anim.setEndValue(1.12)
+        anim.setEasingCurve(QEasingCurve.OutCubic)
+        anim.start(QPropertyAnimation.DeleteWhenStopped)
+
+        self.update()
+        super().enterEvent(event)
+
+    def leaveEvent(self, event):
+        """Leave"""
+        self.is_hovered = False
+
+        anim = QPropertyAnimation(self, b"scale")
+        anim.setDuration(200)
+        anim.setStartValue(self._scale)
+        anim.setEndValue(1.0)
+        anim.setEasingCurve(QEasingCurve.InCubic)
+        anim.start(QPropertyAnimation.DeleteWhenStopped)
+
+        self.update()
+        super().leaveEvent(event)
+
+    def mousePressEvent(self, event):
+        """Press"""
+        anim = QPropertyAnimation(self, b"scale")
+        anim.setDuration(80)
+        anim.setStartValue(self._scale)
+        anim.setEndValue(0.95)
+        anim.start(QPropertyAnimation.DeleteWhenStopped)
+        super().mousePressEvent(event)
+
+    def mouseReleaseEvent(self, event):
+        """Release"""
+        anim = QPropertyAnimation(self, b"scale")
+        anim.setDuration(120)
+        anim.setStartValue(self._scale)
+        anim.setEndValue(1.12 if self.is_hovered else 1.0)
+        anim.start(QPropertyAnimation.DeleteWhenStopped)
+
+        self.clicked_with_id.emit(self.module_id)
+        super().mouseReleaseEvent(event)
+
+    def paintEvent(self, event):
+        """Custom paint - KOÜ yeşil"""
+        painter = QPainter(self)
+        painter.setRenderHint(QPainter.Antialiasing)
+
+        center = QPoint(self.width() // 2, self.height() // 2)
+        radius = int(60 * self._scale)
+
+        # Hover: Yeşil gradient
+        if self.is_hovered:
+            # Outer glow
+            glow = QRadialGradient(center, radius + 12)
+            glow.setColorAt(0, QColor(0, 166, 81, 100))
+            glow.setColorAt(1, QColor(0, 166, 81, 0))
+            painter.setBrush(QBrush(glow))
+            painter.setPen(Qt.NoPen)
+            painter.drawEllipse(center, radius + 12, radius + 12)
+
+            # Glass circle - yeşil
+            gradient = QRadialGradient(center, radius)
+            gradient.setColorAt(0, QColor(0, 166, 81, 240))
+            gradient.setColorAt(1, QColor(0, 143, 71, 200))
+            painter.setBrush(QBrush(gradient))
+            painter.setPen(QPen(QColor(255, 255, 255, 200), 3))
+            painter.drawEllipse(center, radius, radius)
+
+            # Text - beyaz
+            painter.setPen(QPen(QColor(255, 255, 255)))
+        else:
+            # Normal: Saydam beyaz glass
+            gradient = QRadialGradient(center, radius)
+            gradient.setColorAt(0, QColor(255, 255, 255, 200))
+            gradient.setColorAt(1, QColor(255, 255, 255, 140))
+            painter.setBrush(QBrush(gradient))
+            painter.setPen(QPen(QColor(255, 255, 255, 220), 2))
+            painter.drawEllipse(center, radius, radius)
+
+            # Text - yeşil
+            painter.setPen(QPen(QColor(0, 166, 81)))
+
+        # Inner shine
+        if self.is_hovered:
+            shine = QRadialGradient(QPoint(center.x() - 15, center.y() - 15), 25)
+            shine.setColorAt(0, QColor(255, 255, 255, 120))
+            shine.setColorAt(1, QColor(255, 255, 255, 0))
+            painter.setBrush(QBrush(shine))
+            painter.setPen(Qt.NoPen)
+            painter.drawEllipse(QPoint(center.x() - 15, center.y() - 15), 25, 25)
+
+        # Text
+        painter.setFont(QFont("Segoe UI", int(12 * self._scale), QFont.Bold))
+        text_rect = self.rect().adjusted(8, int(40 * self._scale), -8, -8)
+        painter.drawText(text_rect, Qt.AlignCenter | Qt.TextWordWrap, self.text_label)
 
 
 # ============================================================
@@ -746,169 +859,3 @@ if __name__ == "__main__":
 
     # Run application
     sys.exit(app.exec())
-"""
-views/main_window.py
-Kocaeli Üniversitesi - PROFESSIONAL DASHBOARD
-KOÜ Renkleri: Yeşil (#00A651) + Beyaz
-Glassmorphism, Minimal, Clean, Responsive
-Production Ready - Full Implementation
-"""
-
-import sys
-import math
-from pathlib import Path
-from PySide6.QtWidgets import (
-    QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton,
-    QFrame, QScrollArea, QGraphicsOpacityEffect, QGraphicsDropShadowEffect,
-    QSizePolicy, QMessageBox, QProgressBar, QSpacerItem
-)
-from PySide6.QtCore import (
-    Qt, QPropertyAnimation, QEasingCurve, QTimer, QPoint, QSize,
-    Signal, Property, QParallelAnimationGroup
-)
-from PySide6.QtGui import (
-    QFont, QCursor, QColor, QPainter, QPen, QBrush,
-    QLinearGradient, QRadialGradient, QPainterPath, QTransform
-)
-
-sys.path.append(str(Path(__file__).parent.parent))
-
-
-# ============================================================
-# KOÜ GLASS BUTTON
-# ============================================================
-
-class KOUGlassButton(QPushButton):
-    """KOÜ tarzı glassmorphism buton"""
-
-    clicked_with_id = Signal(str)
-
-    def __init__(self, text, module_id, parent=None):
-        super().__init__(parent)
-        self.text_label = text
-        self.module_id = module_id
-        self.is_hovered = False
-        self._scale = 1.0
-
-        self.setFixedSize(130, 130)
-        self.setCursor(Qt.PointingHandCursor)
-        self.setStyleSheet("background: transparent; border: none;")
-
-        # Shadow
-        shadow = QGraphicsDropShadowEffect()
-        shadow.setBlurRadius(25)
-        shadow.setXOffset(0)
-        shadow.setYOffset(8)
-        shadow.setColor(QColor(0, 0, 0, 30))
-        self.setGraphicsEffect(shadow)
-
-    def get_scale(self):
-        return self._scale
-
-    def set_scale(self, value):
-        self._scale = value
-        self.update()
-
-    scale = Property(float, get_scale, set_scale)
-
-    def enterEvent(self, event):
-        """Hover - sadece büyüme"""
-        self.is_hovered = True
-
-        anim = QPropertyAnimation(self, b"scale")
-        anim.setDuration(250)
-        anim.setStartValue(self._scale)
-        anim.setEndValue(1.12)
-        anim.setEasingCurve(QEasingCurve.OutCubic)
-        anim.start(QPropertyAnimation.DeleteWhenStopped)
-
-        self.update()
-        super().enterEvent(event)
-
-    def leaveEvent(self, event):
-        """Leave"""
-        self.is_hovered = False
-
-        anim = QPropertyAnimation(self, b"scale")
-        anim.setDuration(200)
-        anim.setStartValue(self._scale)
-        anim.setEndValue(1.0)
-        anim.setEasingCurve(QEasingCurve.InCubic)
-        anim.start(QPropertyAnimation.DeleteWhenStopped)
-
-        self.update()
-        super().leaveEvent(event)
-
-    def mousePressEvent(self, event):
-        """Press"""
-        anim = QPropertyAnimation(self, b"scale")
-        anim.setDuration(80)
-        anim.setStartValue(self._scale)
-        anim.setEndValue(0.95)
-        anim.start(QPropertyAnimation.DeleteWhenStopped)
-        super().mousePressEvent(event)
-
-    def mouseReleaseEvent(self, event):
-        """Release"""
-        anim = QPropertyAnimation(self, b"scale")
-        anim.setDuration(120)
-        anim.setStartValue(self._scale)
-        anim.setEndValue(1.12 if self.is_hovered else 1.0)
-        anim.start(QPropertyAnimation.DeleteWhenStopped)
-
-        self.clicked_with_id.emit(self.module_id)
-        super().mouseReleaseEvent(event)
-
-    def paintEvent(self, event):
-        """Custom paint - KOÜ yeşil"""
-        painter = QPainter(self)
-        painter.setRenderHint(QPainter.Antialiasing)
-
-        center = QPoint(self.width() // 2, self.height() // 2)
-        radius = int(60 * self._scale)
-
-        # Hover: Yeşil gradient
-        if self.is_hovered:
-            # Outer glow
-            glow = QRadialGradient(center, radius + 12)
-            glow.setColorAt(0, QColor(0, 166, 81, 100))
-            glow.setColorAt(1, QColor(0, 166, 81, 0))
-            painter.setBrush(QBrush(glow))
-            painter.setPen(Qt.NoPen)
-            painter.drawEllipse(center, radius + 12, radius + 12)
-
-            # Glass circle - yeşil
-            gradient = QRadialGradient(center, radius)
-            gradient.setColorAt(0, QColor(0, 166, 81, 240))
-            gradient.setColorAt(1, QColor(0, 143, 71, 200))
-            painter.setBrush(QBrush(gradient))
-            painter.setPen(QPen(QColor(255, 255, 255, 200), 3))
-            painter.drawEllipse(center, radius, radius)
-
-            # Text - beyaz
-            painter.setPen(QPen(QColor(255, 255, 255)))
-        else:
-            # Normal: Saydam beyaz glass
-            gradient = QRadialGradient(center, radius)
-            gradient.setColorAt(0, QColor(255, 255, 255, 200))
-            gradient.setColorAt(1, QColor(255, 255, 255, 140))
-            painter.setBrush(QBrush(gradient))
-            painter.setPen(QPen(QColor(255, 255, 255, 220), 2))
-            painter.drawEllipse(center, radius, radius)
-
-            # Text - yeşil
-            painter.setPen(QPen(QColor(0, 166, 81)))
-
-        # Inner shine
-        if self.is_hovered:
-            shine = QRadialGradient(QPoint(center.x() - 15, center.y() - 15), 25)
-            shine.setColorAt(0, QColor(255, 255, 255, 120))
-            shine.setColorAt(1, QColor(255, 255, 255, 0))
-            painter.setBrush(QBrush(shine))
-            painter.setPen(Qt.NoPen)
-            painter.drawEllipse(QPoint(center.x() - 15, center.y() - 15), 25, 25)
-
-        # Text
-        painter.setFont(QFont("Segoe UI", int(12 * self._scale), QFont.Bold))
-        text_rect = self.rect().adjusted(8, int(40 * self._scale), -8, -8)
-        painter.drawText(text_rect, Qt.AlignCenter | Qt.TextWordWrap, self.text_label)
