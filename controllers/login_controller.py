@@ -284,6 +284,8 @@ class LoginController:
                 'success': False,
                 'message': 'Şifre değiştirme sırasında hata oluştu'
             }
+
+    def _validate_inputs(self, email: str, password: str) -> Dict[str, Any]:
         """
         Validate login inputs
         
@@ -319,30 +321,6 @@ class LoginController:
             return {
                 'valid': False,
                 'message': 'Şifre çok kısa'
-            }
-
-        return {'valid': True}
-
-        """Validate login inputs"""
-
-        # Email validation
-        if not email or not email.strip():
-            return {
-                'valid': False,
-                'message': MESSAGES['login']['empty_email']
-            }
-
-        if not self.email_validator.validate(email):
-            return {
-                'valid': False,
-                'message': MESSAGES['login']['invalid_email']
-            }
-
-        # Password validation
-        if not password:
-            return {
-                'valid': False,
-                'message': MESSAGES['login']['empty_password']
             }
 
         return {'valid': True}

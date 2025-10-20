@@ -16,6 +16,7 @@ from PySide6.QtGui import QFont, QCursor, QPalette, QColor
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from styles.theme import KocaeliTheme
+from controllers.login_controller import LoginController
 
 class AnimatedBackground(QWidget):
     """Animated gradient background with floating particles"""
@@ -274,7 +275,7 @@ class LoginView(QWidget):
     
     def __init__(self, login_controller=None):
         super().__init__()
-        self.login_controller = login_controller
+        self.login_controller = login_controller or LoginController()
         self.password_visible = False
         
         self.setWindowTitle("Kocaeli Üniversitesi - Sınav Takvimi Sistemi")
