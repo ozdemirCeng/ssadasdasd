@@ -60,18 +60,17 @@ class MainApplication(QMainWindow):
         
     def create_login_widget(self):
         """Login page widget oluştur"""
-        # LoginDialog'u widget olarak kullan
-        login_dialog = LoginDialog(self.login_controller)
-        login_dialog.setWindowFlags(Qt.Widget)  # Dialog değil, widget
+        # LoginView'u widget olarak kullan
+        login_view = LoginView(self.login_controller)
         
         # Connect signals
-        login_dialog.login_success.connect(self.on_login_success)
+        login_view.login_success.connect(self.on_login_success)
         
-        return login_dialog
+        return login_view
         
     def on_login_success(self, user_data):
         """Login başarılı - Dashboard'a geç"""
-        logger.info(f"✓ Login successful: {user_data['email']} ({user_data['role']})")
+        logger.info(f"Login successful: {user_data['email']} ({user_data['role']})")
         
         self.current_user = user_data
         
@@ -172,14 +171,14 @@ def initialize_database():
         
         # Test connection
         if db.test_connection():
-            logger.info("✓ Database connection successful")
+            logger.info("Database connection successful")
             return True
         else:
-            logger.error("✗ Database connection test failed")
+            logger.error("Database connection test failed")
             return False
         
     except Exception as e:
-        logger.error(f"✗ Database connection failed: {e}")
+        logger.error(f"Database connection failed: {e}")
         return False
 
 

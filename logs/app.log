@@ -836,3 +836,26 @@
 2025-10-21 00:31:13 [INFO] __main__: [CLEANUP] Closing database connections...
 2025-10-21 00:31:13 [INFO] models.database: [OK] All database connections closed
 2025-10-21 00:31:13 [INFO] __main__: [END] Application closed
+2025-10-21 00:45:56 [INFO] __main__: ============================================================
+2025-10-21 00:45:56 [INFO] __main__:   Sýnav Takvimi Yönetim Sistemi
+2025-10-21 00:45:56 [INFO] __main__:   Version: 1.0.0
+2025-10-21 00:45:56 [INFO] __main__:   Kocaeli Üniversitesi
+2025-10-21 00:45:56 [INFO] __main__: ============================================================
+2025-10-21 00:45:56 [INFO] __main__: Checking database connection...
+2025-10-21 00:45:56 [INFO] __main__: Initializing database connection...
+2025-10-21 00:45:56 [INFO] models.database: [OK] Database connection pool initialized
+2025-10-21 00:45:56 [INFO] __main__: Creating main application window...
+2025-10-21 00:45:56 [CRITICAL] __main__: Critical error: name 'LoginDialog' is not defined
+Traceback (most recent call last):
+  File "C:\Users\omer\PycharmProjects\Sinav-takvimi-yonetimi\main.py", line 258, in main
+    main_window = MainApplication()
+  File "C:\Users\omer\PycharmProjects\Sinav-takvimi-yonetimi\main.py", line 43, in __init__
+    self.init_ui()
+    ~~~~~~~~~~~~^^
+  File "C:\Users\omer\PycharmProjects\Sinav-takvimi-yonetimi\main.py", line 52, in init_ui
+    self.login_page = self.create_login_widget()
+                      ~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\omer\PycharmProjects\Sinav-takvimi-yonetimi\main.py", line 64, in create_login_widget
+    login_dialog = LoginDialog(self.login_controller)
+                   ^^^^^^^^^^^
+NameError: name 'LoginDialog' is not defined
