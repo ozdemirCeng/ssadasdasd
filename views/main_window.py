@@ -23,7 +23,6 @@ from PySide6.QtGui import (
 )
 
 sys.path.append(str(Path(__file__).parent.parent))
-from config import ThemeConfig
 
 
 # ============================================================
@@ -670,7 +669,7 @@ class MainWindow(QMainWindow):
             }}
             
             #logo {{
-                color: {ThemeConfig.PRIMARY_COLOR};
+                color: #10B981;
             }}
             
             #title {{
@@ -678,7 +677,7 @@ class MainWindow(QMainWindow):
             }}
             
             #statValue {{
-                color: {ThemeConfig.PRIMARY_COLOR};
+                color: #10B981;
             }}
             
             #statLabel {{
@@ -703,7 +702,7 @@ class MainWindow(QMainWindow):
             }}
             
             #avatar {{
-                background: {ThemeConfig.PRIMARY_COLOR};
+                background: #10B981;
                 color: white;
                 border-radius: 30px;
             }}
@@ -713,11 +712,11 @@ class MainWindow(QMainWindow):
             }}
             
             #hubRole {{
-                color: {ThemeConfig.PRIMARY_COLOR};
+                color: #10B981;
             }}
             
             #statsBtn {{
-                background: {ThemeConfig.PRIMARY_COLOR};
+                background: #10B981;
                 color: white;
                 border: none;
                 border-radius: 6px;
@@ -725,7 +724,7 @@ class MainWindow(QMainWindow):
             }}
             
             #statsBtn:hover {{
-                background: {ThemeConfig.PRIMARY_DARK};
+                background: #059669;
             }}
             
             #activitiesPanel {{
@@ -753,7 +752,7 @@ class MainWindow(QMainWindow):
             }}
             
             #activityTime {{
-                color: {ThemeConfig.PRIMARY_COLOR};
+                color: #10B981;
             }}
             
             #activityTitle {{
