@@ -1,861 +1,700 @@
 """
 views/main_window.py
-Kocaeli Üniversitesi - PROFESSIONAL DASHBOARD
-KOÜ Renkleri: Yeşil (#00A651) + Beyaz
-Glassmorphism, Minimal, Clean, Responsive
-Production Ready - Full Implementation
+Kocaeli Üniversitesi - Professional Dashboard with Sidebar Menu
 """
 
 import sys
-import math
 from pathlib import Path
 from PySide6.QtWidgets import (
-    QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton,
-    QFrame, QScrollArea, QGraphicsOpacityEffect, QGraphicsDropShadowEffect,
-    QSizePolicy, QMessageBox, QProgressBar, QSpacerItem
+    QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton,
+    QFrame, QScrollArea, QGraphicsOpacityEffect, QSizePolicy, QProgressBar,
+    QApplication
 )
-from PySide6.QtCore import (
-    Qt, QPropertyAnimation, QEasingCurve, QTimer, QPoint, QSize,
-    Signal, Property, QParallelAnimationGroup
-)
-from PySide6.QtGui import (
-    QFont, QCursor, QColor, QPainter, QPen, QBrush,
-    QLinearGradient, QRadialGradient, QPainterPath, QTransform
-)
+from PySide6.QtCore import Qt, QPropertyAnimation, QEasingCurve, QTimer, QSize, Signal
+from PySide6.QtGui import QFont, QIcon, QPainter, QPainterPath, QColor, QLinearGradient
 
 sys.path.append(str(Path(__file__).parent.parent))
 
 
-# ============================================================
-# KOÜ GLASS BUTTON
-# ============================================================
+class Theme:
+    """Tema yönetimi"""
 
-class KOUGlassButton(QPushButton):
-    """KOÜ tarzı glassmorphism buton"""
+    def __init__(self, dark_mode=False):
+        self.dark_mode = dark_mode
 
-    clicked_with_id = Signal(str)
+    @property
+    def bg(self):
+        return "#0f172a" if self.dark_mode else "#f9fafb"
 
-    def __init__(self, text, module_id, parent=None):
-        super().__init__(parent)
-        self.text_label = text
-        self.module_id = module_id
-        self.is_hovered = False
-        self._scale = 1.0
+    @property
+    def card(self):
+        return "#1e293b" if self.dark_mode else "#ffffff"
 
-        self.setFixedSize(130, 130)
+    @property
+    def border(self):
+        return "#334155" if self.dark_mode else "#e5e7eb"
+
+    @property
+    def text(self):
+        return "#f1f5f9" if self.dark_mode else "#111827"
+
+    @property
+    def text_muted(self):
+        return "#94a3b8" if self.dark_mode else "#6b7280"
+
+    @property
+    def hover(self):
+        return "#334155" if self.dark_mode else "#f3f4f6"
+
+    @property
+    def sidebar(self):
+        return "#1e293b" if self.dark_mode else "#ffffff"
+
+    @property
+    def menu_active(self):
+        if self.dark_mode:
+            return "background: rgba(16, 185, 129, 0.2); color: #34d399;"
+        return "background: #ecfdf5; color: #047857;"
+
+
+class ModernButton(QPushButton):
+    """Modern buton komponenti"""
+
+    def __init__(self, text="", icon_char="", parent=None):
+        super().__init__(text, parent)
+        self.icon_char = icon_char
         self.setCursor(Qt.PointingHandCursor)
-        self.setStyleSheet("background: transparent; border: none;")
-
-        # Shadow
-        shadow = QGraphicsDropShadowEffect()
-        shadow.setBlurRadius(25)
-        shadow.setXOffset(0)
-        shadow.setYOffset(8)
-        shadow.setColor(QColor(0, 0, 0, 30))
-        self.setGraphicsEffect(shadow)
-
-    def get_scale(self):
-        return self._scale
-
-    def set_scale(self, value):
-        self._scale = value
-        self.update()
-
-    scale = Property(float, get_scale, set_scale)
         
     def enterEvent(self, event):
-        """Hover - sadece büyüme"""
-        self.is_hovered = True
-
-        anim = QPropertyAnimation(self, b"scale")
-        anim.setDuration(250)
-        anim.setStartValue(self._scale)
-        anim.setEndValue(1.12)
-        anim.setEasingCurve(QEasingCurve.OutCubic)
-        anim.start(QPropertyAnimation.DeleteWhenStopped)
-
-        self.update()
+        self.animate_scale(1.05)
         super().enterEvent(event)
         
     def leaveEvent(self, event):
-        """Leave"""
-        self.is_hovered = False
-
-        anim = QPropertyAnimation(self, b"scale")
-        anim.setDuration(200)
-        anim.setStartValue(self._scale)
-        anim.setEndValue(1.0)
-        anim.setEasingCurve(QEasingCurve.InCubic)
-        anim.start(QPropertyAnimation.DeleteWhenStopped)
-
-        self.update()
+        self.animate_scale(1.0)
         super().leaveEvent(event)
         
-    def mousePressEvent(self, event):
-        """Press"""
-        anim = QPropertyAnimation(self, b"scale")
-        anim.setDuration(80)
-        anim.setStartValue(self._scale)
-        anim.setEndValue(0.95)
-        anim.start(QPropertyAnimation.DeleteWhenStopped)
-        super().mousePressEvent(event)
-
-    def mouseReleaseEvent(self, event):
-        """Release"""
-        anim = QPropertyAnimation(self, b"scale")
-        anim.setDuration(120)
-        anim.setStartValue(self._scale)
-        anim.setEndValue(1.12 if self.is_hovered else 1.0)
-        anim.start(QPropertyAnimation.DeleteWhenStopped)
-
-        self.clicked_with_id.emit(self.module_id)
-        super().mouseReleaseEvent(event)
-    
-    def paintEvent(self, event):
-        """Custom paint - KOÜ yeşil"""
-        painter = QPainter(self)
-        painter.setRenderHint(QPainter.Antialiasing)
-
-        center = QPoint(self.width() // 2, self.height() // 2)
-        radius = int(60 * self._scale)
-
-        # Hover: Yeşil gradient
-        if self.is_hovered:
-            # Outer glow
-            glow = QRadialGradient(center, radius + 12)
-            glow.setColorAt(0, QColor(0, 166, 81, 100))
-            glow.setColorAt(1, QColor(0, 166, 81, 0))
-            painter.setBrush(QBrush(glow))
-            painter.setPen(Qt.NoPen)
-            painter.drawEllipse(center, radius + 12, radius + 12)
-
-            # Glass circle - yeşil
-            gradient = QRadialGradient(center, radius)
-            gradient.setColorAt(0, QColor(0, 166, 81, 240))
-            gradient.setColorAt(1, QColor(0, 143, 71, 200))
-            painter.setBrush(QBrush(gradient))
-            painter.setPen(QPen(QColor(255, 255, 255, 200), 3))
-            painter.drawEllipse(center, radius, radius)
-
-            # Text - beyaz
-            painter.setPen(QPen(QColor(255, 255, 255)))
-        else:
-            # Normal: Saydam beyaz glass
-            gradient = QRadialGradient(center, radius)
-            gradient.setColorAt(0, QColor(255, 255, 255, 200))
-            gradient.setColorAt(1, QColor(255, 255, 255, 140))
-            painter.setBrush(QBrush(gradient))
-            painter.setPen(QPen(QColor(255, 255, 255, 220), 2))
-            painter.drawEllipse(center, radius, radius)
-
-            # Text - yeşil
-            painter.setPen(QPen(QColor(0, 166, 81)))
-
-        # Inner shine
-        if self.is_hovered:
-            shine = QRadialGradient(QPoint(center.x() - 15, center.y() - 15), 25)
-            shine.setColorAt(0, QColor(255, 255, 255, 120))
-            shine.setColorAt(1, QColor(255, 255, 255, 0))
-            painter.setBrush(QBrush(shine))
-            painter.setPen(Qt.NoPen)
-            painter.drawEllipse(QPoint(center.x() - 15, center.y() - 15), 25, 25)
-
-        # Text
-        painter.setFont(QFont("Segoe UI", int(12 * self._scale), QFont.Bold))
-        text_rect = self.rect().adjusted(8, int(40 * self._scale), -8, -8)
-        painter.drawText(text_rect, Qt.AlignCenter | Qt.TextWordWrap, self.text_label)
+    def animate_scale(self, scale):
+        # Simple hover effect via stylesheet
+        pass
 
 
-# ============================================================
-# CENTER HUB - Minimal
-# ============================================================
+class StatCard(QFrame):
+    """İstatistik kartı"""
 
-class MinimalCenterHub(QFrame):
-    """Minimal merkez hub - az boşluk"""
-
-    def __init__(self, user_data, stats, parent=None):
+    def __init__(self, label, value, total, theme, parent=None):
         super().__init__(parent)
-        self.user_data = user_data
-        self.stats = stats
-        self.setMinimumSize(180, 180)
-        self.setMaximumSize(240, 240)
-        self.setStyleSheet("background: transparent; border: none;")
+        self.theme = theme
+        self.value = value
+        self.total = total
+        self.setCursor(Qt.PointingHandCursor)
 
-        self.setup_ui()
-
-    def setup_ui(self):
-        """Compact UI"""
         layout = QVBoxLayout(self)
-        layout.setContentsMargins(15, 15, 15, 15)
-        layout.setSpacing(8)
-        layout.setAlignment(Qt.AlignCenter)
+        layout.setContentsMargins(16, 16, 16, 16)
+        layout.setSpacing(12)
 
-        # Avatar
-        initial = self.user_data.get('ad_soyad', 'K')[0].upper()
-        avatar = QLabel(initial)
-        avatar.setFont(QFont("Segoe UI", 32, QFont.Bold))
-        avatar.setAlignment(Qt.AlignCenter)
-        avatar.setFixedSize(65, 65)
-        avatar.setStyleSheet("""
-            QLabel {
-                background: qlineargradient(
-                    x1:0, y1:0, x2:1, y2:1,
-                    stop:0 #00A651,
-                    stop:1 #008F47
-                );
-                color: white;
-                border-radius: 32px;
-            }
-        """)
-
-        # Name - compact
-        name_parts = self.user_data.get('ad_soyad', 'K').split()
-        name = QLabel(name_parts[0] if name_parts else "Kullanıcı")
-        name.setFont(QFont("Segoe UI", 14, QFont.Bold))
-        name.setAlignment(Qt.AlignCenter)
-        name.setStyleSheet("color: #1d1d1f;")
-
-        # Role
-        role = QLabel(self.user_data.get('role', 'Rol'))
-        role.setFont(QFont("Segoe UI", 10, QFont.DemiBold))
-        role.setAlignment(Qt.AlignCenter)
-        role.setStyleSheet("""
-            QLabel {
-                background: rgba(0, 166, 81, 0.15);
-                color: #00A651;
-                border-radius: 8px;
-                padding: 4px 10px;
-            }
-        """)
-
-        # Stats - inline
-        stats_widget = QWidget()
-        stats_layout = QHBoxLayout(stats_widget)
-        stats_layout.setSpacing(12)
-        stats_layout.setContentsMargins(0, 0, 0, 0)
-
-        for label, value in [("Sınav", self.stats['exams']), ("Ders", self.stats['courses'])]:
-            stat = QWidget()
-            stat_layout = QVBoxLayout(stat)
-            stat_layout.setSpacing(1)
-            stat_layout.setContentsMargins(0, 0, 0, 0)
-
-            val = QLabel(str(value))
-            val.setFont(QFont("Segoe UI", 18, QFont.Bold))
-            val.setAlignment(Qt.AlignCenter)
-            val.setStyleSheet("color: #00A651;")
-
-            lbl = QLabel(label)
-            lbl.setFont(QFont("Segoe UI", 8))
-            lbl.setAlignment(Qt.AlignCenter)
-            lbl.setStyleSheet("color: #666;")
-
-            stat_layout.addWidget(val)
-            stat_layout.addWidget(lbl)
-
-            stats_layout.addWidget(stat)
-
-        layout.addWidget(avatar)
-        layout.addWidget(name)
-        layout.addWidget(role)
-        layout.addSpacing(4)
-        layout.addWidget(stats_widget)
-
-    def paintEvent(self, event):
-        """Glass circle"""
-        painter = QPainter(self)
-        painter.setRenderHint(QPainter.Antialiasing)
-
-        center = QPoint(self.width() // 2, self.height() // 2)
-        radius = min(self.width(), self.height()) // 2 - 5
-
-        # Glass
-        gradient = QRadialGradient(center, radius)
-        gradient.setColorAt(0, QColor(255, 255, 255, 220))
-        gradient.setColorAt(1, QColor(255, 255, 255, 160))
-
-        painter.setBrush(QBrush(gradient))
-        painter.setPen(QPen(QColor(255, 255, 255, 240), 3))
-        painter.drawEllipse(center, radius, radius)
-
-        # Shine
-        shine = QRadialGradient(QPoint(center.x() - 20, center.y() - 20), 40)
-        shine.setColorAt(0, QColor(255, 255, 255, 140))
-        shine.setColorAt(1, QColor(255, 255, 255, 0))
-        painter.setBrush(QBrush(shine))
-        painter.setPen(Qt.NoPen)
-        painter.drawEllipse(QPoint(center.x() - 20, center.y() - 20), 40, 40)
-
-
-# ============================================================
-# STAT CARD - No border
-# ============================================================
-
-class CleanStatCard(QWidget):
-    """Clean stat card - no border"""
-
-    def __init__(self, label, current, total, parent=None):
-        super().__init__(parent)
-        
-        layout = QVBoxLayout(self)
-        layout.setContentsMargins(16, 14, 16, 14)
-        layout.setSpacing(8)
-        
         # Header
         header = QHBoxLayout()
 
         lbl = QLabel(label)
-        lbl.setFont(QFont("Segoe UI", 11, QFont.DemiBold))
-        lbl.setStyleSheet("color: #333;")
+        lbl.setFont(QFont("Segoe UI", 9))
+        lbl.setStyleSheet(f"color: {theme.text_muted}; font-weight: 500;")
 
-        val = QLabel(f"{current}/{total}")
-        val.setFont(QFont("Segoe UI", 10))
-        val.setStyleSheet("color: #00A651;")
+        val = QLabel(str(value))
+        val.setFont(QFont("Segoe UI", 20, QFont.Bold))
+        val.setStyleSheet("color: #10b981;")
 
         header.addWidget(lbl)
         header.addStretch()
         header.addWidget(val)
 
-        # Progress
+        # Progress bar
         progress = QProgressBar()
         progress.setMaximum(total)
-        progress.setValue(current)
+        progress.setValue(value)
         progress.setTextVisible(False)
-        progress.setFixedHeight(6)
-        progress.setStyleSheet("""
-            QProgressBar {
-                background: rgba(0, 0, 0, 0.05);
-                border-radius: 3px;
+        progress.setFixedHeight(8)
+        progress.setStyleSheet(f"""
+            QProgressBar {{
+                background: {"#334155" if theme.dark_mode else "#f3f4f6"};
+                border-radius: 4px;
                 border: none;
-            }
-            QProgressBar::chunk {
-                background: #00A651;
-                border-radius: 3px;
-            }
+            }}
+            QProgressBar::chunk {{
+                background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+                    stop:0 #10b981, stop:1 #14b8a6);
+                border-radius: 4px;
+            }}
         """)
+
+        # Total label
+        total_lbl = QLabel(f"Toplam: {total}")
+        total_lbl.setFont(QFont("Segoe UI", 8))
+        total_lbl.setStyleSheet(f"color: {theme.text_muted};")
 
         layout.addLayout(header)
         layout.addWidget(progress)
+        layout.addWidget(total_lbl)
 
-        self.setStyleSheet("""
-            QWidget {
-                background: rgba(255, 255, 255, 0.7);
+        self.update_style()
+
+    def update_style(self):
+        self.setStyleSheet(f"""
+            QFrame {{
+                background: {self.theme.card};
+                border: 1px solid {self.theme.border};
                 border-radius: 12px;
-                border: none;
-            }
-            QWidget:hover {
-                background: rgba(255, 255, 255, 0.9);
-            }
+            }}
+            QFrame:hover {{
+                border: 1px solid #10b981;
+            }}
         """)
 
 
-# ============================================================
-# ACTIVITY CARD - Clean
-# ============================================================
+class QuickActionCard(QFrame):
+    """Hızlı işlem kartı"""
 
-class CleanActivityCard(QFrame):
-    """Clean activity card"""
+    clicked = Signal()
 
-    def __init__(self, title, time, parent=None):
+    def __init__(self, label, desc, icon, color, theme, parent=None):
         super().__init__(parent)
+        self.theme = theme
+        self.color = color
         self.setCursor(Qt.PointingHandCursor)
 
-        layout = QHBoxLayout(self)
-        layout.setContentsMargins(14, 12, 14, 12)
+        layout = QVBoxLayout(self)
+        layout.setContentsMargins(16, 16, 16, 16)
         layout.setSpacing(12)
 
-        # Dot
-        dot = QLabel("●")
-        dot.setFont(QFont("Segoe UI", 12))
-        dot.setStyleSheet("color: #00A651;")
-        
-        # Content
-        content = QVBoxLayout()
-        content.setSpacing(2)
-        
-        title_label = QLabel(title)
-        title_label.setFont(QFont("Segoe UI", 11, QFont.DemiBold))
-        title_label.setStyleSheet("color: #333;")
-        title_label.setWordWrap(True)
-        
-        time_label = QLabel(time)
-        time_label.setFont(QFont("Segoe UI", 9))
-        time_label.setStyleSheet("color: #999;")
+        # Icon container
+        icon_container = QFrame()
+        icon_container.setFixedSize(48, 48)
+        icon_layout = QVBoxLayout(icon_container)
+        icon_layout.setContentsMargins(0, 0, 0, 0)
 
-        content.addWidget(title_label)
-        content.addWidget(time_label)
+        icon_label = QLabel(icon)
+        icon_label.setFont(QFont("Segoe UI", 20))
+        icon_label.setAlignment(Qt.AlignCenter)
+        icon_layout.addWidget(icon_label)
 
-        layout.addWidget(dot)
-        layout.addLayout(content, 1)
+        # Title
+        title = QLabel(label)
+        title.setFont(QFont("Segoe UI", 11, QFont.Bold))
+        title.setStyleSheet(f"color: {theme.text};")
 
-        self.setStyleSheet("""
-            QFrame {
-                background: rgba(255, 255, 255, 0.6);
-                border-radius: 10px;
-                border: none;
-            }
-            QFrame:hover {
-                background: rgba(255, 255, 255, 0.85);
-            }
+        # Description
+        description = QLabel(desc)
+        description.setFont(QFont("Segoe UI", 9))
+        description.setStyleSheet(f"color: {theme.text_muted};")
+
+        layout.addWidget(icon_container)
+        layout.addWidget(title)
+        layout.addWidget(description)
+
+        self.update_style()
+
+    def update_style(self):
+        color_map = {
+            'emerald': ('#ecfdf5', '#10b981', '#d1fae5') if not self.theme.dark_mode else ('rgba(16, 185, 129, 0.1)',
+                                                                                           '#10b981',
+                                                                                           'rgba(16, 185, 129, 0.2)'),
+            'blue': ('#eff6ff', '#2563eb', '#dbeafe') if not self.theme.dark_mode else ('rgba(37, 99, 235, 0.1)',
+                                                                                        '#2563eb',
+                                                                                        'rgba(37, 99, 235, 0.2)'),
+            'indigo': ('#eef2ff', '#4f46e5', '#e0e7ff') if not self.theme.dark_mode else ('rgba(79, 70, 229, 0.1)',
+                                                                                          '#4f46e5',
+                                                                                          'rgba(79, 70, 229, 0.2)'),
+            'orange': ('#fff7ed', '#f97316', '#ffedd5') if not self.theme.dark_mode else ('rgba(249, 115, 22, 0.1)',
+                                                                                          '#f97316',
+                                                                                          'rgba(249, 115, 22, 0.2)')
+        }
+
+        bg, text, border = color_map.get(self.color, color_map['emerald'])
+
+        self.setStyleSheet(f"""
+            QFrame {{
+                background: {bg};
+                border: 1px solid {border};
+                border-radius: 12px;
+            }}
+            QFrame:hover {{
+                transform: scale(1.05);
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }}
         """)
 
+    def mousePressEvent(self, event):
+        self.clicked.emit()
+        super().mousePressEvent(event)
 
-# ============================================================
-# MAIN WINDOW
-# ============================================================
 
-class MainWindow(QWidget):
-    """KOÜ Professional Dashboard"""
+class MenuButton(QPushButton):
+    """Sidebar menü butonu"""
 
-    logout_requested = Signal()
+    def __init__(self, text, icon, theme, parent=None):
+        super().__init__(parent)
+        self.menu_text = text
+        self.icon = icon
+        self.theme = theme
+        self.is_active = False
+        self.is_collapsed = False
+        self.setCursor(Qt.PointingHandCursor)
+        self.setFixedHeight(44)
+
+        self.update_style()
+
+    def set_active(self, active):
+        self.is_active = active
+        self.update_style()
+
+    def set_collapsed(self, collapsed):
+        self.is_collapsed = collapsed
+        self.update_style()
+
+    def update_style(self):
+        if self.is_active:
+            bg = self.theme.menu_active
+        else:
+            bg = f"background: transparent; color: {self.theme.text_muted};"
+
+        self.setStyleSheet(f"""
+            QPushButton {{
+                {bg}
+                border: none;
+                border-radius: 12px;
+                text-align: left;
+                padding-left: {"16px" if not self.is_collapsed else "0px"};
+                font-size: 13px;
+                font-weight: 500;
+            }}
+            QPushButton:hover {{
+                background: {self.theme.hover};
+            }}
+        """)
+
+        if self.is_collapsed:
+            self.setText(self.icon)
+            self.setToolTip(self.menu_text)
+        else:
+            self.setText(f"{self.icon}  {self.menu_text}")
+
+
+class MainWindow(QMainWindow):
+    """Ana pencere - Professional Dashboard"""
+
+    module_opened = Signal(str)
     
     def __init__(self, user_data, parent=None):
         super().__init__(parent)
         self.user_data = user_data
-        self.is_admin = user_data.get('role') == 'Admin'
-
-        self.stats_data = {
-            'exams': 15,
-            'courses': 42,
-            'classrooms': 8,
-            'students': 850
-        }
+        self.theme = Theme(dark_mode=False)
+        self.sidebar_collapsed = False
+        self.active_menu = 'dashboard'
         
-        self.setWindowTitle("Kocaeli Üniversitesi - Sınav Takvimi Sistemi")
-        self.showMaximized()
-
+        self.setWindowTitle(f"KOÜ Sınav Takvimi - {user_data.get('ad_soyad')}")
+        self.setMinimumSize(1400, 800)
+        
         self.setup_ui()
         self.apply_styles()
 
-        QTimer.singleShot(100, self.animate_entrance)
+        self.showMaximized()
 
     def setup_ui(self):
-        """UI"""
-        main_layout = QVBoxLayout(self)
+        """UI kurulumu"""
+        central = QWidget()
+        self.setCentralWidget(central)
+        
+        main_layout = QVBoxLayout(central)
         main_layout.setContentsMargins(0, 0, 0, 0)
         main_layout.setSpacing(0)
         
         # Top bar
-        top_bar = self.create_top_bar()
-        main_layout.addWidget(top_bar)
-        
-        # Content
+        main_layout.addWidget(self.create_top_bar())
+
+        # Content area
         content = QWidget()
         content_layout = QHBoxLayout(content)
-        content_layout.setContentsMargins(20, 20, 20, 20)
-        content_layout.setSpacing(15)
+        content_layout.setContentsMargins(0, 0, 0, 0)
+        content_layout.setSpacing(0)
 
-        # Left panel - compact
-        left = self.create_left_panel()
-        content_layout.addWidget(left, 1)
+        # Sidebar
+        self.sidebar = self.create_sidebar()
+        content_layout.addWidget(self.sidebar)
 
-        # Center radial - more space
-        self.radial_container = QWidget()
-        self.radial_container.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        self.setup_radial()
-        content_layout.addWidget(self.radial_container, 3)
+        # Main content
+        self.content_area = self.create_content_area()
+        content_layout.addWidget(self.content_area, 1)
 
-        # Right panel - compact
-        right = self.create_right_panel()
-        content_layout.addWidget(right, 1)
-
-        main_layout.addWidget(content, 1)
+        main_layout.addWidget(content)
 
     def create_top_bar(self):
-        """Minimal top bar"""
+        """Üst bar"""
         bar = QFrame()
-        bar.setFixedHeight(60)
-        bar.setStyleSheet("""
-            QFrame {
-                background: rgba(255, 255, 255, 0.85);
-                border: none;
-            }
-        """)
+        bar.setFixedHeight(73)
         
         layout = QHBoxLayout(bar)
-        layout.setContentsMargins(25, 0, 25, 0)
+        layout.setContentsMargins(24, 0, 24, 0)
+
+        # Logo + Title
+        logo_container = QWidget()
+        logo_layout = QHBoxLayout(logo_container)
+        logo_layout.setSpacing(16)
 
         # Logo
         logo = QLabel("🎓")
         logo.setFont(QFont("Segoe UI", 24))
+        logo.setFixedSize(44, 44)
+        logo.setAlignment(Qt.AlignCenter)
+        logo.setStyleSheet("""
+            background: qlineargradient(x1:0, y1:0, x2:1, y2:1,
+                stop:0 #10b981, stop:1 #14b8a6);
+            border-radius: 11px;
+        """)
 
         # Title
-        title_layout = QVBoxLayout()
-        title_layout.setSpacing(0)
-        
-        title = QLabel("Sınav Takvimi Sistemi")
+        title_widget = QWidget()
+        title_layout = QVBoxLayout(title_widget)
+        title_layout.setSpacing(2)
+        title_layout.setContentsMargins(0, 0, 0, 0)
+
+        title = QLabel("Sınav Takvimi Yönetim Sistemi")
         title.setFont(QFont("Segoe UI", 13, QFont.Bold))
-        title.setStyleSheet("color: #333;")
 
         subtitle = QLabel("Kocaeli Üniversitesi")
-        subtitle.setFont(QFont("Segoe UI", 9))
-        subtitle.setStyleSheet("color: #999;")
+        subtitle.setFont(QFont("Segoe UI", 10))
 
         title_layout.addWidget(title)
         title_layout.addWidget(subtitle)
-
-        layout.addWidget(logo)
-        layout.addLayout(title_layout)
+        
+        logo_layout.addWidget(logo)
+        logo_layout.addWidget(title_widget)
+        
+        layout.addWidget(logo_container)
         layout.addStretch()
         
-        # User
-        user = QLabel(self.user_data['ad_soyad'])
-        user.setFont(QFont("Segoe UI", 10))
-        user.setStyleSheet("color: #666;")
-        
-        # Logout
-        logout = QPushButton("Çıkış")
-        logout.setFont(QFont("Segoe UI", 10, QFont.DemiBold))
-        logout.setCursor(Qt.PointingHandCursor)
-        logout.setFixedSize(70, 32)
-        logout.setStyleSheet("""
+        # Theme toggle
+        self.theme_btn = QPushButton("🌙")
+        self.theme_btn.setFixedSize(40, 40)
+        self.theme_btn.setCursor(Qt.PointingHandCursor)
+        self.theme_btn.clicked.connect(self.toggle_theme)
+
+        # User info
+        user_widget = QFrame()
+        user_layout = QHBoxLayout(user_widget)
+        user_layout.setSpacing(12)
+
+        avatar = QLabel("A")
+        avatar.setFixedSize(36, 36)
+        avatar.setAlignment(Qt.AlignCenter)
+        avatar.setFont(QFont("Segoe UI", 12, QFont.Bold))
+        avatar.setStyleSheet("""
+            background: qlineargradient(x1:0, y1:0, x2:1, y2:1,
+                stop:0 #10b981, stop:1 #14b8a6);
+            color: white;
+            border-radius: 9px;
+        """)
+
+        user_info = QWidget()
+        user_info_layout = QVBoxLayout(user_info)
+        user_info_layout.setSpacing(0)
+        user_info_layout.setContentsMargins(0, 0, 0, 0)
+
+        name = QLabel(self.user_data.get('ad_soyad', 'Kullanıcı'))
+        name.setFont(QFont("Segoe UI", 10, QFont.Bold))
+
+        role = QLabel(self.user_data.get('role', 'Admin'))
+        role.setFont(QFont("Segoe UI", 8))
+
+        user_info_layout.addWidget(name)
+        user_info_layout.addWidget(role)
+
+        user_layout.addWidget(avatar)
+        user_layout.addWidget(user_info)
+
+        # Logout button
+        logout_btn = QPushButton("↪")
+        logout_btn.setFixedSize(40, 40)
+        logout_btn.setCursor(Qt.PointingHandCursor)
+        logout_btn.clicked.connect(self.handle_logout)
+        logout_btn.setStyleSheet("""
             QPushButton {
                 background: rgba(239, 68, 68, 0.1);
+                border: 1px solid rgba(239, 68, 68, 0.2);
+                border-radius: 10px;
                 color: #ef4444;
-                border: none;
-                border-radius: 8px;
+                font-size: 18px;
             }
             QPushButton:hover {
                 background: rgba(239, 68, 68, 0.2);
             }
-            QPushButton:pressed {
-                background: rgba(239, 68, 68, 0.3);
-            }
         """)
-        logout.clicked.connect(self.logout_requested.emit)
 
-        layout.addWidget(user)
-        layout.addWidget(logout)
+        layout.addWidget(self.theme_btn)
+        layout.addWidget(user_widget)
+        layout.addWidget(logout_btn)
         
         return bar
         
-    def create_left_panel(self):
-        """Compact left panel"""
-        panel = QFrame()
-        panel.setMaximumWidth(240)
-        panel.setStyleSheet("""
-            QFrame {
-                background: rgba(255, 255, 255, 0.6);
-                border-radius: 16px;
-                border: none;
-            }
-        """)
+    def create_sidebar(self):
+        """Sidebar oluştur"""
+        sidebar = QFrame()
+        sidebar.setFixedWidth(288)
 
-        layout = QVBoxLayout(panel)
-        layout.setContentsMargins(18, 18, 18, 18)
-        layout.setSpacing(14)
+        layout = QVBoxLayout(sidebar)
+        layout.setContentsMargins(16, 16, 16, 16)
+        layout.setSpacing(4)
 
-        header = QLabel("İstatistikler")
-        header.setFont(QFont("Segoe UI", 16, QFont.Bold))
-        header.setStyleSheet("color: #333;")
-
-        layout.addWidget(header)
-
-        stats = [
-            ("Sınavlar", 15, 20),
-            ("Dersler", 42, 50),
-            ("Derslikler", 8, 10),
-            ("Öğrenciler", 850, 1000)
+        # Menu items
+        menu_items = [
+            ('🏠', 'Ana Sayfa', 'dashboard'),
+            ('🏛', 'Derslikler', 'derslikler'),
+            ('📚', 'Ders Listesi', 'dersler'),
+            ('👥', 'Öğrenci Listesi', 'ogrenciler'),
+            ('📅', 'Sınav Programı', 'sinavlar'),
+            ('📝', 'Oturma Planı', 'oturma'),
+            ('📊', 'Raporlar', 'raporlar'),
+            ('⚙', 'Ayarlar', 'ayarlar')
         ]
 
-        for label, current, total in stats:
-            card = CleanStatCard(label, current, total)
-            layout.addWidget(card)
+        self.menu_buttons = []
+        for icon, text, menu_id in menu_items:
+            btn = MenuButton(text, icon, self.theme)
+            btn.clicked.connect(lambda checked, mid=menu_id: self.switch_menu(mid))
+            layout.addWidget(btn)
+            self.menu_buttons.append((btn, menu_id))
 
+        # Collapse button
         layout.addStretch()
 
-        return panel
+        collapse_btn = QPushButton("◀")
+        collapse_btn.setFixedHeight(32)
+        collapse_btn.setCursor(Qt.PointingHandCursor)
+        collapse_btn.clicked.connect(self.toggle_sidebar)
+        layout.addWidget(collapse_btn)
 
-    def setup_radial(self):
-        """Radial - compact"""
-        # Center hub
-        self.center_hub = MinimalCenterHub(
-            self.user_data,
-            self.stats_data,
-            self.radial_container
-        )
-        self.center_hub.show()
+        self.collapse_btn = collapse_btn
+        self.menu_buttons[0][0].set_active(True)
 
-        # Modules
-        if self.is_admin:
-            modules = [
-                ("Dersler", "ders"),
-                ("Derslikler", "derslik"),
-                ("Öğrenciler", "ogrenci"),
-                ("Sınavlar", "sinav"),
-                ("Oturma Planı", "oturma"),
-                ("Raporlar", "rapor")
-            ]
-        else:
-            modules = [
-                ("Dersler", "ders"),
-                ("Derslikler", "derslik"),
-                ("Sınavlar", "sinav"),
-                ("Raporlar", "rapor")
-            ]
-        
-        self.radial_buttons = []
-        for text, module_id in modules:
-            btn = KOUGlassButton(text, module_id, self.radial_container)
-            btn.clicked_with_id.connect(self.open_module)
-            btn.show()
-            self.radial_buttons.append(btn)
-        
-        QTimer.singleShot(50, lambda: self.position_radial(None))
+        return sidebar
 
-        original = self.radial_container.resizeEvent
+    def create_content_area(self):
+        """İçerik alanı"""
+        content = QWidget()
+        layout = QVBoxLayout(content)
+        layout.setContentsMargins(24, 24, 24, 24)
+        layout.setSpacing(24)
 
-        def safe_resize(e):
-            if original and e:
-                original(e)
-            self.position_radial(e)
+        # Stats grid
+        stats_container = QWidget()
+        stats_layout = QHBoxLayout(stats_container)
+        stats_layout.setSpacing(16)
 
-        self.radial_container.resizeEvent = safe_resize
-
-    def position_radial(self, event):
-        """Compact positioning"""
-        if not hasattr(self, 'center_hub'):
-            return
-
-        cx = self.radial_container.width() // 2
-        cy = self.radial_container.height() // 2
-
-        # Compact radius
-        container_size = min(self.radial_container.width(), self.radial_container.height())
-        radius = max(180, min(260, container_size // 3))
-
-        # Center hub
-        hub_size = max(180, min(220, container_size // 4))
-        self.center_hub.setFixedSize(hub_size, hub_size)
-        self.center_hub.move(cx - hub_size // 2, cy - hub_size // 2)
-        self.center_hub.raise_()
-        self.center_hub.show()
-
-        # Buttons
-        num = len(self.radial_buttons)
-        button_size = max(110, min(130, container_size // 9))
-        
-        for i, btn in enumerate(self.radial_buttons):
-            angle = (360 / num) * i - 90
-            rad = math.radians(angle)
-
-            x = cx + int(radius * math.cos(rad)) - button_size // 2
-            y = cy + int(radius * math.sin(rad)) - button_size // 2
-
-            btn.setFixedSize(button_size, button_size)
-            btn.move(x, y)
-            btn.raise_()
-            btn.show()
-
-    def create_right_panel(self):
-        """Compact right panel"""
-        panel = QFrame()
-        panel.setMaximumWidth(280)
-        panel.setStyleSheet("""
-            QFrame {
-                background: rgba(255, 255, 255, 0.6);
-                border-radius: 16px;
-                border: none;
-            }
-        """)
-
-        layout = QVBoxLayout(panel)
-        layout.setContentsMargins(18, 18, 18, 18)
-        layout.setSpacing(12)
-
-        header = QLabel("Son İşlemler")
-        header.setFont(QFont("Segoe UI", 16, QFont.Bold))
-        header.setStyleSheet("color: #333;")
-
-        layout.addWidget(header)
-
-        scroll = QScrollArea()
-        scroll.setWidgetResizable(True)
-        scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
-        scroll.setStyleSheet("""
-            QScrollArea {
-                border: none;
-                background: transparent;
-            }
-            QScrollBar:vertical {
-                background: rgba(0, 0, 0, 0.03);
-                width: 6px;
-                border-radius: 3px;
-            }
-            QScrollBar::handle:vertical {
-                background: rgba(0, 166, 81, 0.4);
-                border-radius: 3px;
-            }
-        """)
-
-        scroll_widget = QWidget()
-        scroll_layout = QVBoxLayout(scroll_widget)
-        scroll_layout.setSpacing(10)
-        scroll_layout.setAlignment(Qt.AlignTop)
-
-        activities = [
-            ("BMÜ Final Programı", "2sa"),
-            ("301 Derslik", "5sa"),
-            ("YMÜ Vize", "1g"),
-            ("Öğrenci Listesi", "2g"),
-            ("EDA Dersliği", "3g")
+        stats = [
+            ("Aktif Sınavlar", 0, 30),
+            ("Toplam Dersler", 0, 60),
+            ("Derslikler", 0, 15),
+            ("Öğrenciler", 0, 1000)
         ]
 
-        for title, time in activities:
-            card = CleanActivityCard(title, time)
-            scroll_layout.addWidget(card)
+        for label, value, total in stats:
+            card = StatCard(label, value, total, self.theme)
+            stats_layout.addWidget(card)
 
-        scroll.setWidget(scroll_widget)
-        layout.addWidget(scroll)
+        layout.addWidget(stats_container)
 
-        return panel
+        # Welcome card
+        welcome_card = self.create_welcome_card()
+        layout.addWidget(welcome_card)
 
-    def open_module(self, module_id):
-        """Modül aç"""
-        print(f"✓ Modül: {module_id}")
+        # System status
+        status_card = self.create_status_card()
+        layout.addWidget(status_card)
 
-        names = {
-            'ders': 'Dersler',
-            'derslik': 'Derslikler',
-            'ogrenci': 'Öğrenciler',
-            'sinav': 'Sınavlar',
-            'oturma': 'Oturma Planı',
-            'rapor': 'Raporlar'
-        }
+        return content
 
-        QMessageBox.information(
-            self,
-            names.get(module_id, 'Modül'),
-            f"{names.get(module_id, module_id)} modülü\n(Geliştiriliyor)",
-            QMessageBox.Ok
+    def create_welcome_card(self):
+        """Hoş geldiniz kartı"""
+        card = QFrame()
+
+        layout = QVBoxLayout(card)
+        layout.setContentsMargins(32, 32, 32, 32)
+        layout.setSpacing(24)
+
+        # Header
+        header = QHBoxLayout()
+
+        header_text = QWidget()
+        header_layout = QVBoxLayout(header_text)
+        header_layout.setSpacing(4)
+
+        title = QLabel(f"Hoş Geldiniz, {self.user_data.get('ad_soyad')} 👋")
+        title.setFont(QFont("Segoe UI", 18, QFont.Bold))
+
+        subtitle = QLabel("Bugün ne yapmak istersiniz?")
+        subtitle.setFont(QFont("Segoe UI", 11))
+
+        header_layout.addWidget(title)
+        header_layout.addWidget(subtitle)
+
+        header.addWidget(header_text)
+        header.addStretch()
+
+        layout.addLayout(header)
+
+        # Quick actions
+        actions_container = QWidget()
+        actions_layout = QHBoxLayout(actions_container)
+        actions_layout.setSpacing(16)
+
+        actions = [
+            ("Derslik Ekle", "Yeni derslik tanımla", "🏛", "emerald"),
+            ("Excel Yükle", "Ders/Öğrenci listesi", "📄", "blue"),
+            ("Program Oluştur", "Sınav takvimi yap", "📅", "indigo"),
+            ("Rapor Al", "PDF/Excel çıktı", "📊", "orange")
+        ]
+
+        for label, desc, icon, color in actions:
+            action_card = QuickActionCard(label, desc, icon, color, self.theme)
+            actions_layout.addWidget(action_card)
+
+        layout.addWidget(actions_container)
+
+        return card
+
+    def create_status_card(self):
+        """Sistem durumu kartı"""
+        card = QFrame()
+
+        layout = QVBoxLayout(card)
+        layout.setContentsMargins(32, 32, 32, 32)
+        layout.setSpacing(16)
+
+        title = QLabel("Sistem Durumu")
+        title.setFont(QFont("Segoe UI", 14, QFont.Bold))
+
+        layout.addWidget(title)
+
+        # Status items
+        status_container = QWidget()
+        status_layout = QHBoxLayout(status_container)
+        status_layout.setSpacing(24)
+
+        statuses = [
+            ("0", "Bekleyen Sınav", "emerald"),
+            ("0", "Aktif Program", "blue"),
+            ("15", "Gün Kaldı", "orange")
+        ]
+
+        for value, label, color in statuses:
+            item = QWidget()
+            item_layout = QVBoxLayout(item)
+            item_layout.setAlignment(Qt.AlignCenter)
+
+            val = QLabel(value)
+            val.setFont(QFont("Segoe UI", 32, QFont.Bold))
+            val.setAlignment(Qt.AlignCenter)
+
+            lbl = QLabel(label)
+            lbl.setFont(QFont("Segoe UI", 10))
+            lbl.setAlignment(Qt.AlignCenter)
+
+            item_layout.addWidget(val)
+            item_layout.addWidget(lbl)
+
+            status_layout.addWidget(item)
+
+        layout.addWidget(status_container)
+
+        return card
+
+    def toggle_theme(self):
+        """Tema değiştir"""
+        self.theme.dark_mode = not self.theme.dark_mode
+        self.theme_btn.setText("☀" if self.theme.dark_mode else "🌙")
+        self.apply_styles()
+
+        # Update all components
+        for btn, _ in self.menu_buttons:
+            btn.theme = self.theme
+            btn.update_style()
+
+    def toggle_sidebar(self):
+        """Sidebar aç/kapat"""
+        self.sidebar_collapsed = not self.sidebar_collapsed
+
+        if self.sidebar_collapsed:
+            self.sidebar.setFixedWidth(80)
+            self.collapse_btn.setText("▶")
+        else:
+            self.sidebar.setFixedWidth(288)
+            self.collapse_btn.setText("◀")
+
+        for btn, _ in self.menu_buttons:
+            btn.set_collapsed(self.sidebar_collapsed)
+
+    def switch_menu(self, menu_id):
+        """Menü değiştir"""
+        self.active_menu = menu_id
+
+        for btn, mid in self.menu_buttons:
+            btn.set_active(mid == menu_id)
+
+        if menu_id != 'dashboard':
+            self.module_opened.emit(menu_id)
+
+    def handle_logout(self):
+        """Çıkış yap"""
+        from PySide6.QtWidgets import QMessageBox
+        reply = QMessageBox.question(
+            self, "Çıkış", "Çıkış yapmak istediğinize emin misiniz?",
+            QMessageBox.Yes | QMessageBox.No
         )
+        if reply == QMessageBox.Yes:
+            self.close()
 
-    def animate_entrance(self):
-        """Entrance"""
-        if hasattr(self, 'center_hub'):
-            self.center_hub.show()
-
-        hub_effect = QGraphicsOpacityEffect(self.center_hub)
-        self.center_hub.setGraphicsEffect(hub_effect)
-        
-        hub_anim = QPropertyAnimation(hub_effect, b"opacity")
-        hub_anim.setDuration(600)
-        hub_anim.setStartValue(0)
-        hub_anim.setEndValue(1)
-            hub_anim.start()
-
-            def remove_hub():
-                self.center_hub.setGraphicsEffect(None)
-
-            hub_anim.finished.connect(remove_hub)
-
-        for btn in self.radial_buttons:
-            btn.show()
-
-        self.btn_anims = []
-        for i, btn in enumerate(self.radial_buttons):
-            effect = QGraphicsOpacityEffect(btn)
-            btn.setGraphicsEffect(effect)
-            
-            anim = QPropertyAnimation(effect, b"opacity")
-            anim.setDuration(500)
-            anim.setStartValue(0)
-            anim.setEndValue(1)
-
-            def make_remove(b):
-                def remove():
-                    b.setGraphicsEffect(None)
-
-                return remove
-
-            anim.finished.connect(make_remove(btn))
-            self.btn_anims.append(anim)
-
-            QTimer.singleShot(100 * (i + 1), anim.start)
-        
     def apply_styles(self):
-        """KOÜ gradient"""
-        self.setStyleSheet("""
-            QWidget {
-                background: qlineargradient(
-                    x1:0, y1:0, x2:1, y2:1,
-                    stop:0 #e8f5e9,
-                    stop:0.5 #c8e6c9,
-                    stop:1 #a5d6a7
-                );
-                font-family: 'Segoe UI', Arial;
-            }
+        """Stilleri uygula - Cam görünümü ile"""
+        self.setStyleSheet(f"""
+            QMainWindow {{
+                background: {self.theme.bg};
+            }}
+            QFrame {{
+                background: rgba(255, 255, 255, 0.3);
+                border: 1px solid rgba(255, 255, 255, 0.4);
+                border-radius: 16px;
+                backdrop-filter: blur(10px);
+            }}
+            QFrame:hover {{
+                background: rgba(255, 255, 255, 0.4);
+            }}
+            QLabel {{
+                color: {self.theme.text};
+                background: transparent;
+                border: none;
+            }}
+            QPushButton {{
+                background: {self.theme.card};
+                border: 1px solid {self.theme.border};
+                border-radius: 10px;
+                color: {self.theme.text};
+            }}
+            QPushButton:hover {{
+                background: {self.theme.hover};
+            }}
         """)
 
 
-# ============================================================
-# TEST & DEMO
-# ============================================================
-
 if __name__ == "__main__":
-    from PySide6.QtWidgets import QApplication
-    import sys
-
-    # Application
     app = QApplication(sys.argv)
-    app.setApplicationName("KOÜ Sınav Takvimi")
-    app.setOrganizationName("Kocaeli Üniversitesi")
 
-    # Demo user data - Admin
-    admin_user = {
+    user_data = {
         'user_id': 1,
         'email': 'admin@kocaeli.edu.tr',
         'role': 'Admin',
-        'ad_soyad': 'Ahmet Yılmaz'
+        'ad_soyad': 'Ahmet Yılmaz',
+        'bolum_id': None
     }
 
-    # Demo user data - Koordinatör
-    koordinator_user = {
-        'user_id': 2,
-        'email': 'koordinator@kocaeli.edu.tr',
-        'role': 'Bölüm Koordinatörü',
-        'ad_soyad': 'Mehmet Demir'
-    }
-
-    # Create main window with admin user
-    window = MainWindow(admin_user)
-
-    # Window settings
-    window.setWindowTitle("Kocaeli Üniversitesi - Sınav Takvimi Sistemi")
-
-
-    # Connect logout signal
-    def on_logout():
-        reply = QMessageBox.question(
-            window,
-            "Çıkış Onayı",
-            "Sistemden çıkmak istediğinize emin misiniz?",
-            QMessageBox.Yes | QMessageBox.No,
-            QMessageBox.No
-        )
-
-        if reply == QMessageBox.Yes:
-            print("Kullanıcı çıkış yaptı")
-            app.quit()
-
-
-    window.logout_requested.connect(on_logout)
-
-    # Show window
+    window = MainWindow(user_data)
     window.show()
 
-    # Info message
-    print("=" * 60)
-    print("  KOÜ SINAV TAKVİMİ SİSTEMİ - DASHBOARD")
-    print("=" * 60)
-    print(f"  Kullanıcı: {admin_user['ad_soyad']}")
-    print(f"  Rol: {admin_user['role']}")
-    print(f"  Email: {admin_user['email']}")
-    print("=" * 60)
-    print("\n  Dashboard başarıyla yüklendi!")
-    print("  - Dairesel butonlara tıklayarak modülleri açabilirsiniz")
-    print("  - Hover yaparak animasyonları görebilirsiniz")
-    print("  - Çıkış butonu ile güvenli çıkış yapabilirsiniz\n")
-
-    # Run application
     sys.exit(app.exec())
