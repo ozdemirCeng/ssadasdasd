@@ -18,7 +18,7 @@ from config import DATABASE, LOGGING, APP, UI
 from models.database import db
 from controllers.login_controller import LoginController
 from views.login_view import LoginView
-from views.main_window import DashboardView
+from views.main_window import MainWindow
 import logging
 import logging.config
 
@@ -77,7 +77,7 @@ class MainApplication(QMainWindow):
         
         # Create dashboard page
         logger.info("Creating dashboard...")
-        self.dashboard_page = DashboardView(user_data)
+        self.dashboard_page = MainWindow(user_data)
         
         # Dashboard'u widget olarak ekle
         self.stacked_widget.addWidget(self.dashboard_page)
