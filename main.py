@@ -1,12 +1,12 @@
 """
 Kocaeli Üniversitesi Sınav Takvimi Sistemi
-Main Entry Point
+Main Entry Point - Single Window with Page System
 """
 
 import sys
 import logging
 import logging.config
-from PySide6.QtWidgets import QApplication, QMessageBox
+from PySide6.QtWidgets import QApplication, QMainWindow, QStackedWidget, QWidget
 from PySide6.QtCore import Qt
 
 # Import configuration
@@ -21,6 +21,83 @@ from controllers.login_controller import LoginController
 # Import views
 from views.login_view import LoginView
 from views.main_window import DashboardView
+
+
+class MainApplication(QMainWindow):
+    """
+    Ana uygulama penceresi
+    Tek pencere içinde sayfa geçişi
+    """
+    
+    def __init__(self):
+        super().__init__()
+        self.login_controller = LoginController()
+        self.current_user = None
+        
+        self.setWindowTitle("Kocaeli Üniversitesi - Sınav Takvimi Sistemi")
+        self.setMinimumSize(1400, 800)
+        
+        self._init_ui()
+        
+    def _init_ui(self):
+        """UI oluştur"""
+        # Central widget - Stacked widget for page switching
+        self.stacked_widget = QStackedWidget()
+        self.setCentralWidget(self.stacked_widget)
+        
+        # Create pages
+        self.login_page = LoginView(self.login_controller)
+        self.dashboard_page = None  # Will be created after login
+        
+        # Add login page
+        self.stacked_widget.addWidget(self.login_page)
+        
+        # Connect signals
+        self.login_page.login_success.connect(self._on_login_success)
+        
+        # Show login page
+        self.stacked_widget.setCurrentWidget(self.login_page)
+        
+    def _on_login_success(self, user_data):
+        """Login başarılı - Dashboard sayfasına geç"""
+        logger = logging.getLogger(__name__)
+        logger.info(f"[OK] Login successful: {user_data['email']} ({user_data['role']})")
+        
+        self.current_user = user_data
+        
+        # Create dashboard page
+        self.dashboard_page = DashboardView(user_data)
+        self.stacked_widget.addWidget(self.dashboard_page)
+        
+        # Connect dashboard signals
+        self.dashboard_page.logout_requested.connect(self._on_logout)
+        self.dashboard_page.module_changed.connect(self._on_module_changed)
+        
+        # Switch to dashboard
+        self.stacked_widget.setCurrentWidget(self.dashboard_page)
+        
+    def _on_logout(self):
+        """Logout - Login sayfasına dön"""
+        logger = logging.getLogger(__name__)
+        logger.info("[LOGOUT] User logged out")
+        
+        # Clear login fields
+        self.login_page.clear()
+        
+        # Remove dashboard page
+        if self.dashboard_page:
+            self.stacked_widget.removeWidget(self.dashboard_page)
+            self.dashboard_page = None
+        
+        # Switch to login page
+        self.stacked_widget.setCurrentWidget(self.login_page)
+        self.current_user = None
+        
+    def _on_module_changed(self, module_name):
+        """Module değişikliği"""
+        logger = logging.getLogger(__name__)
+        logger.info(f"[MODULE] Switched to: {module_name}")
+        # TODO: Module content loading
 
 
 def setup_logging():
@@ -56,6 +133,8 @@ def initialize_database():
 
 def show_database_error():
     """Show database connection error dialog"""
+    from PySide6.QtWidgets import QMessageBox
+    
     msg = QMessageBox()
     msg.setIcon(QMessageBox.Critical)
     msg.setWindowTitle("Veritabanı Bağlantı Hatası")
@@ -99,56 +178,18 @@ def main():
                 logger.info("[CANCEL] User cancelled database connection")
                 sys.exit(1)
 
-    # Create login controller
-    login_controller = LoginController()
+    # Create main application window
+    logger.info("[UI] Creating main application window...")
+    main_window = MainApplication()
+    main_window.show()
 
-    # Create and show login window
-    logger.info("[UI] Opening login window...")
-    login_window = LoginView(login_controller)
-
-    # Handle successful login
-    def on_login_success(user_data):
-        logger.info(f"[OK] Login successful: {user_data['email']} ({user_data['role']})")
-        logger.info(f"[USER] User: {user_data['ad_soyad']}")
-        if user_data.get('bolum_adi'):
-            logger.info(f"[DEPT] Department: {user_data['bolum_adi']} ({user_data.get('bolum_kodu', 'N/A')})")
-
-        # Close login window
-        login_window.close()
-        
-        # Create and show main dashboard
-        logger.info("[UI] Opening main dashboard...")
-        main_window = DashboardView(user_data)
-        
-        # Handle logout from main window
-        def on_logout():
-            logger.info("[LOGOUT] User logged out")
-            main_window.close()
-            login_window.show()
-            login_window.clear()  # Clear login fields
-        
-        main_window.logout_requested.connect(on_logout)
-        
-        # Handle module changes
-        def on_module_changed(module_name):
-            logger.info(f"[MODULE] Switched to: {module_name}")
-            # TODO: Load module content
-        
-        main_window.module_changed.connect(on_module_changed)
-        
-        # Show main window
-        main_window.show()
-
-    login_window.login_success.connect(on_login_success)
-
-    # Show login window
-    login_window.show()
+    # Run application
     result = app.exec()
     
     if result == 0:
-        logger.info("[OK] Login dialog accepted")
+        logger.info("[OK] Application closed normally")
     else:
-        logger.info("[CANCEL] Login cancelled")
+        logger.info("[CANCEL] Application cancelled")
 
     # Cleanup
     logger.info("[CLEANUP] Closing database connections...")

@@ -256,7 +256,7 @@ class ActivityFeed(QFrame):
 # MAIN DASHBOARD VIEW
 # ============================================================
 
-class DashboardView(QMainWindow):
+class DashboardView(QWidget):
     """
     Ana dashboard ekranı
     - Radial navigation
@@ -272,20 +272,14 @@ class DashboardView(QMainWindow):
         self.user_data = user_data
         self.is_admin = user_data.get('role') == 'Admin'
         
-        self.setWindowTitle("Kocaeli Üniversitesi - Sınav Takvimi Sistemi")
-        self.setMinimumSize(1400, 800)
-        
         self._init_ui()
         self._apply_styles()
         self._animate_entrance()
         
     def _init_ui(self):
         """Ana UI yapısı"""
-        # Central widget
-        central = QWidget()
-        self.setCentralWidget(central)
-        
-        main_layout = QVBoxLayout(central)
+        # Main layout
+        main_layout = QVBoxLayout(self)
         main_layout.setContentsMargins(0, 0, 0, 0)
         main_layout.setSpacing(0)
         
@@ -462,8 +456,8 @@ class DashboardView(QMainWindow):
     def _apply_styles(self):
         """Tema stilleri"""
         self.setStyleSheet("""
-            /* Main Window */
-            QMainWindow {
+            /* Main Widget */
+            QWidget {
                 background: qlineargradient(
                     x1:0, y1:0, x2:1, y2:1,
                     stop:0 #0F172A,
