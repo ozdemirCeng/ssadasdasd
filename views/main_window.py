@@ -8,12 +8,19 @@ from pathlib import Path
 from PySide6.QtWidgets import (
     QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton,
     QFrame, QScrollArea, QGraphicsOpacityEffect, QSizePolicy, QProgressBar,
-    QApplication
+    QApplication, QStackedWidget
 )
-from PySide6.QtCore import Qt, QPropertyAnimation, QEasingCurve, QTimer, QSize, Signal
+from PySide6.QtCore import Qt, QPropertyAnimation, QEasingCurve, QTimer, QSize, Signal, QParallelAnimationGroup
 from PySide6.QtGui import QFont, QIcon, QPainter, QPainterPath, QColor, QLinearGradient
 
 sys.path.append(str(Path(__file__).parent.parent))
+
+# Import views
+from views.koordinator.derslik_view import DerslikView
+from views.koordinator.ders_yukle_view import DersYukleView
+from views.koordinator.ogrenci_yukle_view import OgrenciYukleView
+from views.koordinator.sinav_olustur_view import SinavOlusturView
+from views.koordinator.oturma_plani_view import OturmaPaniView
 
 
 class Theme:
@@ -282,17 +289,19 @@ class MainWindow(QMainWindow):
     """Ana pencere - Professional Dashboard"""
 
     module_opened = Signal(str)
-    
+    logout_requested = Signal()
+
     def __init__(self, user_data, parent=None):
         super().__init__(parent)
         self.user_data = user_data
         self.theme = Theme(dark_mode=False)
         self.sidebar_collapsed = False
         self.active_menu = 'dashboard'
-        
+        self.pages = {}  # Sayfa önbelleği
+
         self.setWindowTitle(f"KOÜ Sınav Takvimi - {user_data.get('ad_soyad')}")
         self.setMinimumSize(1400, 800)
-        
+
         self.setup_ui()
         self.apply_styles()
 
@@ -320,9 +329,15 @@ class MainWindow(QMainWindow):
         self.sidebar = self.create_sidebar()
         content_layout.addWidget(self.sidebar)
 
-        # Main content
-        self.content_area = self.create_content_area()
-        content_layout.addWidget(self.content_area, 1)
+        # Main content - QStackedWidget for page transitions
+        self.content_stack = QStackedWidget()
+
+        # Dashboard sayfa
+        self.dashboard_page = self.create_dashboard_page()
+        self.content_stack.addWidget(self.dashboard_page)
+        self.pages['dashboard'] = self.dashboard_page
+
+        content_layout.addWidget(self.content_stack, 1)
 
         main_layout.addWidget(content)
 
@@ -476,8 +491,8 @@ class MainWindow(QMainWindow):
 
         return sidebar
 
-    def create_content_area(self):
-        """İçerik alanı"""
+    def create_dashboard_page(self):
+        """Dashboard sayfası"""
         content = QWidget()
         layout = QVBoxLayout(content)
         layout.setContentsMargins(24, 24, 24, 24)
@@ -546,14 +561,15 @@ class MainWindow(QMainWindow):
         actions_layout.setSpacing(16)
 
         actions = [
-            ("Derslik Ekle", "Yeni derslik tanımla", "🏛", "emerald"),
-            ("Excel Yükle", "Ders/Öğrenci listesi", "📄", "blue"),
-            ("Program Oluştur", "Sınav takvimi yap", "📅", "indigo"),
-            ("Rapor Al", "PDF/Excel çıktı", "📊", "orange")
+            ("Derslik Ekle", "Yeni derslik tanımla", "🏛", "emerald", "derslikler"),
+            ("Excel Yükle", "Ders/Öğrenci listesi", "📄", "blue", "dersler"),
+            ("Program Oluştur", "Sınav takvimi yap", "📅", "indigo", "sinavlar"),
+            ("Rapor Al", "PDF/Excel çıktı", "📊", "orange", "raporlar")
         ]
 
-        for label, desc, icon, color in actions:
+        for label, desc, icon, color, page_id in actions:
             action_card = QuickActionCard(label, desc, icon, color, self.theme)
+            action_card.clicked.connect(lambda checked=False, pid=page_id: self.switch_menu(pid))
             actions_layout.addWidget(action_card)
 
         layout.addWidget(actions_container)
@@ -632,24 +648,96 @@ class MainWindow(QMainWindow):
             btn.set_collapsed(self.sidebar_collapsed)
 
     def switch_menu(self, menu_id):
-        """Menü değiştir"""
+        """Menü değiştir ve sayfaya geç"""
         self.active_menu = menu_id
 
         for btn, mid in self.menu_buttons:
             btn.set_active(mid == menu_id)
 
-        if menu_id != 'dashboard':
-            self.module_opened.emit(menu_id)
+        # Sayfa geçişi
+        self.show_page(menu_id)
+
+    def show_page(self, page_id):
+        """Sayfayı göster (animasyonlu geçiş)"""
+        # Sayfa önbellekte yoksa oluştur
+        if page_id not in self.pages:
+            page_widget = self.create_page(page_id)
+            if page_widget:
+                self.content_stack.addWidget(page_widget)
+                self.pages[page_id] = page_widget
+
+        # Sayfaya geç
+        if page_id in self.pages:
+            target_page = self.pages[page_id]
+            current_index = self.content_stack.currentIndex()
+            target_index = self.content_stack.indexOf(target_page)
+
+            # Animasyonlu geçiş için opacity efekti
+            if current_index != target_index:
+                self.animate_page_transition(target_page)
+                self.content_stack.setCurrentWidget(target_page)
+
+    def create_page(self, page_id):
+        """Sayfa widget'ı oluştur"""
+        page_map = {
+            'dashboard': lambda: self.dashboard_page,
+            'derslikler': lambda: DerslikView(self.user_data),
+            'dersler': lambda: DersYukleView(self.user_data),
+            'ogrenciler': lambda: OgrenciYukleView(self.user_data),
+            'sinavlar': lambda: SinavOlusturView(self.user_data),
+            'oturma': lambda: OturmaPaniView(self.user_data),
+            'raporlar': lambda: self.create_placeholder_page("Raporlar", "📊"),
+            'ayarlar': lambda: self.create_placeholder_page("Ayarlar", "⚙")
+        }
+
+        if page_id in page_map:
+            return page_map[page_id]()
+        return None
+
+    def create_placeholder_page(self, title, icon):
+        """Placeholder sayfa oluştur"""
+        page = QWidget()
+        layout = QVBoxLayout(page)
+        layout.setAlignment(Qt.AlignCenter)
+
+        icon_label = QLabel(icon)
+        icon_label.setFont(QFont("Segoe UI", 72))
+        icon_label.setAlignment(Qt.AlignCenter)
+        icon_label.setStyleSheet(f"color: {self.theme.text_muted};")
+
+        title_label = QLabel(title)
+        title_label.setFont(QFont("Segoe UI", 24, QFont.Bold))
+        title_label.setAlignment(Qt.AlignCenter)
+        title_label.setStyleSheet(f"color: {self.theme.text};")
+
+        subtitle = QLabel("Bu özellik yakında eklenecek")
+        subtitle.setFont(QFont("Segoe UI", 14))
+        subtitle.setAlignment(Qt.AlignCenter)
+        subtitle.setStyleSheet(f"color: {self.theme.text_muted};")
+
+        layout.addWidget(icon_label)
+        layout.addWidget(title_label)
+        layout.addWidget(subtitle)
+
+        return page
+
+    def animate_page_transition(self, target_widget):
+        """Sayfa geçiş animasyonu"""
+        # Fade in efekti
+        effect = QGraphicsOpacityEffect(target_widget)
+        target_widget.setGraphicsEffect(effect)
+
+        animation = QPropertyAnimation(effect, b"opacity")
+        animation.setDuration(300)
+        animation.setStartValue(0.0)
+        animation.setEndValue(1.0)
+        animation.setEasingCurve(QEasingCurve.InOutQuad)
+        animation.start(QPropertyAnimation.DeleteWhenStopped)
 
     def handle_logout(self):
         """Çıkış yap"""
-        from PySide6.QtWidgets import QMessageBox
-        reply = QMessageBox.question(
-            self, "Çıkış", "Çıkış yapmak istediğinize emin misiniz?",
-            QMessageBox.Yes | QMessageBox.No
-        )
-        if reply == QMessageBox.Yes:
-            self.close()
+        # Signal emit et - main.py handle edecek
+        self.logout_requested.emit()
 
     def apply_styles(self):
         """Stilleri uygula - Cam görünümü ile"""
