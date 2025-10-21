@@ -193,8 +193,94 @@ class UserModel:
     def update_session_activity(session_id: str):
         """Update last activity timestamp"""
         query = """
-            UPDATE active_sessions 
+            UPDATE active_sessions
             SET last_activity = CURRENT_TIMESTAMP
             WHERE session_id = %s
         """
         db.execute_update(query, (session_id,))
+
+    def __init__(self, db_connection):
+        """Initialize with database connection"""
+        self.db = db_connection
+
+    def update_user(self, user_id: int, **kwargs) -> bool:
+        """Update user information"""
+        try:
+            allowed_fields = ['ad_soyad', 'email', 'bolum_id', 'aktif']
+
+            updates = []
+            params = []
+
+            for key, value in kwargs.items():
+                if key in allowed_fields and value is not None:
+                    updates.append(f"{key} = %s")
+                    params.append(value)
+
+            if not updates:
+                logger.warning("No fields to update")
+                return False
+
+            params.append(user_id)
+
+            query = f"""
+                UPDATE users
+                SET {', '.join(updates)}
+                WHERE user_id = %s
+            """
+
+            cursor = self.db.execute_query(query, tuple(params))
+
+            if cursor and cursor.rowcount > 0:
+                self.db.commit()
+                logger.info(f"User updated (ID: {user_id})")
+                return True
+
+            return False
+
+        except Exception as e:
+            self.db.rollback()
+            logger.error(f"Error updating user: {e}")
+            return False
+
+    def change_password(self, user_id: int, current_password: str, new_password: str) -> bool:
+        """Change user password"""
+        try:
+            # Get current password hash
+            query = "SELECT password_hash FROM users WHERE user_id = %s"
+            cursor = self.db.execute_query(query, (user_id,))
+
+            if not cursor:
+                return False
+
+            row = cursor.fetchone()
+            if not row:
+                return False
+
+            current_hash = row[0]
+
+            # Verify current password
+            if not self.verify_password(current_password, current_hash):
+                return False
+
+            # Hash new password
+            new_hash = self.hash_password(new_password)
+
+            # Update password
+            update_query = """
+                UPDATE users
+                SET password_hash = %s
+                WHERE user_id = %s
+            """
+            cursor = self.db.execute_query(update_query, (new_hash, user_id))
+
+            if cursor and cursor.rowcount > 0:
+                self.db.commit()
+                logger.info(f"Password changed for user ID: {user_id}")
+                return True
+
+            return False
+
+        except Exception as e:
+            self.db.rollback()
+            logger.error(f"Error changing password: {e}")
+            return False

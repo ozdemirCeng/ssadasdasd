@@ -21,6 +21,8 @@ from views.koordinator.ders_yukle_view import DersYukleView
 from views.koordinator.ogrenci_yukle_view import OgrenciYukleView
 from views.koordinator.sinav_olustur_view import SinavOlusturView
 from views.koordinator.oturma_plani_view import OturmaPaniView
+from views.koordinator.raporlar_view import RaporlarView
+from views.koordinator.ayarlar_view import AyarlarView
 
 
 class Theme:
@@ -503,12 +505,50 @@ class MainWindow(QMainWindow):
         stats_layout = QHBoxLayout(stats_container)
         stats_layout.setSpacing(16)
 
-        stats = [
-            ("Aktif Sınavlar", 0, 30),
-            ("Toplam Dersler", 0, 60),
-            ("Derslikler", 0, 15),
-            ("Öğrenciler", 0, 1000)
-        ]
+        # Get real statistics from database
+        try:
+            from models.database import db
+            from models.sinav_model import SinavModel
+            from models.ders_model import DersModel
+            from models.derslik_model import DerslikModel
+            from models.ogrenci_model import OgrenciModel
+
+            bolum_id = self.user_data.get('bolum_id', 1)
+
+            sinav_model = SinavModel(db)
+            ders_model = DersModel(db)
+            derslik_model = DerslikModel(db)
+            ogrenci_model = OgrenciModel(db)
+
+            # Get counts
+            programlar = sinav_model.get_programs_by_bolum(bolum_id)
+            aktif_sinav_count = sum(len(sinav_model.get_sinavlar_by_program(p['program_id'])) for p in programlar if p.get('aktif', True))
+
+            dersler = ders_model.get_dersler_by_bolum(bolum_id)
+            ders_count = len(dersler)
+
+            derslikler = derslik_model.get_derslikler_by_bolum(bolum_id)
+            derslik_count = len(derslikler)
+
+            ogrenciler = ogrenci_model.get_ogrenciler_by_bolum(bolum_id)
+            ogrenci_count = len(ogrenciler)
+
+            stats = [
+                ("Aktif Sınavlar", aktif_sinav_count, max(aktif_sinav_count + 10, 30)),
+                ("Toplam Dersler", ders_count, max(ders_count + 10, 60)),
+                ("Derslikler", derslik_count, max(derslik_count + 5, 15)),
+                ("Öğrenciler", ogrenci_count, max(ogrenci_count + 100, 1000))
+            ]
+        except Exception as e:
+            import logging
+            logging.error(f"Dashboard stats error: {e}")
+            # Fallback to default values
+            stats = [
+                ("Aktif Sınavlar", 0, 30),
+                ("Toplam Dersler", 0, 60),
+                ("Derslikler", 0, 15),
+                ("Öğrenciler", 0, 1000)
+            ]
 
         for label, value, total in stats:
             card = StatCard(label, value, total, self.theme)
@@ -710,8 +750,8 @@ class MainWindow(QMainWindow):
             'ogrenciler': lambda: OgrenciYukleView(self.user_data),
             'sinavlar': lambda: SinavOlusturView(self.user_data),
             'oturma': lambda: OturmaPaniView(self.user_data),
-            'raporlar': lambda: self.create_placeholder_page("Raporlar", "📊"),
-            'ayarlar': lambda: self.create_placeholder_page("Ayarlar", "⚙")
+            'raporlar': lambda: RaporlarView(self.user_data),
+            'ayarlar': lambda: AyarlarView(self.user_data)
         }
 
         if page_id in page_map:
