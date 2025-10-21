@@ -307,6 +307,58 @@ class DepartmentConfig:
 
 
 # ============================================================
+# Backward compatibility - Shorthand configs
+# ============================================================
+DATABASE = DatabaseConfig.get_connection_params()
+APP = {
+    'name': AppConfig.APP_NAME,
+    'version': AppConfig.APP_VERSION,
+    'organization': AppConfig.ORGANIZATION,
+    'domain': AppConfig.DOMAIN
+}
+UI = ThemeConfig
+SECURITY = {
+    'password_min_length': AppConfig.PASSWORD_MIN_LENGTH,
+    'password_require_special': AppConfig.PASSWORD_REQUIRE_SPECIAL,
+    'password_require_number': AppConfig.PASSWORD_REQUIRE_NUMBER,
+    'login_max_attempts': AppConfig.LOGIN_MAX_ATTEMPTS,
+    'login_lockout_duration': AppConfig.LOGIN_LOCKOUT_DURATION
+}
+MESSAGES = {
+    'login_success': 'Başarıyla giriş yaptınız',
+    'login_failed': 'Giriş başarısız',
+    'invalid_credentials': 'E-posta veya şifre hatalı',
+    'account_locked': 'Hesabınız kilitlendi. Lütfen daha sonra tekrar deneyin.',
+    'password_changed': 'Şifreniz başarıyla değiştirildi'
+}
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'default': {
+            'format': '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+        }
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'default',
+            'level': LogConfig.LEVEL
+        },
+        'file': {
+            'class': 'logging.FileHandler',
+            'filename': str(LogConfig.LOG_FILE),
+            'formatter': 'default',
+            'level': LogConfig.LEVEL
+        }
+    },
+    'root': {
+        'level': LogConfig.LEVEL,
+        'handlers': ['console', 'file']
+    }
+}
+
+# ============================================================
 # Export all configs
 # ============================================================
 __all__ = [
@@ -323,5 +375,11 @@ __all__ = [
     'RESOURCES_DIR',
     'EXPORTS_DIR',
     'TEMP_DIR',
-    'LOGS_DIR'
+    'LOGS_DIR',
+    'DATABASE',
+    'APP',
+    'UI',
+    'SECURITY',
+    'MESSAGES',
+    'LOGGING'
 ]
