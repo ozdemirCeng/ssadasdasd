@@ -459,7 +459,7 @@ class MainWindow(QMainWindow):
         self.menu_buttons = []
         for icon, text, menu_id in menu_items:
             btn = MenuButton(text, icon, self.theme)
-            btn.clicked.connect(lambda checked, mid=menu_id: self.switch_menu(mid))
+            btn.clicked.connect(lambda checked=False, mid=menu_id: self.switch_menu(mid))
             layout.addWidget(btn)
             self.menu_buttons.append((btn, menu_id))
 
