@@ -1,5 +1,6 @@
+# -*- coding: utf-8 -*-
 """
-Oturma Plan1 View
+Oturma Planı View
 """
 
 from PySide6.QtWidgets import (QWidget, QVBoxLayout, QPushButton, QLabel,
@@ -12,7 +13,7 @@ logger = logging.getLogger(__name__)
 
 
 class OturmaPaniView(QWidget):
-    """Oturma plan1 ekran1"""
+    """Oturma planı ekranı"""
 
     def __init__(self, user_data):
         super().__init__()
@@ -21,20 +22,20 @@ class OturmaPaniView(QWidget):
         self.init_ui()
 
     def init_ui(self):
-        """UI olu_tur"""
+        """UI oluştur"""
         layout = QVBoxLayout()
 
-        # Ba_l1k
-        title = QLabel("Oturma Plan1")
+        # Başlık
+        title = QLabel("Oturma Planı")
         title.setStyleSheet("font-size: 20px; font-weight: bold;")
         layout.addWidget(title)
 
-        # A�1klama
-        info = QLabel("Oturma plan1 �zellikleri burada olacak.")
+        # Açıklama
+        info = QLabel("Oturma planı özellikleri burada olacak.")
         layout.addWidget(info)
 
         # Buton
-        self.btn_generate = QPushButton("Oturma Plan1 Olu_tur")
+        self.btn_generate = QPushButton("Oturma Planı Oluştur")
         self.btn_generate.clicked.connect(self.show_generate_dialog)
         layout.addWidget(self.btn_generate)
 
@@ -42,9 +43,9 @@ class OturmaPaniView(QWidget):
         self.setLayout(layout)
 
     def show_generate_dialog(self):
-        """Oturma plan1 olu_turma dialogu g�ster"""
+        """Oturma planı oluşturma dialogu göster"""
         QMessageBox.information(
             self,
             "Bilgi",
-            "Oturma plan1 olu_turma �zellii yak1nda eklenecek."
+            "Oturma planı oluşturma özelliği yakında eklenecek."
         )

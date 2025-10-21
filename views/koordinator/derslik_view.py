@@ -1,6 +1,7 @@
+# -*- coding: utf-8 -*-
 """
 Derslik View
-Derslik yönetimi ekran1
+Derslik yÃ¶netimi ekranÄ±
 """
 
 from PySide6.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QPushButton,
@@ -13,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 
 class DerslikView(QWidget):
-    """Derslik yönetimi ekran1"""
+    """Derslik yÃ¶netimi ekranÄ±"""
 
     def __init__(self, user_data):
         super().__init__()
@@ -22,11 +23,11 @@ class DerslikView(QWidget):
         self.init_ui()
 
     def init_ui(self):
-        """UI olu_tur"""
+        """UI oluÅŸtur"""
         layout = QVBoxLayout()
 
-        # Ba_l1k
-        title = QLabel("Derslik Yönetimi")
+        # BaÅŸlÄ±k
+        title = QLabel("Derslik YÃ¶netimi")
         title.setStyleSheet("font-size: 20px; font-weight: bold;")
         layout.addWidget(title)
 
@@ -38,19 +39,19 @@ class DerslikView(QWidget):
         layout.addLayout(btn_layout)
 
         # Tablo (gelecekte eklenecek)
-        info_label = QLabel("Derslik listesi burada görüntülenecek.")
+        info_label = QLabel("Derslik listesi burada gÃ¶rÃ¼ntÃ¼lenecek.")
         layout.addWidget(info_label)
 
         layout.addStretch()
         self.setLayout(layout)
 
     def show_add_derslik_dialog(self):
-        """Derslik ekleme dialogu göster"""
-        QMessageBox.information(self, "Bilgi", "Derslik ekleme özellii yak1nda eklenecek.")
+        """Derslik ekleme dialogu gÃ¶ster"""
+        QMessageBox.information(self, "Bilgi", "Derslik ekleme Ã¶zelliÄŸi yakÄ±nda eklenecek.")
 
     def load_derslikler(self):
-        """Derslikleri yükle"""
+        """Derslikleri yÃ¼kle"""
         bolum_id = self.user_data.get('bolum_id')
         if bolum_id:
             derslikler = self.controller.get_derslikler_by_bolum(bolum_id)
-            logger.info(f"{len(derslikler)} derslik yüklendi")
+            logger.info(f"{len(derslikler)} derslik yÃ¼klendi")

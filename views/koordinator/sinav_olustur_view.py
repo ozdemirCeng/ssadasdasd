@@ -1,5 +1,6 @@
+# -*- coding: utf-8 -*-
 """
-S1nav Program1 Olu_turma View
+Sınav Programı Oluşturma View
 """
 
 from PySide6.QtWidgets import (QWidget, QVBoxLayout, QPushButton, QLabel,
@@ -12,7 +13,7 @@ logger = logging.getLogger(__name__)
 
 
 class SinavOlusturView(QWidget):
-    """S1nav program1 olu_turma ekran1"""
+    """Sınav programı oluşturma ekranı"""
 
     def __init__(self, user_data):
         super().__init__()
@@ -21,20 +22,20 @@ class SinavOlusturView(QWidget):
         self.init_ui()
 
     def init_ui(self):
-        """UI olu_tur"""
+        """UI oluştur"""
         layout = QVBoxLayout()
 
-        # Ba_l1k
-        title = QLabel("S1nav Program1 Olu_turma")
+        # Başlık
+        title = QLabel("Sınav Programı Oluşturma")
         title.setStyleSheet("font-size: 20px; font-weight: bold;")
         layout.addWidget(title)
 
-        # A�1klama
-        info = QLabel("S1nav program1 olu_turma �zellikleri burada olacak.")
+        # Açıklama
+        info = QLabel("Sınav programı oluşturma özellikleri burada olacak.")
         layout.addWidget(info)
 
         # Buton
-        self.btn_create = QPushButton("Yeni S1nav Program1 Olu_tur")
+        self.btn_create = QPushButton("Yeni Sınav Programı Oluştur")
         self.btn_create.clicked.connect(self.show_create_dialog)
         layout.addWidget(self.btn_create)
 
@@ -42,9 +43,9 @@ class SinavOlusturView(QWidget):
         self.setLayout(layout)
 
     def show_create_dialog(self):
-        """S1nav program1 olu_turma dialogu g�ster"""
+        """Sınav programı oluşturma dialogu göster"""
         QMessageBox.information(
             self,
             "Bilgi",
-            "S1nav program1 olu_turma �zellii yak1nda eklenecek."
+            "Sınav programı oluşturma özelliği yakında eklenecek."
         )

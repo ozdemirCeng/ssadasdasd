@@ -569,7 +569,7 @@ class MainWindow(QMainWindow):
 
         for label, desc, icon, color, page_id in actions:
             action_card = QuickActionCard(label, desc, icon, color, self.theme)
-            action_card.clicked.connect(lambda checked=False, pid=page_id: self.switch_menu(pid))
+            action_card.clicked.connect(lambda pid=page_id: self.switch_menu(pid))
             actions_layout.addWidget(action_card)
 
         layout.addWidget(actions_container)
@@ -659,12 +659,30 @@ class MainWindow(QMainWindow):
 
     def show_page(self, page_id):
         """Sayfayı göster (animasyonlu geçiş)"""
+        import logging
+        logger = logging.getLogger(__name__)
+
         # Sayfa önbellekte yoksa oluştur
         if page_id not in self.pages:
-            page_widget = self.create_page(page_id)
-            if page_widget:
-                self.content_stack.addWidget(page_widget)
-                self.pages[page_id] = page_widget
+            try:
+                logger.info(f"Creating page: {page_id}")
+                page_widget = self.create_page(page_id)
+                if page_widget:
+                    self.content_stack.addWidget(page_widget)
+                    self.pages[page_id] = page_widget
+                    logger.info(f"Page created successfully: {page_id}")
+                else:
+                    logger.warning(f"Page widget is None for: {page_id}")
+                    return
+            except Exception as e:
+                logger.error(f"Error creating page {page_id}: {e}", exc_info=True)
+                from PySide6.QtWidgets import QMessageBox
+                QMessageBox.critical(
+                    self,
+                    "Sayfa Yükleme Hatası",
+                    f"'{page_id}' sayfası yüklenirken hata oluştu:\n\n{str(e)}\n\nDetaylar için log dosyasını kontrol edin."
+                )
+                return
 
         # Sayfaya geç
         if page_id in self.pages:
@@ -674,11 +692,17 @@ class MainWindow(QMainWindow):
 
             # Animasyonlu geçiş için opacity efekti
             if current_index != target_index:
+                logger.debug(f"Switching to page: {page_id} (index: {target_index})")
                 self.animate_page_transition(target_page)
                 self.content_stack.setCurrentWidget(target_page)
+        else:
+            logger.error(f"Page {page_id} not found in pages dict after creation attempt")
 
     def create_page(self, page_id):
         """Sayfa widget'ı oluştur"""
+        import logging
+        logger = logging.getLogger(__name__)
+
         page_map = {
             'dashboard': lambda: self.dashboard_page,
             'derslikler': lambda: DerslikView(self.user_data),
@@ -691,8 +715,17 @@ class MainWindow(QMainWindow):
         }
 
         if page_id in page_map:
-            return page_map[page_id]()
-        return None
+            try:
+                logger.debug(f"Instantiating page widget for: {page_id}")
+                widget = page_map[page_id]()
+                logger.debug(f"Page widget instantiated: {page_id} -> {type(widget).__name__}")
+                return widget
+            except Exception as e:
+                logger.error(f"Error instantiating page widget for {page_id}: {e}", exc_info=True)
+                raise
+        else:
+            logger.warning(f"Unknown page_id: {page_id}")
+            return None
 
     def create_placeholder_page(self, title, icon):
         """Placeholder sayfa oluştur"""
