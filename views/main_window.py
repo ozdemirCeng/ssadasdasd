@@ -64,15 +64,15 @@ class ModernButton(QPushButton):
         super().__init__(text, parent)
         self.icon_char = icon_char
         self.setCursor(Qt.PointingHandCursor)
-        
+
     def enterEvent(self, event):
         self.animate_scale(1.05)
         super().enterEvent(event)
-        
+
     def leaveEvent(self, event):
         self.animate_scale(1.0)
         super().leaveEvent(event)
-        
+
     def animate_scale(self, scale):
         # Simple hover effect via stylesheet
         pass
@@ -282,17 +282,17 @@ class MainWindow(QMainWindow):
     """Ana pencere - Professional Dashboard"""
 
     module_opened = Signal(str)
-    
+
     def __init__(self, user_data, parent=None):
         super().__init__(parent)
         self.user_data = user_data
         self.theme = Theme(dark_mode=False)
         self.sidebar_collapsed = False
         self.active_menu = 'dashboard'
-        
+
         self.setWindowTitle(f"KOÜ Sınav Takvimi - {user_data.get('ad_soyad')}")
         self.setMinimumSize(1400, 800)
-        
+
         self.setup_ui()
         self.apply_styles()
 
@@ -302,11 +302,11 @@ class MainWindow(QMainWindow):
         """UI kurulumu"""
         central = QWidget()
         self.setCentralWidget(central)
-        
+
         main_layout = QVBoxLayout(central)
         main_layout.setContentsMargins(0, 0, 0, 0)
         main_layout.setSpacing(0)
-        
+
         # Top bar
         main_layout.addWidget(self.create_top_bar())
 
@@ -330,7 +330,7 @@ class MainWindow(QMainWindow):
         """Üst bar"""
         bar = QFrame()
         bar.setFixedHeight(73)
-        
+
         layout = QHBoxLayout(bar)
         layout.setContentsMargins(24, 0, 24, 0)
 
@@ -364,13 +364,13 @@ class MainWindow(QMainWindow):
 
         title_layout.addWidget(title)
         title_layout.addWidget(subtitle)
-        
+
         logo_layout.addWidget(logo)
         logo_layout.addWidget(title_widget)
-        
+
         layout.addWidget(logo_container)
         layout.addStretch()
-        
+
         # Theme toggle
         self.theme_btn = QPushButton("🌙")
         self.theme_btn.setFixedSize(40, 40)
@@ -431,9 +431,9 @@ class MainWindow(QMainWindow):
         layout.addWidget(self.theme_btn)
         layout.addWidget(user_widget)
         layout.addWidget(logout_btn)
-        
+
         return bar
-        
+
     def create_sidebar(self):
         """Sidebar oluştur"""
         sidebar = QFrame()
@@ -652,19 +652,15 @@ class MainWindow(QMainWindow):
             self.close()
 
     def apply_styles(self):
-        """Stilleri uygula - Cam görünümü ile"""
+        """Stilleri uygula"""
         self.setStyleSheet(f"""
             QMainWindow {{
                 background: {self.theme.bg};
             }}
             QFrame {{
-                background: rgba(255, 255, 255, 0.3);
-                border: 1px solid rgba(255, 255, 255, 0.4);
+                background: {self.theme.card};
+                border: 1px solid {self.theme.border};
                 border-radius: 16px;
-                backdrop-filter: blur(10px);
-            }}
-            QFrame:hover {{
-                background: rgba(255, 255, 255, 0.4);
             }}
             QLabel {{
                 color: {self.theme.text};
