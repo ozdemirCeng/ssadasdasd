@@ -282,6 +282,7 @@ class MainWindow(QMainWindow):
     """Ana pencere - Professional Dashboard"""
 
     module_opened = Signal(str)
+    logout_requested = Signal()
 
     def __init__(self, user_data, parent=None):
         super().__init__(parent)
