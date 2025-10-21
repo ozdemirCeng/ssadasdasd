@@ -639,7 +639,24 @@ class MainWindow(QMainWindow):
         for btn, mid in self.menu_buttons:
             btn.set_active(mid == menu_id)
 
+        # Modül açılıyor mesajı göster
         if menu_id != 'dashboard':
+            from PySide6.QtWidgets import QMessageBox
+            menu_names = {
+                'derslikler': 'Derslikler',
+                'dersler': 'Ders Listesi',
+                'ogrenciler': 'Öğrenci Listesi',
+                'sinavlar': 'Sınav Programı',
+                'oturma': 'Oturma Planı',
+                'raporlar': 'Raporlar',
+                'ayarlar': 'Ayarlar'
+            }
+            QMessageBox.information(
+                self,
+                menu_names.get(menu_id, 'Modül'),
+                f"{menu_names.get(menu_id, menu_id)} modülü\n\n(Geliştirme aşamasında)",
+                QMessageBox.Ok
+            )
             self.module_opened.emit(menu_id)
 
     def handle_logout(self):
