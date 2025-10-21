@@ -322,7 +322,8 @@ SECURITY = {
     'password_require_special': AppConfig.PASSWORD_REQUIRE_SPECIAL,
     'password_require_number': AppConfig.PASSWORD_REQUIRE_NUMBER,
     'login_max_attempts': AppConfig.LOGIN_MAX_ATTEMPTS,
-    'login_lockout_duration': AppConfig.LOGIN_LOCKOUT_DURATION
+    'login_lockout_duration': AppConfig.LOGIN_LOCKOUT_DURATION,
+    'session_timeout': 3600  # 1 saat (saniye cinsinden)
 }
 MESSAGES = {
     'login_success': 'Başarıyla giriş yaptınız',
