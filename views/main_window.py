@@ -475,7 +475,8 @@ class MainWindow(QMainWindow):
         self.menu_buttons = []
         for icon, text, menu_id in menu_items:
             btn = MenuButton(text, icon, self.theme)
-            btn.clicked.connect(lambda checked, mid=menu_id: self.switch_menu(mid))
+            # Lambda ile menu_id'yi doğru şekilde yakala
+            btn.clicked.connect(lambda checked=False, mid=menu_id: self.switch_menu(mid))
             layout.addWidget(btn)
             self.menu_buttons.append((btn, menu_id))
 
@@ -609,7 +610,8 @@ class MainWindow(QMainWindow):
 
         for label, desc, icon, color, page_id in actions:
             action_card = QuickActionCard(label, desc, icon, color, self.theme)
-            action_card.clicked.connect(lambda pid=page_id: self.switch_menu(pid))
+            # Lambda ile page_id'yi doğru şekilde yakala
+            action_card.clicked.connect(lambda checked=False, pid=page_id: self.switch_menu(pid))
             actions_layout.addWidget(action_card)
 
         layout.addWidget(actions_container)
@@ -689,13 +691,21 @@ class MainWindow(QMainWindow):
 
     def switch_menu(self, menu_id):
         """Menü değiştir ve sayfaya geç"""
+        import logging
+        logger = logging.getLogger(__name__)
+        logger.info(f"Switching to menu: {menu_id}")
+
         self.active_menu = menu_id
 
+        # Menü butonlarını güncelle
         for btn, mid in self.menu_buttons:
             btn.set_active(mid == menu_id)
 
         # Sayfa geçişi
         self.show_page(menu_id)
+
+        # Signal emit
+        self.module_opened.emit(menu_id)
 
     def show_page(self, page_id):
         """Sayfayı göster (animasyonlu geçiş)"""
@@ -796,16 +806,21 @@ class MainWindow(QMainWindow):
 
     def animate_page_transition(self, target_widget):
         """Sayfa geçiş animasyonu"""
-        # Fade in efekti
-        effect = QGraphicsOpacityEffect(target_widget)
-        target_widget.setGraphicsEffect(effect)
+        try:
+            # Fade in efekti
+            effect = QGraphicsOpacityEffect(target_widget)
+            target_widget.setGraphicsEffect(effect)
 
-        animation = QPropertyAnimation(effect, b"opacity")
-        animation.setDuration(300)
-        animation.setStartValue(0.0)
-        animation.setEndValue(1.0)
-        animation.setEasingCurve(QEasingCurve.InOutQuad)
-        animation.start(QPropertyAnimation.DeleteWhenStopped)
+            self._current_animation = QPropertyAnimation(effect, b"opacity")
+            self._current_animation.setDuration(200)
+            self._current_animation.setStartValue(0.3)
+            self._current_animation.setEndValue(1.0)
+            self._current_animation.setEasingCurve(QEasingCurve.InOutQuad)
+            self._current_animation.start()
+        except Exception as e:
+            # Animasyon hatasında sessizce devam et
+            import logging
+            logging.debug(f"Animation error (non-critical): {e}")
 
     def handle_logout(self):
         """Çıkış yap"""
